@@ -1,3 +1,5 @@
+console.log('linked!')
+
 // var key = "20bad3c2c2a34e2a9ada0c04f778f495" 
 // var region = "eastus"
 
