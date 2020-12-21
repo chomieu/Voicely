@@ -55,21 +55,27 @@ document.addEventListener("DOMContentLoaded", function () {
         recognizer.close();
         recognizer = undefined;
       },
-      // If there's an error
+      // If there's an error.
       function (err) {
+        // Also sets the button to work again.
         startRecognizeOnceAsyncButton.disabled = false;
+        // Add the error to the div that spells out text
         phraseDiv.innerHTML += err;
+        // log error to the console.
         window.console.log(err);
 
+        // Close the SpeechRecognizer object, and set the variable to undefined.
         recognizer.close();
         recognizer = undefined;
       });
   });
 
+  // If window.SpeechSDK is present, set the SpeechSDK variable to point to it and make the button work.
   if (!!window.SpeechSDK) {
     SpeechSDK = window.SpeechSDK;
     startRecognizeOnceAsyncButton.disabled = false;
 
+    // Now remove warning and show the content block again.
     document.getElementById('content').style.display = 'block';
     document.getElementById('warning').style.display = 'none';
   }
