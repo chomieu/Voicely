@@ -58,7 +58,7 @@ $( button ).click( function() {
         var g = context.createGain();
         o.connect( g );
         g.connect( context.destination );
-        o.type = "sine";
+        o.type = "square";
         o.frequency.value = score[ beatIndex ][ 0 ];
         o.connect(context.destination);
         o.start( 0 );
