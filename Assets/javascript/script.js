@@ -1,9 +1,4 @@
-<<<<<<< HEAD:script.js
 // API Documentation: https://docs.microsoft.com/en-us/javascript/api/microsoft-cognitiveservices-speech-sdk/?view=azure-node-latest
-=======
-console.log('linked!')
-
->>>>>>> ddce2bfc6a20d6dbd6286e4e3994d1ba9508a719:Assets/javascript/script.js
 // var key = "20bad3c2c2a34e2a9ada0c04f778f495" 
 // var region = "eastus"
 
