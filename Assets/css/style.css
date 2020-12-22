@@ -1,3 +1,34 @@
-body {
-    background-color: lightblue;
+body, html, main {
+    height: 100%;
+}
+
+header, article {
+    border: 1px solid lightgray;
+}
+
+h3 {
+    font-family: "Kaushan Script";
+}
+
+h4 {
+    margin-top: 15px;
+    padding-left: 5%;
+}
+
+article {
+    padding-bottom: 15px !important;
+}
+
+textarea {
+    margin-top: 15px;
+    height: 400px;
+}
+
+ul {
+    margin-top: 0 !important;
+}
+
+li {
+    font-family: Mali;
+    font-size: large;
 }
