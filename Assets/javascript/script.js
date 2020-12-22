@@ -1,6 +1,8 @@
 // status fields and start button in UI
 var startRecognizeOnceAsyncButton;
 
+verifyInclude();
+
 // subscription key and region for speech services.
 var SpeechSDK;
 var recognizer;
