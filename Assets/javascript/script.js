@@ -70,13 +70,13 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 
-  // If window.SpeechSDK is present, set the SpeechSDK variable to point to it and make the button work.
-  if (!!window.SpeechSDK) {
-    SpeechSDK = window.SpeechSDK;
-    startRecognizeOnceAsyncButton.disabled = false;
+  // // If window.SpeechSDK is present, set the SpeechSDK variable to point to it and make the button work.
+  // if (!!window.SpeechSDK) {
+  //   SpeechSDK = window.SpeechSDK;
+  //   startRecognizeOnceAsyncButton.disabled = false;
 
-    // Now remove warning and show the content block again.
-    document.getElementById('content').style.display = 'block';
-    document.getElementById('warning').style.display = 'none';
-  }
+  //   // Now remove warning and show the content block again.
+  //   document.getElementById('content').style.display = 'block';
+  //   document.getElementById('warning').style.display = 'none';
+  // }
 });
