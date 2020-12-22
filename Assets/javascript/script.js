@@ -6,8 +6,23 @@ verifyInclude();
 // subscription key and region for speech services.
 var SpeechSDK;
 var recognizer;
+var emojiList;
 
 $("document").ready(function () {
+
+  // key option 1
+  var APIkey = '2b307e3e19a6de2e97c409b817d0a381eec4b0e1'
+  // key option 2
+  // var APIkey = '8b4259ccd704fd17cd7ad399e0ee00b9dd83faab';
+  // emojiURL option 1
+  // var emojiURL = `https://emoji-api.com/emojis?search=${x}&access_key=${APIkey}`;
+  // emojiURL option 2
+  var emojiURL = `https://emoji-api.com/emojis?access_key=${ APIkey }`;
+
+  $.get( emojiURL ).then( function ( emResponse ) {
+    emojiList = emResponse;
+    console.log( emojiList );
+  })
   // Collect variables
   startRecognizeOnceAsyncButton = document.getElementById("startRecognizeOnceAsyncButton");
 
@@ -29,13 +44,10 @@ $("document").ready(function () {
       // If we're successful.
       function (result) {
         // Make the button to start speech recognition work again.
-        $("#startRecognizeOnceAsyncButton").prop("disabled", false)
+        $("#startRecognizeOnceAsyncButton").prop("disabled", false);
 
-        voiceSearch( result.privText );
-
-        // Place the result text in the #phraseDiv
-        $("#phraseDiv").text(result.text)
-        window.console.log(result)
+        // Voicesearch takes the text results and the full list of emojis as arguments.
+        voiceSearch( result.privText, emojiList );
 
         recognizer.close();
         recognizer = undefined;
