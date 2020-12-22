@@ -2,49 +2,33 @@
 <html>
 
 <head>
-    <title>Microsoft Cognitive Services Speech SDK JavaScript Quickstart</title>
+    <title>Voicely</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="./Assets/css/style.css">
-</head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+   </head>
 
-<body style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:13px;">
-
+<body>
+    
     <div id="warning">
         <h1 style="font-weight:500;">Speech Recognition Speech SDK not found
             (microsoft.cognitiveservices.speech.sdk.bundle.js missing).</h1>
-    </div>
+        </div>
+        
+        <header class="center cyan white-text">
+            <h3>Voicely</h3>
+            <h6>Your Personal Transcriptionist</h6>
+        </header>
 
-    <div id="content" style="display:none">
-        <table width="100%">
-            <tr>
-                <td></td>
-                <td>
-                    <h1 style="font-weight:500;">Microsoft Cognitive Services Speech SDK JavaScript Quickstart</h1>
-                </td>
-            </tr>
-            <tr>
-                <td align="right"><a
-                        href="https://docs.microsoft.com/azure/cognitive-services/speech-service/get-started"
-                        target="_blank">Subscription</a>:</td>
-                <td><input id="subscriptionKey" type="text" size="40" value="subscription"></td>
-            </tr>
-            <tr>
-                <td align="right">Region</td>
-                <td><input id="serviceRegion" type="text" size="40" value="YourServiceRegion"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><button id="startRecognizeOnceAsyncButton">Start recognition</button></td>
-            </tr>
-            <tr>
-                <td align="right" valign="top">Results</td>
-                <td><textarea id="phraseDiv" style="display: inline-block;width:500px;height:200px"></textarea></td>
-            </tr>
-        </table>
-    </div>
-
-    <script src="SpeechSDK/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
-    <script src="./Assets/javascript/script.js"></script>
-</body>
-
-</html>
+        <div id="content" style="display:none">
+            <textarea id="phraseDiv" style="display: inline-block;width:500px;height:200px"></textarea>
+            <button class="btn cyan waves-effect waves-light" id="startRecognizeOnceAsyncButton">Start recognition</button>
+        </div>
+            
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            <script src="SpeechSDK/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="Assets/javascript/script.js"></script>
+        </body>
+        
+        </html>
