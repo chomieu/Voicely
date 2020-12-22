@@ -30,7 +30,10 @@ $("document").ready(function () {
       function (result) {
         // Make the button to start speech recognition work again.
         $("#startRecognizeOnceAsyncButton").prop("disabled", false)
-        // 
+
+        voiceSearch( result.privText );
+
+        // Place the result text in the #phraseDiv
         $("#phraseDiv").text(result.text)
         window.console.log(result)
 
