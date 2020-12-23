@@ -28,8 +28,6 @@ $("document").ready(function () {
 
   $("#startRecognizeOnceAsyncButton").on("click", function() {
     $("#startRecognizeOnceAsyncButton").prop("disabled", true)
-    $("#phraseDiv").empty()
-
     // Use the subscription key and configure the SpeechSDK object provided by the file referenced in the index.html file.
     var speechConfig
     speechConfig = SpeechSDK.SpeechConfig.fromSubscription("20bad3c2c2a34e2a9ada0c04f778f495", "eastus");
