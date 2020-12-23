@@ -1,9 +1,4 @@
-// status fields and start button in UI
-var startRecognizeOnceAsyncButton;
-
-verifyInclude();
-
-// subscription key and region for speech services.
+// Global variables
 var SpeechSDK;
 var recognizer;
 var emojiList;
@@ -23,14 +18,13 @@ $("document").ready(function () {
     emojiList = emResponse;
     console.log( emojiList );
   })
-  // Collect variables
-  startRecognizeOnceAsyncButton = document.getElementById("startRecognizeOnceAsyncButton");
 
-  $("#startRecognizeOnceAsyncButton").on("click", function() {
-    $("#startRecognizeOnceAsyncButton").prop("disabled", true)
+  $("#recordVoicelyBtn").on("click", function() {
+    $("#recordVoicelyBtn").prop("disabled", true)
+    $("#phraseDiv").empty()
     // Use the subscription key and configure the SpeechSDK object provided by the file referenced in the index.html file.
-    var speechConfig
-    speechConfig = SpeechSDK.SpeechConfig.fromSubscription("20bad3c2c2a34e2a9ada0c04f778f495", "eastus");
+    var speechConfig = SpeechSDK.SpeechConfig.fromSubscription("20bad3c2c2a34e2a9ada0c04f778f495", "eastus");
+    // Set speech recognition language to US English
     speechConfig.speechRecognitionLanguage = "en-US"
     // Add the user's microphone input
     var audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
@@ -42,18 +36,19 @@ $("document").ready(function () {
       // If we're successful.
       function (result) {
         // Make the button to start speech recognition work again.
-        $("#startRecognizeOnceAsyncButton").prop("disabled", false);
-
+        $("#recordVoicelyBtn").prop("disabled", false)
         // Voicesearch takes the text results and the full list of emojis as arguments.
         voiceSearch( result.privText, emojiList );
+        window.console.log(result)
 
+        // Close the SpeechRecognizer object, and set the variable to undefined.
         recognizer.close();
         recognizer = undefined;
       },
       // If there's an error.
       function (err) {
         // Also sets the button to work again.
-        $("#startRecognizeOnceAsyncButton").prop("disabled", false)
+        $("#recordVoicelyBtn").prop("disabled", false)
         // Add the error to the div that spells out text
         $("#phraseDiv").text(err)
         // log error to the console.
