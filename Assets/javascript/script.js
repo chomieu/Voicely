@@ -12,14 +12,17 @@ $("document").ready(function () {
   // emojiURL option 1
   // var emojiURL = `https://emoji-api.com/emojis?search=${x}&access_key=${APIkey}`;
   // emojiURL option 2
-  var emojiURL = `https://emoji-api.com/emojis?access_key=${ APIkey }`;
+  var emojiURL = `https://emoji-api.com/emojis?access_key=${APIkey}`;
 
-  $.get( emojiURL ).then( function ( emResponse ) {
+  $.get(emojiURL).then(function (emResponse) {
     emojiList = emResponse;
-    console.log( emojiList );
+    console.log(emojiList);
+    // If the emoji API server is down, use the response stored in "emoji.json" as a backup 
+  }).fail(function () {
+    emojiList = emojiS;
   })
 
-  $("#recordVoicelyBtn").on("click", function() {
+  $("#recordVoicelyBtn").on("click", function () {
     $("#recordVoicelyBtn").prop("disabled", true)
     // Use the subscription key and configure the SpeechSDK object provided by the file referenced in the index.html file.
     var speechConfig = SpeechSDK.SpeechConfig.fromSubscription("20bad3c2c2a34e2a9ada0c04f778f495", "eastus");
@@ -37,7 +40,7 @@ $("document").ready(function () {
         // Make the button to start speech recognition work again.
         $("#recordVoicelyBtn").prop("disabled", false)
         // Voicesearch takes the text results and the full list of emojis as arguments.
-        voiceSearch( result.privText, emojiList );
+        voiceSearch(result.privText, emojiList);
         window.console.log(result)
 
         // Close the SpeechRecognizer object, and set the variable to undefined.
