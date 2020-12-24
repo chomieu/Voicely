@@ -21,7 +21,6 @@ $("document").ready(function () {
 
   $("#recordVoicelyBtn").on("click", function() {
     $("#recordVoicelyBtn").prop("disabled", true)
-    $("#phraseDiv").empty()
     // Use the subscription key and configure the SpeechSDK object provided by the file referenced in the index.html file.
     var speechConfig = SpeechSDK.SpeechConfig.fromSubscription("20bad3c2c2a34e2a9ada0c04f778f495", "eastus");
     // Set speech recognition language to US English
