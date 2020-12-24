@@ -15,7 +15,7 @@ function voiceSearch( matchText, emojiObject ) {
     var emojiArray = []
     console.log( "Array of matched phrases: ", matchArray );
     var oldText = $( "#phraseDiv" ).text();
-    if ( matchArray ) {
+    if ( matchArray && emojiObject ) {
         console.log( "4. Entered matchArray if statement" );
         // Iterate over matchArray and build an array of keywords to replace.
         for ( var i = 0; i < matchArray.length; i++ ) {
@@ -28,7 +28,7 @@ function voiceSearch( matchText, emojiObject ) {
             console.log( "5. Matched string stripped of symbol words: ", strippedString );
             var dashedString = strippedString.replace( /\s/g, "-" );
             console.log( "6. Matched string with dashes instead of spaces: ", dashedString );
-            for ( var j = 0; j < emojiList.length; j++ ) {
+            for ( var j = 0; j < emojiObject.length; j++ ) {
                 if ( emojiObject[ j ].slug == dashedString ) {
                     emojiArray.push( emojiObject[ j ].character );
                 }
@@ -49,7 +49,6 @@ function voiceSearch( matchText, emojiObject ) {
         }
         // Place the result text in the #phraseDiv
         console.log( "10. Text to be placed in #phraseDiv: ", newText );
-        var oldText = $( "#phraseDiv" ).text();
         $( "#phraseDiv" ).text( `${ oldText } ${ newText }`);
     } else if ( oldText ) {
         $( "#phraseDiv" ).text( `${ oldText } ${ matchText }` );
