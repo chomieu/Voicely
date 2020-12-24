@@ -59,4 +59,19 @@ $("document").ready(function () {
         recognizer = undefined;
       });
   });
+
+  // Text Editor Tool
+  tinymce.init({
+    selector: '#phraseDiv',
+    plugins: 'autolink lists media table',
+    toolbar: 'addcomment showcomments casechange code formatpainter',
+    toolbar_mode: 'floating',
+    tinycomments_mode: 'embedded',
+    tinycomments_author: 'Author name',
+    inline: true,
+    draggable_modal: true,
+    mobile: {
+      menubar: true
+    }
+  });
 });
