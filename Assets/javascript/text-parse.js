@@ -14,6 +14,7 @@ function voiceSearch( matchText, emojiObject ) {
     var matchArray = matchText.match( regEx );
     var emojiArray = []
     console.log( "Array of matched phrases: ", matchArray );
+    // Gets the current contents of the div, in case there was already content there before running voiceSearch.
     var oldText = $( "#phraseDiv" ).text();
     if ( matchArray && emojiObject ) {
         console.log( "4. Entered matchArray if statement" );
