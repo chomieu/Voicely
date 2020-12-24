@@ -28,21 +28,21 @@ function voiceSearch( matchText, emojiObject ) {
             console.log( "5. Matched string stripped of symbol words: ", strippedString );
             var dashedString = strippedString.replace( /\s/g, "-" );
             console.log( "6. Matched string with dashes instead of spaces: ", dashedString );
-            for ( var j = 0; j < emojiList.length; j++ ) {
-                if ( emojiObject[ j ].slug == dashedString ) {
+            for ( var j = 0; j < emojiObject.length; j++ ) {
+                if ( emojiObject[ j ] == dashedString ) {
                     emojiArray.push( emojiObject[ j ].character );
                 }
             }
         };
-        console.log( "7. Array of emojis: ", emojiArray );
+        console.log( "7. Array of emojis: ", emojiObject);
         // Iterate over matchArray, and replace all instances of matchArray[ i ] in matchText with emojiArray[ i ].
         var newText = matchText;
         for ( var i = 0; i < matchArray.length; i++ ) {
             var regEx2 = new RegExp( matchArray[ i ] );
             console.log( "8. RegEx I'm using to replace content of newText with emoji: ", regEx2 );
-            console.log( "9. The emoji I'm using for it: ", emojiArray[ i ] );
-            if ( emojiArray[ i ] ) {
-                newText = newText.replace( regEx2, emojiArray[ i ] );
+            console.log( "9. The emoji I'm using for it: ", emojiObject[ i ] );
+            if ( emojiObject[ i ] ) {
+                newText = newText.replace( regEx2, emojiObject[ i ] );
             } else {
                 newText = newText.replace( regEx2, strippedString );
             }

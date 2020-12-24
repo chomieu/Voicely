@@ -63,8 +63,15 @@ $("document").ready(function () {
   // Text Editor Tool
   tinymce.init({
     selector: '#phraseDiv',
-    plugins: 'autolink lists media table',
-    toolbar: 'addcomment showcomments casechange code formatpainter',
+    plugins: [
+      'advlist autolink lists link image charmap print preview anchor',
+      'searchreplace visualblocks code fullscreen',
+      'insertdatetime media table paste code help wordcount'
+    ],
+    toolbar: 'formatselect | ' +
+    'bold italic underline fontcolor backcolor | alignleft aligncenter ' +
+    'alignright alignjustify | bullist numlist outdent indent | ' +
+    'removeformat',
     toolbar_mode: 'floating',
     tinycomments_mode: 'embedded',
     tinycomments_author: 'Author name',
