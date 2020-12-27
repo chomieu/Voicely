@@ -64,6 +64,8 @@ $("document").ready(function () {
 
 
   //--------START---Dynamically add list items to the page----------
+  //variable to track current index position being used for title and text area
+  var currentIndex
   var listItems = [{
     title: 'GroceryList',
     content: 'snacks',
@@ -100,15 +102,16 @@ $("document").ready(function () {
       //append link to new li
       $('#listItem-'+i).append($('<a>', { href:'#!', class: 'secondary-content', id:'listLink-'+i}))
       //append icon to link
-      $('#listLink-'+i).append($('<i>', {class: 'material-icons', id:'listIcon-'+i}))
+      $('#listLink-'+i).append($('<i>', {class: 'material-icons', id:'listIcon-'+i,}))
       //set icon text to clear
       $('#listIcon-'+i).text('clear')
       //increment x for the next line item color pattern
       x++
     }
   }
-
+  
   loadList()
+  
   
   //listen for click to add new voicly session
   $(document).on('click', '#newVoicelyBtn', function(event){
@@ -127,5 +130,32 @@ $("document").ready(function () {
 
   })
   
-//------END---dynamically added list items------------
+//------END-------dynamically added list items------------
+
+//------START------load/savecontent-------------------
+
+$('.collection').on('click', '.collection-item', function(){
+  //collects text from the entire li
+  var selectedTitle = $(this).text()
+  //our x icons contain the word 'clear', remove the word 'clear' from $(this).text()
+  selectedTitle = selectedTitle.substring(0, selectedTitle.length - 5)
+  //compare selectedTitle text to our titles in our listItems, if it matches, save the index location to currentIndex
+  for (let i = 0; i < listItems.length; i++) {
+    if(listItems[i].title === selectedTitle){
+      currentIndex = i
+      console.log(`current index is ${currentIndex}`)
+    }
+  }
+  loadCollection()
+})
+
+function loadCollection(){
+  $('#voicelyTitle')
+}
+
+
+$(document).on('click', '#saveVoicelyBtn', function(){
+  var updateContent = $('#phraseDiv').text()
+  console.log(updateContent)
+})
 });
