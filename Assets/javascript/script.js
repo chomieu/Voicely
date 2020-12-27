@@ -61,4 +61,134 @@ $("document").ready(function () {
         recognizer = undefined;
       });
   });
+
+  var listItems = [{
+    title: 'GroceryList',
+    content: 'snacks',
+  },{
+    title:'Christmas List',
+    content: 'World peace',
+  },{
+    title:'To Do',
+    content: 'Work on Voicely project',
+  },{
+    title:'Why Westley is the cutest',
+    content: 'Facts',
+  },{
+    title:'5 Cutest Wildcat Species',
+    content: 'Sandcats',
+  },{
+    title:'Christmas List',
+    content: 'World peace',
+  },{
+    title:'To Do',
+    content: 'Work on Voicely project',
+  },{
+    title:'Why Westley is the cutest',
+    content: 'Facts',
+  },{
+    title:'5 Cutest Wildcat Species',
+    content: 'Sandcats',
+  },{
+    title:'Christmas List',
+    content: 'World peace',
+  },{
+    title:'To Do',
+    content: 'Work on Voicely project',
+  },{
+    title:'Why Westley is the cutest',
+    content: 'Facts',
+  },{
+    title:'5 Cutest Wildcat Species',
+    content: 'Sandcats',
+  },{
+    title:'Christmas List',
+    content: 'World peace',
+  },{
+    title:'To Do',
+    content: 'Work on Voicely project',
+  },{
+    title:'Why Westley is the cutest',
+    content: 'Facts',
+  },{
+    title:'5 Cutest Wildcat Species',
+    content: 'Sandcats',
+  },{
+    title:'Christmas List',
+    content: 'World peace',
+  },{
+    title:'To Do',
+    content: 'Work on Voicely project',
+  },{
+    title:'Why Westley is the cutest',
+    content: 'Facts',
+  },{
+    title:'5 Cutest Wildcat Species',
+    content: 'Sandcats',
+  },{
+    title:'Christmas List',
+    content: 'World peace',
+  },{
+    title:'To Do',
+    content: 'Work on Voicely project',
+  },{
+    title:'Why Westley is the cutest',
+    content: 'Facts',
+  },{
+    title:'5 Cutest Wildcat Species',
+    content: 'Sandcats',
+  },{
+    title:'Christmas List',
+    content: 'World peace',
+  },{
+    title:'To Do',
+    content: 'Work on Voicely project',
+  },{
+    title:'Why Westley is the cutest',
+    content: 'Facts',
+  },{
+    title:'5 Cutest Wildcat Species',
+    content: 'Sandcats',
+  },{
+    title:'Christmas List',
+    content: 'World peace',
+  },{
+    title:'To Do',
+    content: 'Work on Voicely project',
+  },{
+    title:'Why Westley is the cutest',
+    content: 'Facts',
+  },{
+    title:'5 Cutest Wildcat Species',
+    content: 'Sandcats',
+  }]
+
+  function loadList(){
+    //clear contents of list
+    $('#savedList').empty()
+    // lighten-3 to darken-3 to lighten-2 on loop cor continuous color pattern in new list items
+    var colorClass = ['lighten-3','lighten-2','lighten-1','','darken-1','darken-2','darken-3','darken-2','darken-1','','lighten-1','lighten-2']
+    //start on colorClass index 0
+    var x=0
+
+    for (let i = 0; i < listItems.length; i++) {
+      //if x === 11 then reset x to 0 to loop color pattern
+      if (x === 11){
+        x=0
+      }
+      //append new list item & add text
+      $('#savedList').append($('<li>', {class: 'collection-item cyan ' + colorClass[x] , id:'listItem-'+i}))
+      $('#listItem-'+i).text(listItems[i].title)
+      //append link to new li
+      $('#listItem-'+i).append($('<a>', { href:'#!', class: 'secondary-content', id:'listLink-'+i}))
+      //append icon to link
+      $('#listLink-'+i).append($('<i>', {class: 'material-icons', id:'listIcon-'+i}))
+      //set icon text to clear
+      $('#listIcon-'+i).text('clear')
+      //increment x for the next line item color pattern
+      x++
+    }
+
+  }
+  loadList()
 });
