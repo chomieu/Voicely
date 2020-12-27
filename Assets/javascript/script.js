@@ -123,39 +123,53 @@ $("document").ready(function () {
         title: newTitle,
         content: ''
       }
+      //add the new session to our listItems
       listItems.push(newObject)
-      //update user list
+      //update user list with our new listItem
       loadList()
     }
 
   })
-  
 //------END-------dynamically added list items------------
 
-//------START------load/savecontent-------------------
 
+
+//------START------load/save content-------------------
+
+//listen for a click on any saved session
 $('.collection').on('click', '.collection-item', function(){
-  //collects text from the entire li
+  //collects text from the entire li 
   var selectedTitle = $(this).text()
-  //our x icons contain the word 'clear', remove the word 'clear' from $(this).text()
+  //i could not figure out how to only focus on the li text content. It always included the icon text as well.
+  //our 'x' icons contain the word 'clear', this is to remove the word 'clear' from $(this).text()
   selectedTitle = selectedTitle.substring(0, selectedTitle.length - 5)
-  //compare selectedTitle text to our titles in our listItems, if it matches, save the index location to currentIndex
+  //compare selectedTitle 'text' to our titles in our listItems array, if it matches, save the index location to currentIndex
   for (let i = 0; i < listItems.length; i++) {
     if(listItems[i].title === selectedTitle){
       currentIndex = i
       console.log(`current index is ${currentIndex}`)
     }
   }
-  loadCollection()
+
+  loadListItem()
 })
 
-function loadCollection(){
-  $('#voicelyTitle')
+//refrencing the currentIndex, load the title and content values to the screen of whatever  list item the user clicks
+function loadListItem(){
+  $('#voicelyTitle').val(listItems[currentIndex].title)
+  $('#phraseDiv').val('')
+  $('#phraseDiv').val(listItems[currentIndex].content)
 }
 
-
+//listen for a click on save content button, when clicked updatet the conent value refrenced in currentIndex
 $(document).on('click', '#saveVoicelyBtn', function(){
-  var updateContent = $('#phraseDiv').text()
+  var updateContent = $('#phraseDiv').val()
   console.log(updateContent)
+  listItems[currentIndex].content = updateContent
+  console.log(listItems[currentIndex])
 })
-});
+
+//update kanban board, add edge case to deny titles having the same name for different sessions
+
+//------END------load/save content------------
+})
