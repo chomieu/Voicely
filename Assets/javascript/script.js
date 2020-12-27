@@ -62,6 +62,8 @@ $("document").ready(function () {
       });
   });
 
+
+  //--------START---Dynamically add list items to the page----------
   var listItems = [{
     title: 'GroceryList',
     content: 'snacks',
@@ -76,37 +78,7 @@ $("document").ready(function () {
     content: 'Facts',
   },{
     title:'5 Cutest Wildcat Species',
-    content: 'Sandcats',
-  },{
-    title:'Christmas List',
-    content: 'World peace',
-  },{
-    title:'To Do',
-    content: 'Work on Voicely project',
-  },{
-    title:'Why Westley is the cutest',
-    content: 'Facts',
-  },{
-    title:'5 Cutest Wildcat Species',
-    content: 'Sandcats',
-  },{
-    title:'Christmas List',
-    content: 'World peace',
-  },{
-    title:'To Do',
-    content: 'Work on Voicely project',
-  },{
-    title:'Why Westley is the cutest',
-    content: 'Facts',
-  },{
-    title:'5 Cutest Wildcat Species',
-    content: 'Sandcats',
-  },{
-    title:'Christmas List',
-    content: 'World peace',
-  },{
-    title:'To Do',
-    content: 'Work on Voicely project',
+    content: 'Sandcats'
   }]
 
   function loadList(){
@@ -134,7 +106,26 @@ $("document").ready(function () {
       //increment x for the next line item color pattern
       x++
     }
-
   }
+
   loadList()
+  
+  //listen for click to add new voicly session
+  $(document).on('click', '#newVoicelyBtn', function(event){
+    //save the text value of the title input
+    var newTitle = $(this).prev().val()
+    //if there is text content, add a new object with title name to our saved user data
+    if (newTitle !== ''){
+      var newObject = {
+        title: newTitle,
+        content: ''
+      }
+      listItems.push(newObject)
+      //update user list
+      loadList()
+    }
+
+  })
+  
+//------END---dynamically added list items------------
 });
