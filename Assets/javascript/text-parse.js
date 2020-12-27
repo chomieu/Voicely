@@ -3,7 +3,7 @@
 // Takes in a string, matches a regex with any phrases in it, then returns emojis created from those matches to the #emoji-display div.
 function voiceSearch( matchText, emojiObject ) {
     // construct our RegEx of the keyphrase.
-    var regEx = /(S|s)ymbol[s]?[,]? (E\d0 )?[\w+ ]+emoji/g;
+    var regEx = /(S|s)ymbol[s]?[,]? (E\d0 )?[\w+( |,|\.|\?|!)]+?emoji/g;
     console.log( "1. ******** NEW CALL OF voiceSearch ********");
     console.log( "2. Initial RegEx: ", regEx );
     console.log( "3. Text to match: ", matchText );
@@ -12,6 +12,7 @@ function voiceSearch( matchText, emojiObject ) {
     console.log( "Array of matched phrases: ", matchArray );
     // Gets the current contents of the div, in case there was already content there before running voiceSearch.
     var oldText = $( "#phraseDiv" ).text();
+    console.log( "oldText:", oldText );
     // If the RegEx has at least one match AND an emojiObject has been passed in (the latter shouldn't be a problem anymore since Chomie added the cached emoji.json file, but it's a nice failsafe in case we use this function in other contexts).
     if ( matchArray && emojiObject ) {
         console.log( "4. Entered matchArray if statement" );
@@ -59,6 +60,9 @@ function voiceSearch( matchText, emojiObject ) {
                 newText = newText.replace( regEx2, strippedString );
             }
         }
+        // Remove punctuation from new line speech tags that have them immediately afterward.
+        newText = newText.replace( /\n(\.|\?|!)/, "\n" );
+        newText = newText.replace( /- (\.|\?|!)/, "- ");
         // Place the result text in the #phraseDiv
         console.log( "10. Text to be placed in #phraseDiv: ", newText );
         $( "#phraseDiv" ).text( `${ oldText } ${ newText }`);

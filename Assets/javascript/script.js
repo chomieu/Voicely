@@ -14,12 +14,16 @@ $("document").ready(function () {
   // emojiURL option 2
   var emojiURL = `https://emoji-api.com/emojis?access_key=${APIkey}`;
 
-  $.get(emojiURL).then(function (emResponse) {
+  $.get( emojiURL ).then( function ( emResponse ) {
     emojiList = emResponse;
-    console.log(emojiList);
+    // console.log( a );
+    console.log( emojiList );
     // If the emoji API server is down, use the response stored in "emoji.json" as a backup 
-  }).fail(function () {
+  }).fail( function () {
     emojiList = emojiS;
+  }).then( function () {
+    // Always adds the content of characters.json.
+    characterS.forEach(( obj ) => emojiList.push( obj ));
   })
 
   $("#recordVoicelyBtn").on("click", function () {

@@ -1,0 +1,20 @@
+characterS = [
+    {
+        "slug": "newline",
+        "character": "\n",
+        "unicodeName": "newline",
+        "group": "special-characters"
+    },
+    {
+        "slug": "new line",
+        "character": "\n",
+        "unicodeName": "new line",
+        "group": "special-characters"
+    },
+    {
+        "slug": "list-item",
+        "character": "\n- ",
+        "unicodeName": "list item",
+        "group": "special-characters"        
+    }
+]
