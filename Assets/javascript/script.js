@@ -107,60 +107,6 @@ $("document").ready(function () {
   },{
     title:'To Do',
     content: 'Work on Voicely project',
-  },{
-    title:'Why Westley is the cutest',
-    content: 'Facts',
-  },{
-    title:'5 Cutest Wildcat Species',
-    content: 'Sandcats',
-  },{
-    title:'Christmas List',
-    content: 'World peace',
-  },{
-    title:'To Do',
-    content: 'Work on Voicely project',
-  },{
-    title:'Why Westley is the cutest',
-    content: 'Facts',
-  },{
-    title:'5 Cutest Wildcat Species',
-    content: 'Sandcats',
-  },{
-    title:'Christmas List',
-    content: 'World peace',
-  },{
-    title:'To Do',
-    content: 'Work on Voicely project',
-  },{
-    title:'Why Westley is the cutest',
-    content: 'Facts',
-  },{
-    title:'5 Cutest Wildcat Species',
-    content: 'Sandcats',
-  },{
-    title:'Christmas List',
-    content: 'World peace',
-  },{
-    title:'To Do',
-    content: 'Work on Voicely project',
-  },{
-    title:'Why Westley is the cutest',
-    content: 'Facts',
-  },{
-    title:'5 Cutest Wildcat Species',
-    content: 'Sandcats',
-  },{
-    title:'Christmas List',
-    content: 'World peace',
-  },{
-    title:'To Do',
-    content: 'Work on Voicely project',
-  },{
-    title:'Why Westley is the cutest',
-    content: 'Facts',
-  },{
-    title:'5 Cutest Wildcat Species',
-    content: 'Sandcats',
   }]
 
   function loadList(){
