@@ -16,5 +16,10 @@ characterS = [
         "character": "\n- ",
         "unicodeName": "list item",
         "group": "special-characters"        
+    },
+    {
+        "slug": "exclamation mark",
+        "character": "!",
+        "unicodeName": ""
     }
 ]
