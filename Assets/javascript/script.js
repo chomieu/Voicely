@@ -126,6 +126,9 @@ $("document").ready(function () {
       //add the new session to our listItems
       listItems.push(newObject)
       //update user list with our new listItem
+      currentIndex = listItems.length-1
+      console.log(currentIndex)
+      console.log(listItems)
       loadList()
     }
 
