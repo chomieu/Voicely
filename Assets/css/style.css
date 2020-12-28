@@ -2,12 +2,6 @@ body, html, main {
     height: 100%;
 }
 
-/* body {
-    background-image: url("https://img.freepik.com/free-photo/white-cloud-blue-sky-sea_74190-4488.jpg?size=626&ext=jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-} */
-
 header, article {
     border: 1px solid lightgray;
 }
