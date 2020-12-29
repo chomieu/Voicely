@@ -23,7 +23,7 @@ function voiceSearch( matchText, emojiObject ) {
             voice recognition API inserting commas after or pluralizing the word "symbol," but if both happen
             or users manage to do something else that inserts a second character after "symbol," it could 
             mess up the results being put into #phraseDiv. */
-            var strippedString = matchArray[ i ].substring( 7, matchArray[ i ].length - 6 ).trim().replace( ",", "" );
+            var strippedString = matchArray[ i ].substring( 7, matchArray[ i ].length - 6 ).trim().replace( /,/g, "" );
             if ( /E\d0/.test( strippedString ) ) {
                 // Make everything lower-case and insert a space after the number.
                 strippedString = strippedString.toLowerCase();
