@@ -1,8 +1,12 @@
   //--------START---Dynamically add list items to the page----------
   //variable to track current index position being used for title and text area
   var currentIndex
+  var newTitle
+  var editTitleBtnToggle = false
+  var newTitleBtnToggle = true
+  var phraseDivLock = true
   //example object for storing titles and content
-  var listItems = [{
+  var memoList = [{
     title: 'GroceryList',
     content: 'snacks',
   },{
@@ -28,14 +32,14 @@
     //start on colorClass index 0
     var x=0
 
-    for (let i = 0; i < listItems.length; i++) {
+    for (let i = 0; i < memoList.length; i++) {
       //if x === 11 then reset x to 0 to loop color pattern again
       if (x === 11){
         x=0
       }
       //append new list item & add text
       $('#savedList').append($('<li>', {class: 'collection-item cyan ' + colorClass[x] , id:'listItem-'+i}))
-      $('#listItem-'+i).text(listItems[i].title)
+      $('#listItem-'+i).text(memoList[i].title)
       //append link to new li
       $('#listItem-'+i).append($('<a>', { href:'#!', class: 'secondary-content', id:'listLink-'+i}))
       //append icon to link
@@ -48,45 +52,136 @@
   }
   
   loadList()
-  
-  
-  //listen for 'click' to add new voicly session title
-  $(document).on('click', '#newVoicelyBtn', function(event){
-    //save the text value of the title input
-    var newTitle = $(this).prev().val()
-    var titleApproved = true
-    console.log(`New title name: ${newTitle}`)
 
-      if( newTitle === ''){
+function changePageScene() {
+    // console.log(`newBtn = ${newTitleBtnToggle}, editBtn = ${editTitleBtnToggle}`)
+
+    //START-UP - Scene to create a new Voicely or load a saved session
+    if (newTitleBtnToggle === false && editTitleBtnToggle === false && phraseDivLock === true ) {
+        $('#editTitleBtn').text('Edit title')
+        $("#voicelyTitle").prop("disabled", true)
+        $("#editTitleBtn").prop("disabled", true)
+        $('#editTitleBtn').text('Edit title')
+        $("#newVoicelyBtn").prop("disabled", false)
+        $("#newVoicelyBtn").text("new entry")
+        $('#phraseDiv').prop("disabled", true)
+
+        console.log('Scene: START-UP - Create new Voicely or select a  saved session')
+        return
+    }
+
+    //LOAD - Scene to create a new Voicely memo, or cancel and return to START-UP SCREEN
+    if (newTitleBtnToggle === true && editTitleBtnToggle === true && phraseDivLock === true) {
+        $("#voicelyTitle").prop("disabled", false)
+        $("#editTitleBtn").prop("disabled", false)
+        $('#editTitleBtn').text('Save title')
+        $("#newVoicelyBtn").prop("disabled", false)
+        $("#newVoicelyBtn").text("cancel")
+        
+        console.log('Scene: LOADING - Create a new Voicely Memo or cancel to return to startup')
+        return
+    }
+
+    if (newTitleBtnToggle === true && editTitleBtnToggle === false) {
+        
+        console.log('')
+        return
+    }
+
+    //EDIT TITLE - Scene to edit the title of an existing memo
+    if (newTitleBtnToggle === false && editTitleBtnToggle === true && phraseDivLock === true) {
+        $("#voicelyTitle").prop("disabled", false)
+        $("#editTitleBtn").prop("disabled", false)
+        $('#editTitleBtn').text('Save title')
+        
+        console.log('Scene: EDIT TITLE - Edit the title of current memo')
+        return
+    }
+    //EDIT MEMO - Scene for working on a current Voicely memo
+    if (newTitleBtnToggle === false && editTitleBtnToggle === false && phraseDivLock === false) {
+        $('#editTitleBtn').text('Edit title')
+        $("#voicelyTitle").prop("disabled", true)
+        $("#editTitleBtn").prop("disabled", false)
+        $('#editTitleBtn').text('Edit title')
+        $("#newVoicelyBtn").prop("disabled", false)
+        $("#newVoicelyBtn").text("new entry")
+
+        console.log('Scene: EDIT MEMO - edit current memo')
+        return
+    }
+    
+}
+
+
+$(document).on('click', '#newVoicelyBtn', function (event) {
+    console.log(`newTitle:${editTitleBtnToggle}, editTitle: ${editTitleBtnToggle}, phrasDivLock: ${phraseDivLock}`)
+    if (newTitleBtnToggle === true && editTitleBtnToggle === false && phraseDivLock === true) {
+        editTitleBtnToggle = true
+        changePageScene()
+        newTitleBtnToggle = false
+        editTitleBtnToggle = false
+        return
+    }
+    if (newTitleBtnToggle === false && editTitleBtnToggle === false && phraseDivLock === true) {
+        changePageScene()
+        newTitleBtnToggle = true
+
+        return
+    }
+})
+  
+
+function approveNewTitle() {
+    var titleApproved = true
+    editTitleBtnToggle = true
+    changePageScene()
+
+    if (newTitle === '') {
         titleApproved = false
         alert(`Title can not be blank, please enter a title name.`)
-      }
+    }
 
-      if (titleApproved){
-        for (let i = 0; i < listItems.length; i++) {
-          if( listItems[i].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim() ){
-            titleApproved = false
-            console.log(`The title: '${listItems[i].title}', already exists at index ${i}`)
-            alert(`"${newTitle}" already exists, please enter a different title.`)
-          }
+    if (titleApproved) {
+        for (let i = 0; i < memoList.length; i++) {
+            if (memoList[i].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
+                titleApproved = false
+                console.log(`The title: '${memoList[i].title}', already exists at index ${i}`)
+                alert(`"${newTitle}" already exists, please enter a different title.`)
+            }
         }
-      }
+    }
+    if (titleApproved){
+        createNewVoicely()
+    }
+}
 
-      if(titleApproved){
-        var newObject = {
-            title: newTitle,
-            content: ''
-          }
-          //add the new session to our listItems
-          listItems.push(newObject)
-          //update currentIndex to refrence our newly created index
-          currentIndex = listItems.length-1
-          console.log(`current index is ${currentIndex}, title: ${listItems[currentIndex].title}`)
-          loadList()
-      }
-        console.log(`new title approved: ${titleApproved}`)
-        titleApproved = true
-  })
+
+function createNewVoicely(){
+    var newMemoObject = {
+        title: newTitle,
+        content: ''
+    }
+    //add the new session to our memoList
+    memoList.push(newMemoObject)
+    //update currentIndex to refrence our newly created index
+    currentIndex = memoList.length - 1
+    console.log(`current index is ${currentIndex}, title: ${memoList[currentIndex].title}`)
+    loadList()
+    newTitleBtnToggle = false
+    editTitleBtnToggle = false
+    phraseDivLock = false
+    console.log(editTitleBtnToggle)
+    changePageScene()
+
+    
+}
+
+
+$(document).on('click', '#editTitleBtn', function (event) {
+    //save the text value of the title input
+    newTitle = $(this).prev().prev().val()
+    approveNewTitle()
+})
 
 
 //------END-------dynamically added list items------------
@@ -102,30 +197,35 @@ $('.collection').on('click', '.collection-item', function(){
   // I could not figure out how to only focus on the li text content (title name). It always included the icon text of 'clear' as well.
   //our 'x' icon contains the text 'clear', this is to  remove the word 'clear' from $(this).text()
   selectedTitle = selectedTitle.substring(0, selectedTitle.length - 5)
-  //compare selectedTitle 'text' to our titles in our listItems array, if it matches, save the index location to currentIndex
-  for (let i = 0; i < listItems.length; i++) {
-    if(listItems[i].title === selectedTitle){
+  //compare selectedTitle 'text' to our titles in our memoList array, if it matches, save the index location to currentIndex
+  for (let i = 0; i < memoList.length; i++) {
+    if(memoList[i].title === selectedTitle){
       currentIndex = i
-      console.log(`index-${currentIndex}; title: ${listItems[currentIndex].title}`)
+      console.log(`index-${currentIndex}; title: ${memoList[currentIndex].title}`)
     }
   }
 
-  loadListItem()
+  loadVoicelyMemo()
 })
 
-//refrencing the currentIndex, load the title and content values to the screen of whatever  list item the user clicks
-function loadListItem(){
-  $('#voicelyTitle').val(listItems[currentIndex].title)
+//refrencing the currentIndex, load the title and content values to the screen of whatever list item the user clicks
+function loadVoicelyMemo(){
+  $('#voicelyTitle').val(memoList[currentIndex].title)
   $('#phraseDiv').val('')
-  $('#phraseDiv').val(listItems[currentIndex].content)
+  $('#phraseDiv').val(memoList[currentIndex].content)
+}
+
+function saveCurrentVoicely(){
+    var updateContent = $('#phraseDiv').val()
+    console.log(updateContent)
+    memoList[currentIndex].content = updateContent
+    console.log(memoList[currentIndex])
+
 }
 
 //listen for a click on save content button, when clicked updatet the conent value refrenced in currentIndex
 $(document).on('click', '#saveVoicelyBtn', function(){
-  var updateContent = $('#phraseDiv').val()
-  console.log(updateContent)
-  listItems[currentIndex].content = updateContent
-  console.log(listItems[currentIndex])
+    saveCurrentVoicely()
 })
 
 //------END------load/save content------------
