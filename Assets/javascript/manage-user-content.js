@@ -2,9 +2,9 @@
   //variable to track current index position being used for title and text area
   var currentIndex
   var newTitle
-  var editTitleBtnToggle = false
   var newTitleBtnToggle = true
-  var phraseDivLock = true
+  var editTitleBtnToggle = false
+  var phraseDivEnabled = false
   //example object for storing titles and content
   var memoList = [{
     title: 'GroceryList',
@@ -54,10 +54,11 @@
   loadList()
 
 function changePageScene() {
+
     // console.log(`newBtn = ${newTitleBtnToggle}, editBtn = ${editTitleBtnToggle}`)
 
     //START-UP - Scene to create a new Voicely or load a saved session
-    if (newTitleBtnToggle === false && editTitleBtnToggle === false && phraseDivLock === true ) {
+    if (newTitleBtnToggle === false && editTitleBtnToggle === false && phraseDivEnabled === false ) {
         $('#editTitleBtn').text('Edit title')
         $("#voicelyTitle").prop("disabled", true)
         $("#editTitleBtn").prop("disabled", true)
@@ -71,12 +72,15 @@ function changePageScene() {
     }
 
     //LOAD - Scene to create a new Voicely memo, or cancel and return to START-UP SCREEN
-    if (newTitleBtnToggle === true && editTitleBtnToggle === true && phraseDivLock === true) {
+    if (newTitleBtnToggle === true && editTitleBtnToggle === true && phraseDivEnabled === false) {
         $("#voicelyTitle").prop("disabled", false)
         $("#editTitleBtn").prop("disabled", false)
         $('#editTitleBtn').text('Save title')
         $("#newVoicelyBtn").prop("disabled", false)
         $("#newVoicelyBtn").text("cancel")
+        $('#phraseDiv').prop("disabled", true)
+        $('#recordVoicelyBtn').prop("disabled", true)
+        $('#saveVoicelyBtn').prop("disabled", true)
         
         console.log('Scene: LOADING - Create a new Voicely Memo or cancel to return to startup')
         return
@@ -89,7 +93,7 @@ function changePageScene() {
     }
 
     //EDIT TITLE - Scene to edit the title of an existing memo
-    if (newTitleBtnToggle === false && editTitleBtnToggle === true && phraseDivLock === true) {
+    if (newTitleBtnToggle === false && editTitleBtnToggle === true && phraseDivEnabled === false) {
         $("#voicelyTitle").prop("disabled", false)
         $("#editTitleBtn").prop("disabled", false)
         $('#editTitleBtn').text('Save title')
@@ -98,15 +102,19 @@ function changePageScene() {
         return
     }
     //EDIT MEMO - Scene for working on a current Voicely memo
-    if (newTitleBtnToggle === false && editTitleBtnToggle === false && phraseDivLock === false) {
+    if (newTitleBtnToggle === false && editTitleBtnToggle === false && phraseDivEnabled === true) {
         $('#editTitleBtn').text('Edit title')
         $("#voicelyTitle").prop("disabled", true)
         $("#editTitleBtn").prop("disabled", false)
         $('#editTitleBtn').text('Edit title')
         $("#newVoicelyBtn").prop("disabled", false)
         $("#newVoicelyBtn").text("new entry")
+        $('#phraseDiv').prop("disabled", false)
+        $('#recordVoicelyBtn').prop("disabled", false)
+        $('#saveVoicelyBtn').prop("disabled", false)
 
         console.log('Scene: EDIT MEMO - edit current memo')
+
         return
     }
     
@@ -114,18 +122,23 @@ function changePageScene() {
 
 
 $(document).on('click', '#newVoicelyBtn', function (event) {
-    console.log(`newTitle:${editTitleBtnToggle}, editTitle: ${editTitleBtnToggle}, phrasDivLock: ${phraseDivLock}`)
-    if (newTitleBtnToggle === true && editTitleBtnToggle === false && phraseDivLock === true) {
+    // from STARTUP Scene to LOAD Scene
+    if (newTitleBtnToggle === true && editTitleBtnToggle === false && phraseDivEnabled === false) {
         editTitleBtnToggle = true
+        console.log(`newTitle: ${editTitleBtnToggle}, editTitle: ${editTitleBtnToggle}, phraseDivEnabled: ${phraseDivEnabled}`)
         changePageScene()
         newTitleBtnToggle = false
         editTitleBtnToggle = false
+        console.log(`newTitle: ${editTitleBtnToggle}, editTitle: ${editTitleBtnToggle}, phraseDivEnabled: ${phraseDivEnabled}`)
         return
     }
-    if (newTitleBtnToggle === false && editTitleBtnToggle === false && phraseDivLock === true) {
+    
+    if (newTitleBtnToggle === false && editTitleBtnToggle === false && phraseDivEnabled === true) {
+      console.log(`newTitle: ${editTitleBtnToggle}, editTitle: ${editTitleBtnToggle}, phraseDivEnabled: ${phraseDivEnabled}`)
+      newTitleBtnToggle = true
+      editTitleBtnToggle = true
+      phraseDivEnabled = false
         changePageScene()
-        newTitleBtnToggle = true
-
         return
     }
 })
@@ -134,6 +147,7 @@ $(document).on('click', '#newVoicelyBtn', function (event) {
 function approveNewTitle() {
     var titleApproved = true
     editTitleBtnToggle = true
+    console.log(`newTitle: ${editTitleBtnToggle}, editTitle: ${editTitleBtnToggle}, phraseDivEnabled: ${phraseDivEnabled}`)
     changePageScene()
 
     if (newTitle === '') {
@@ -167,13 +181,12 @@ function createNewVoicely(){
     currentIndex = memoList.length - 1
     console.log(`current index is ${currentIndex}, title: ${memoList[currentIndex].title}`)
     loadList()
+    $('#phraseDiv').text('')
     newTitleBtnToggle = false
     editTitleBtnToggle = false
-    phraseDivLock = false
-    console.log(editTitleBtnToggle)
+    phraseDivEnabled = true
+    console.log(`newTitle: ${editTitleBtnToggle}, editTitle: ${editTitleBtnToggle}, phraseDivEnabled: ${phraseDivEnabled}`)
     changePageScene()
-
-    
 }
 
 

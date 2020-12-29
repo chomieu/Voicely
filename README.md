@@ -7,7 +7,7 @@
  when side item is selected, 
     newTitle = false,
     editTitle = false,
-    phraseDivLock = false
+    phraseDivEnabled = false
     loadScene()
     load title info
     load phraseDiv info
