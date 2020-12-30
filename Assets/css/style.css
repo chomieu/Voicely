@@ -1,5 +1,9 @@
-body, html, main {
+body, html {
     height: 100%;
+}
+
+header {
+    height: 100px;
 }
 
 header, article {
@@ -7,6 +11,7 @@ header, article {
 }
 
 h3 {
+    margin: 0.25em;
     font-family: "Kaushan Script";
 }
 
@@ -15,13 +20,29 @@ h4 {
     padding-left: 5%;
 }
 
-article {
-    padding-bottom: 15px !important;
+main {
+    height: calc(100% - 140px);
+    display: flex;
+    align-items: stretch;
 }
 
-textarea {
-    margin-top: 15px;
-    height: 400px;
+article {
+    padding-bottom: 15px !important;
+    display: flex;
+    flex-direction: column;
+}
+
+/* #phraseDiv_container {
+    flex: 1;
+} */
+
+#phraseDiv {
+    margin: 0.5em 0;
+    flex: 1;
+}
+
+section {
+    overflow: scroll;
 }
 
 ul {
@@ -31,4 +52,8 @@ ul {
 li {
     font-family: Mali;
     font-size: large;
+}
+
+@media (min-width: 617px) {
+ 
 }

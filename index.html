@@ -6,30 +6,41 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@500&family=Kaushan+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./Assets/css/style.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@500&family=Kaushan+Script&display=swap"
-        rel="stylesheet">
 </head>
 
 <body class="container light-blue lighten-5">
 
-    <header class="row center white-text cyan accent-3">
+    <header class="nav-wraper row center white-text cyan accent-3">
         <h3>Voicely</h3>
         <p>Your Personal Transcriptionist</p>
+
+        <ul id="slide-out" class="sidenav">
+          <li><a href="#!">Setting #1 place holder</a></li>
+          <li><a href="#!">Setting #2 place holder</a></li>
+          <li><div class="divider"></div></li>
+          <li><a class="subheader">Subheader</a></li>
+          <li><a class="waves-effect" href="#!">Something here</a></li>
+        </ul>
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </header>
 
     <main class="row">
-        <article class="col s5 white" id="content">
+        <article class="col s12 m5 white" id="content">
             <input class="cyan accent-1 white-text" type="text" id="voiclyTitle" placeholder="title">
-            <button class="btn cyan accent-3 waves-effect waves-light" id="newVoicelyBtn">new entry</button>
-            <button class="btn cyan accent-3 waves-effect waves-light" id="editTitleBtn">edit title</button>
-            <div class="cyan lighten-5" id="phraseDiv"></div>
-            <button class="btn cyan accent-3 waves-effect waves-light" id="recordVoicelyBtn">record</button>
-            <button class="btn cyan accent-3 waves-effect waves-light" id="pdfBtn">to PDF</button>
-            <button class="btn cyan accent-3 waves-effect waves-light" id="saveVoicelyBtn">save</button>
+            <div>
+                <button class="btn cyan accent-3 waves-effect waves-light" id="newVoicelyBtn"><i class="material-icons">note_add</i></button>
+                <button class="btn cyan accent-3 waves-effect waves-light" id="editTitleBtn"><i class="material-icons">edit</i></button>
+            </div>
+            <textarea class="cyan lighten-5" id="phraseDiv"></textarea>
+            <div>
+                <button class="btn cyan accent-3 waves-effect waves-light" id="recordVoicelyBtn"><i class="material-icons">mic</i></button>
+                <button class="btn cyan accent-3 waves-effect waves-light" id="pdfBtn"><i class="material-icons">share</i></button>
+                <button class="btn cyan accent-3 waves-effect waves-light" id="saveVoicelyBtn"><i class="material-icons">save</i></button>
+            </div>
         </article>
-        <section class="col s7">
+        <section class="col s12 m7">
             <ul class="collection white-text">
                 <li class="collection-item cyan lighten-3">Grocery list<a href="#!" class="secondary-content"><i
                             class="material-icons">clear</i></a>
@@ -46,9 +57,9 @@
     </main>
 
     <script type="text/javascript" src="emoji.json"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="SpeechSDK/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="Assets/javascript/text-parse.js"></script>
     <script src="Assets/javascript/script.js"></script>
 </body>

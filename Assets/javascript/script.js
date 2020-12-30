@@ -61,4 +61,8 @@ $("document").ready(function () {
         recognizer = undefined;
       });
   });
+
+  
+  $('.sidenav').sidenav();
+
 });
