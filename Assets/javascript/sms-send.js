@@ -17,11 +17,24 @@ $( "#smsBtn" ).on( "click", function () {
             "x-rapidapi-host": "clicksend.p.rapidapi.com"
         },
         "processData": false,
-        "data": "{\n\"messages\":[\n{\n\"source\":\"mashape\",\n\"from\": \"Voicely\",\n\"body\":\"" + title + msg + "\",\n\"to\": \"+" + phoneNumber + "\",\n\"schedule\": \"1452244637\",\n\"custom_string\": \"MeowMeowMeow\"\n}\n]\n}"
+        "data": "{\n\"messages\":[\n{\n\"source\":\"mashape\",\n\"from\": \"Voicely\",\n\"body\":\"" + title + msg + "\",\n\"to\": \"+" + phoneNumber + "\",\n\"schedule\": \"1452244637\",\n\"custom_string\": \"\"\n}\n]\n}"
     };
 
-    $.ajax(settings).done(function (response) {
-        console.log(response);
+    $( "#smsBtn" ).text( "Sending..." );
+    $( '#smsBtn' ).prop( "disabled", true );
+
+    $.ajax( settings ).done( function ( response ) {
+        console.log( response );
+        if ( response.data.messages[ 0 ].status == "SUCCESS" ) {
+            $( "#smsBtn" ).text( "Sent!" );
+            setTimeout( function() {
+                $( "#smsBtn" ).text( "Send SMS" );
+                $( '#smsBtn' ).prop( "disabled", false );
+            }, 3000 );
+        } else {
+            alert( "Message failed: " + response.data.messages[ 0 ].status );
+            $( '#smsBtn' ).prop( "disabled", false )
+        }
     });
 });
 
