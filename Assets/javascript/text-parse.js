@@ -23,13 +23,13 @@ function voiceSearch( matchText, emojiObject ) {
             voice recognition API inserting commas after or pluralizing the word "symbol," but if both happen
             or users manage to do something else that inserts a second character after "symbol," it could 
             mess up the results being put into #phraseDiv. */
-            var strippedString = matchArray[ i ].substring( 7, matchArray[ i ].length - 6 ).trim();
+            var strippedString = matchArray[ i ].substring( 7, matchArray[ i ].length - 6 ).trim().replace( /,/g, "" );
             if ( /E\d0/.test( strippedString ) ) {
                 // Make everything lower-case and insert a space after the number.
                 strippedString = strippedString.toLowerCase();
                 strippedString = strippedString.slice( 0, 2) + " " + strippedString.slice( 2, strippedString.length );
             };
-            console.log( "5. Matched string stripped of symbol words: ", strippedString );
+            console.log( "5. Matched string stripped of symbol words and commas: ", strippedString );
             var dashedString = strippedString.replace( /\s/g, "-" );
             console.log( "6. Matched string with dashes instead of spaces: ", dashedString );
             // Iterates over entire emojiObject looking for slugs that match the "dashed" version of what was said.
@@ -61,8 +61,8 @@ function voiceSearch( matchText, emojiObject ) {
             }
         }
         // Remove punctuation from new line speech tags that have them immediately afterward.
-        newText = newText.replace( /\n(\.|\?|!)/, "\n" );
-        newText = newText.replace( /- (\.|\?|!)/, "- ");
+        newText = newText.replace( /\n(\.|\?|!|,)\s/, "\n" );
+        newText = newText.replace( /- (\.|\?|!|,)\s/, "- ");
         // Place the result text in the #phraseDiv
         console.log( "10. Text to be placed in #phraseDiv: ", newText );
         $( "#phraseDiv" ).val( `${ oldText } ${ newText }`);
