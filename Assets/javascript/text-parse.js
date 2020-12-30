@@ -61,8 +61,8 @@ function voiceSearch( matchText, emojiObject ) {
             }
         }
         // Remove punctuation from new line speech tags that have them immediately afterward.
-        newText = newText.replace( /\n(\.|\?|!|,)\s/, "\n" );
-        newText = newText.replace( /- (\.|\?|!|,)\s/, "- ");
+        newText = newText.replace( /\n(\.|\?|!|,)(\s)?/, "\n" );
+        newText = newText.replace( /- (\.|\?|!|,)(\s)?/, "- ");
         // Place the result text in the #phraseDiv
         console.log( "10. Text to be placed in #phraseDiv: ", newText );
         $( "#phraseDiv" ).val( `${ oldText } ${ newText }`);
