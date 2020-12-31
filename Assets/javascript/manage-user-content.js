@@ -154,11 +154,11 @@ function approveNewTitle() {
     $('#alertText').text(`*title can not be blank`)
     return
   }
-  //if title is not empty, check to see if title is already in use
-  //if title is in use, alert user
+  //if title is not empty, and title matches the current displayed title, allow it and return
   if(titleApproved && memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim() ){
     titleApproved = true
     return
+    //if title matches a different index location, deny to avoid duplicate title names and alert user to
   }else {
     for (let i = 0; i < memoList.length; i++) {
       if (memoList[i].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
@@ -195,9 +195,12 @@ function createNewVoicely() {
   pageEditContent = false
 }
 
-
+//find the index location where 'selectedTitle' lives. This is used to load the title and content onto the page when loading a saved memo.
+//displayIndex is also used to track the index loaction of the current loaded memo for auto-saving and editing purposes.
 function findDisplayedIndex() {
+  //loop through the memolist array
   for (let i = 0; i < memoList.length; i++) {
+    //if the memo.title property matches the text value saved in "selectedTitle", save that index number to 'displayedIndex' variable
     if (memoList[i].title === selectedTitle) {
       displayedIndex = i
     }
@@ -205,9 +208,10 @@ function findDisplayedIndex() {
 }
 
 
-//refrencing the displayedIndex, load the memo selected by the user
+//refrencing the displayedIndex variable, load the memo selected by the user
 function loadVoicelyMemo() {
   $('#voicelyTitle').val(memoList[displayedIndex].title)
+  //empty #phraseDiv before loading content to avoid concatination of previous and new content
   $('#phraseDiv').val('')
   $('#phraseDiv').val(memoList[displayedIndex].content)
 }
@@ -215,9 +219,10 @@ function loadVoicelyMemo() {
 
 //refrencing the current index, update the content of current memo
 function saveCurrentVoicely() {
+  //save current content in #phraseDiv and set as the new value for the displayed index
   var updateContent = $('#phraseDiv').val()
   memoList[displayedIndex].content = updateContent
-  //update local storage
+  //update local storage with new values
   setLocalStorage()
   console.log(`1. '${memoList[displayedIndex].title}' content auto-saved`)
 }
@@ -225,7 +230,7 @@ function saveCurrentVoicely() {
 
 //listen for click on 'new voicely' button
 $(document).on('click', '#newVoicelyBtn', function (event) {
-  // if no Memo is loaded (start up page) and user clicks new memo, change page scene for 'LoadMemo'
+  // if no Memo is loaded (start up page) and user clicks new memo, change page scene to 'LoadMemo'
   if (displayedIndex === null && $(this).text().toLocaleLowerCase() === 'new voicely') {
     //update button scene
     pageLoadMemo = true
