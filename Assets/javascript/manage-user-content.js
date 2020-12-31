@@ -64,7 +64,7 @@ function loadMemoList() {
     }
     //append new list item & add text
     $('#savedList').append($('<li>', { class: 'collection-item cyan ' + colorClass[x], id: 'listItem-' + i }))
-    $('#listItem-' + i).append($('<a>', { href: '#!', class: 'memo-title', id: 'memoTitle-' + i }))
+    $('#listItem-' + i).append($('<span>', { href: '#!', class: 'memo-title', id: 'memoTitle-' + i }))
     $('#memoTitle-' + i).text(memoList[i].title)
     //append link to new list item
     $('#listItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content', id: 'listLink-' + i }))
@@ -343,10 +343,10 @@ $('.collection').on('click', '.memo-title', function () {
       findIndex()
       //if a memo is currently loaded, index will not be null
     } else {
-      //find the index of the memo selected to load
-      findIndex()
       //check to see if curzrent memo content should be updated before loading the selected memo
       confirmUpdateContent()
+      //find the index of the memo selected to load
+      findIndex()
     }
     //load the page with the index if the Memo selected
     loadVoicelyMemo()
@@ -400,6 +400,7 @@ $('.collection').on('click', '.secondary-content', function () {
       updatePageScene()
       //reset scene variable
       pageStart = false
+      currentIndex = null
     // if memo being deleted is not the current memo displayed
     }else{
       //remove the memo from the index
