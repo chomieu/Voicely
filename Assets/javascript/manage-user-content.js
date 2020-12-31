@@ -33,7 +33,7 @@ var memoList = [{
 }]
 
 //check local storage for saved memos
-function getLocalStorage(){
+function getLocalStorage() {
   var storedMemos = JSON.parse(localStorage.getItem("Voicely"));
   //if Memos are retrieved, update memoList with data
   if (storedMemos !== null) {
@@ -41,7 +41,7 @@ function getLocalStorage(){
   }
 }
 //update data in local storage
-function setLocalStorage(){
+function setLocalStorage() {
   localStorage.setItem("Voicely", JSON.stringify(memoList));
 }
 
@@ -64,7 +64,8 @@ function loadMemoList() {
     }
     //append new list item & add text
     $('#savedList').append($('<li>', { class: 'collection-item cyan ' + colorClass[x], id: 'listItem-' + i }))
-    $('#listItem-' + i).text(memoList[i].title)
+    $('#listItem-' + i).append($('<span>', { href: '#!', class: 'memo-title', id: 'memoTitle-' + i }))
+    $('#memoTitle-' + i).text(memoList[i].title)
     //append link to new list item
     $('#listItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content', id: 'listLink-' + i }))
     //append icon to link
@@ -81,13 +82,14 @@ function loadMemoList() {
 function updatePageScene() {
   //START - Scene to create a new Voicely or load a saved session
   if (pageStart) {
-    $('#editTitleBtn').text('Edit title')
     $("#voicelyTitle").prop("disabled", true)
+    $("#voicelyTitle").val("")
     $("#editTitleBtn").prop("disabled", true)
     $('#editTitleBtn').text('Edit title')
     $("#newVoicelyBtn").prop("disabled", false)
     $("#newVoicelyBtn").text("new voicely")
     $('#phraseDiv').prop("disabled", true)
+    $('#phraseDiv').val("")
   }
   //LOAD - Scene to create a new Voicely memo, or cancel and return to START-UP SCREEN
   if (pageLoadMemo) {
@@ -175,13 +177,14 @@ function createNewVoicely() {
 //this is triggered if a user selects a different memo when a current memo is loaded
 //avoids a user accidentally loading a different memo without saving current memo
 function confirmUpdateContent() {
+
   //check to see if displayed Memo content matches saved memo content
   if ($('#phraseDiv').val().toLowerCase().trim() === memoList[currentIndex].content.toLocaleLowerCase().trim()) {
     console.log('MEMO is up to date')
   } else {
     //if content does not match, prompt user before loading a different memo
     var saveWork
-    saveWork = confirm(`Changes have been made to '${memoList[currentIndex].title}', would you like to save? \n OK - Yes \n Cancel - No`)
+    saveWork = confirm(`Changes have been made to '${memoList[currentIndex].title}', would you like to save? \n OK (yes) \n Cancel (no)`)
     if (saveWork) {
       //if user selects 'ok', save current memo changes before loading a different memo
       saveCurrentVoicely()
@@ -191,15 +194,11 @@ function confirmUpdateContent() {
 
 
 function findIndex() {
-  //collects text from the entire list item
-  // I could not figure out how to only focus on the li text content (title name). It always included the icon text of 'clear' as well.
-  //our 'x' icon contains the text 'clear', this is to  remove the word 'clear' from $(this).text()
-  selectedTitle = selectedTitle.substring(0, selectedTitle.length - 5)
-  //compare selectedTitle 'text' to our titles in our memoList array, if it matches, save the index location to currentIndex
+  console.log(memoList)
   for (let i = 0; i < memoList.length; i++) {
     if (memoList[i].title === selectedTitle) {
       currentIndex = i
-      console.log(`index-${currentIndex}; title: ${memoList[currentIndex].title}`)
+      console.log(currentIndex)
     }
   }
 }
@@ -279,7 +278,7 @@ $(document).on('click', '#editTitleBtn', function (event) {
     //check title for approval
     approveNewTitle()
     //if title is approved
-    if (titleApproved){
+    if (titleApproved) {
       //create the new memo object
       createNewVoicely()
       //reset the title approved variable
@@ -306,7 +305,7 @@ $(document).on('click', '#editTitleBtn', function (event) {
     //check to see if new title is approved
     approveNewTitle()
     //if new title is approved
-    if (titleApproved){
+    if (titleApproved) {
       //update current memo object with new title name
       memoList[currentIndex].title = newTitle
       console.log(memoList)
@@ -328,10 +327,13 @@ $(document).on('click', '#editTitleBtn', function (event) {
 
 
 //listen for a click on any saved Memo
-$('.collection').on('click', '.collection-item', function () {
+// $('.collection').on('click', '.collection-item', function () {
+$('.collection').on('click', '.memo-title', function () {
+  console.log($(this).text())
+  findIndex()
   //if a memo is selected and the edit title button displays 'edit title',
   //user is not in the middle of changing a current title name, so
-  //allow user to load memo
+  //user is allowed to load memo
   if ($('#editTitleBtn').text().toLowerCase() === 'edit title') {
     //save the text from the list item selected to
     selectedTitle = $(this).text()
@@ -341,7 +343,7 @@ $('.collection').on('click', '.collection-item', function () {
       findIndex()
       //if a memo is currently loaded, index will not be null
     } else {
-      //check to see if current memo content should be updated before loading the selected memo
+      //check to see if curzrent memo content should be updated before loading the selected memo
       confirmUpdateContent()
       //find the index of the memo selected to load
       findIndex()
@@ -367,5 +369,50 @@ $(document).on('click', '#saveVoicelyBtn', function () {
   saveCurrentVoicely()
 })
 
-// load saved memo list on startup
+//work in progresss for remove item icons
+    //still some bugs to be worked out
+      //1 -- when an item is deleted, and a new memo is selected, user is prompted that changes have been made if there hasnt been any
+            //Must be some confusion in the updated index after deletion and the index that is being referenced in confirmUpdateContent()?
+      //2 
+$('.collection').on('click', '.secondary-content', function () {
+  var displayedTitle = $('#voicelyTitle').val()
+  //grab the title text and save it in a variable
+  var thisTitle = $(this).prev().text()
+  var thisIndex
+  //comfirm with user if they would like to delete
+  var confirmDelete = confirm(`Are you sure you want to delete '${thisTitle}'?`)
+  //find the index location wher 'thisTitle' is held and store index number it in 'thisIndex'
+  for (let i = 0; i < memoList.length; i++) {
+    if (memoList[i].title === thisTitle) {
+      thisIndex = i
+    }
+  }
+  //if user confirms delete item
+  if (confirmDelete) {
+    //scenario where the idem displayed is the item being deleted
+    if (thisTitle === displayedTitle) {
+      //function to remove the deleted index from memoList
+      memoList.splice(thisIndex, 1)
+      //console.log to confirm deletion for dev purposes
+      console.log(memoList)
+      //update page scene since displayed content was just deleted
+      pageStart = true
+      updatePageScene()
+      //reset scene variable
+      pageStart = false
+      currentIndex = null
+    // if memo being deleted is not the current memo displayed
+    }else{
+      //remove the memo from the index
+      memoList.splice(thisIndex, 1)
+      console.log(memoList)
+    }
+    //update localstorage to reflect deleted memo
+    setLocalStorage()
+    //rebuild the memo list to reflect deleted memo
+    loadMemoList()
+  }
+})
+
+// load saved memo list on page startup
 loadMemoList()
