@@ -13,7 +13,6 @@ var pageStart
 var pageLoadMemo
 var pageEditContent
 var pageEditTitle
-var pageLockEverything
 
 
 //object array for storing titles and content
@@ -33,6 +32,9 @@ var memoList = [{
 }, {
   title: '5 Cutest Wildcat Species',
   content: 'Sandcats'
+}, {
+  title: ' 🔨  Time',
+  content: '💡     💡     💡     💡     💡     💡     💡     💡\n     💡     💡     💡     💡     💡     💡     💡\n💡     💡     💡     💡     💡     💡     💡     💡\nAdd voicely feature to record emoji text into memo titles.\nSee line 7 of script.js for notes'
 }]
 
 //check local storage for saved memos
@@ -99,6 +101,8 @@ function updatePageScene() {
     $("#newVoicelyBtn").text("new voicely")
     $('#phraseDiv').prop("disabled", true)
     $('#phraseDiv').val("")
+    $('#recordVoicelyBtn').prop("disabled", true)
+    $('#recordVoicelyBtn').text('Record')
   }
   //LOAD - Scene to create a new Voicely memo, or cancel and return to START-UP SCREEN
   if (pageLoadMemo) {
@@ -109,7 +113,8 @@ function updatePageScene() {
     $("#newVoicelyBtn").prop("disabled", false)
     $("#newVoicelyBtn").text("cancel")
     $('#phraseDiv').prop("disabled", true)
-    $('#recordVoicelyBtn').prop("disabled", true)
+    $('#recordVoicelyBtn').prop("disabled", false)
+    $('#recordVoicelyBtn').text('Record Title')
     $('#saveVoicelyBtn').prop("disabled", true)
   }
   //EDIT TITLE - Scene to edit the title of an existing memo
@@ -119,7 +124,8 @@ function updatePageScene() {
     $("#newVoicelyBtn").text('cancel')
     $("#editTitleBtn").prop("disabled", false)
     $('#editTitleBtn').text('Update title')
-    $('#recordVoicelyBtn').prop("disabled", true)
+    $('#recordVoicelyBtn').prop("disabled", false)
+    $('#recordVoicelyBtn').text('Record Title')
     $('#saveVoicelyBtn').prop("disabled", true)
   }
   //EDIT CONTENT - Scene for working on a current Voicely memo
@@ -133,6 +139,7 @@ function updatePageScene() {
     $('#editTitleBtn').text('Edit title')
     $('#phraseDiv').prop("disabled", false)
     $('#recordVoicelyBtn').prop("disabled", false)
+    $('#recordVoicelyBtn').text('Record')
     $('#saveVoicelyBtn').prop("disabled", false)
   }
 }
@@ -145,10 +152,14 @@ function approveNewTitle() {
     titleApproved = true
   } else {
     $('#alertText').text(`*title can not be blank`)
+    return
   }
   //if title is not empty, check to see if title is already in use
   //if title is in use, alert user
-  if (titleApproved) {
+  if(titleApproved && memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim() ){
+    titleApproved = true
+    return
+  }else {
     for (let i = 0; i < memoList.length; i++) {
       if (memoList[i].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
         titleApproved = false
@@ -208,7 +219,7 @@ function saveCurrentVoicely() {
   memoList[displayedIndex].content = updateContent
   //update local storage
   setLocalStorage()
-  console.log(memoList[displayedIndex])
+  console.log(`1. '${memoList[displayedIndex].title}' content auto-saved`)
 }
 
 
@@ -338,7 +349,8 @@ $('.collection').on('click', '.memo-title', function () {
     }
     //load the page with the index if the Memo selected
     loadVoicelyMemo()
-    console.log(`'${memoList[displayedIndex].title}' is located at index-${displayedIndex}`)
+    console.log(`2. '${memoList[displayedIndex].title}' loaded from index-${displayedIndex}`)
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     //update page scene
     pageEditContent = true
     updatePageScene()
@@ -410,6 +422,12 @@ $('.collection').on('click', '.secondary-content', function () {
       loadMemoList()
     }
   })
+})
+
+$('#content').on('click', '#recordVoicelyBtn', function (){
+  if($(this).text().toLowerCase() === 'record title' ){
+    console.log('clicked')
+  }
 })
 
 
