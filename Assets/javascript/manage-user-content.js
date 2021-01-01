@@ -102,7 +102,6 @@ function updatePageScene() {
     $('#phraseDiv').prop("disabled", true)
     $('#phraseDiv').val("")
     $('#recordVoicelyBtn').prop("disabled", true)
-    $('#recordVoicelyBtn').text('Record')
   }
   //LOAD - Scene to create a new Voicely memo, or cancel and return to START-UP SCREEN
   if (pageLoadMemo) {
@@ -113,8 +112,7 @@ function updatePageScene() {
     $("#newVoicelyBtn").prop("disabled", false)
     $("#newVoicelyBtn").text("cancel")
     $('#phraseDiv').prop("disabled", true)
-    $('#recordVoicelyBtn').prop("disabled", false)
-    $('#recordVoicelyBtn').text('Record Title')
+    $('#recordVoicelyBtn').prop("disabled", true)
     $('#saveVoicelyBtn').prop("disabled", true)
   }
   //EDIT TITLE - Scene to edit the title of an existing memo
@@ -125,7 +123,6 @@ function updatePageScene() {
     $("#editTitleBtn").prop("disabled", false)
     $('#editTitleBtn').text('Update title')
     $('#recordVoicelyBtn').prop("disabled", false)
-    $('#recordVoicelyBtn').text('Record Title')
     $('#saveVoicelyBtn').prop("disabled", true)
   }
   //EDIT CONTENT - Scene for working on a current Voicely memo
@@ -139,7 +136,6 @@ function updatePageScene() {
     $('#editTitleBtn').text('Edit title')
     $('#phraseDiv').prop("disabled", false)
     $('#recordVoicelyBtn').prop("disabled", false)
-    $('#recordVoicelyBtn').text('Record')
     $('#saveVoicelyBtn').prop("disabled", false)
   }
 }
@@ -154,8 +150,9 @@ function approveNewTitle() {
     $('#alertText').text(`*title can not be blank`)
     return
   }
+  console.log(displayedIndex)
   //if title is not empty, and title matches the current displayed title, allow it and return
-  if(titleApproved && memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim() ){
+  if(titleApproved && displayedIndex!== null &&  memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim() ){
     titleApproved = true
     return
     //if title matches a different index location, deny to avoid duplicate title names and alert user to
