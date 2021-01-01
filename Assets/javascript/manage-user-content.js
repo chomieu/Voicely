@@ -152,11 +152,11 @@ function approveNewTitle() {
   }
   console.log(displayedIndex)
   //if title is not empty, and title matches the current displayed title, allow it and return
-  if(titleApproved && displayedIndex!== null &&  memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim() ){
+  if (titleApproved && displayedIndex !== null && memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
     titleApproved = true
     return
     //if title matches a different index location, deny to avoid duplicate title names and alert user to
-  }else {
+  } else {
     for (let i = 0; i < memoList.length; i++) {
       if (memoList[i].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
         titleApproved = false
@@ -222,6 +222,56 @@ function saveCurrentVoicely() {
   //update local storage with new values
   setLocalStorage()
   console.log(`1. '${memoList[displayedIndex].title}' content auto-saved`)
+}
+
+function confirmDeleteMemo(x) {
+  var displayedTitle = $('#voicelyTitle').val()
+  //grab the title text and save it in a variable
+  var thisIndex
+  //comfirm with user if they would like to delete
+
+  //find the index location wher 'thisTitle' is held and store index number it in 'thisIndex'
+  for (let i = 0; i < memoList.length; i++) {
+    if (memoList[i].title === x) {
+      thisIndex = i
+    }
+  }
+  console.log(thisIndex)
+  $('#listItem-' + thisIndex).append($('<p>', { id: 'delete' }))
+  $('#delete').text('Delete Memo?').css('color', 'red')
+  $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'yesBtn' }))
+  $('#yesBtn').css('margin', '0 20px').text('yes')
+  $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'noBtn' }))
+  $('#noBtn').text('no')
+
+  $('#listItem-' + thisIndex).on('click', '.deleteBtn', function () {
+    if ($(this).text() === 'yes') {
+      //scenario where the idem displayed is the item being deleted
+      if (x === displayedTitle) {
+        //function to remove the deleted index from memoList
+        memoList.splice(thisIndex, 1)
+        //console.log to confirm deletion for dev purposes
+        console.log(memoList)
+        //update page scene since displayed content was just deleted
+        pageStart = true
+        updatePageScene()
+        //reset scene variable
+        pageStart = false
+        displayedIndex = null
+        // if memo being deleted is not the current memo displayed
+      } else {
+        //remove the memo from the index
+        memoList.splice(thisIndex, 1)
+        console.log(memoList)
+      }
+      //update localstorage to reflect deleted memo
+      setLocalStorage()
+      //rebuild the memo list to reflect deleted memo
+      loadMemoList()
+    } else {
+      loadMemoList()
+    }
+  })
 }
 
 
@@ -376,61 +426,10 @@ $(document).on('click', '#saveVoicelyBtn', function () {
 
 
 $('.collection').on('click', '.secondary-content', function () {
-  var displayedTitle = $('#voicelyTitle').val()
-  //grab the title text and save it in a variable
   var thisTitle = $(this).prev().text()
-  var thisIndex
-  //comfirm with user if they would like to delete
-
-  //find the index location wher 'thisTitle' is held and store index number it in 'thisIndex'
-  for (let i = 0; i < memoList.length; i++) {
-    if (memoList[i].title === thisTitle) {
-      thisIndex = i
-    }
-  }
-  console.log(thisIndex)
-  $('#listItem-' + thisIndex).append($('<p>', {id: 'delete'}))
-  $('#delete').text('Delete Memo?').css('color', 'red')
-  $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'yesBtn' }))
-  $('#yesBtn').css('margin', '0 20px').text('yes')
-  $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'noBtn' }))
-  $('#noBtn').text('no')
-
-  $('#listItem-' + thisIndex).on('click', '.deleteBtn', function () {
-    if ($(this).text() === 'yes') {
-      //scenario where the idem displayed is the item being deleted
-      if (thisTitle === displayedTitle) {
-        //function to remove the deleted index from memoList
-        memoList.splice(thisIndex, 1)
-        //console.log to confirm deletion for dev purposes
-        console.log(memoList)
-        //update page scene since displayed content was just deleted
-        pageStart = true
-        updatePageScene()
-        //reset scene variable
-        pageStart = false
-        displayedIndex = null
-        // if memo being deleted is not the current memo displayed
-      } else {
-        //remove the memo from the index
-        memoList.splice(thisIndex, 1)
-        console.log(memoList)
-      }
-      //update localstorage to reflect deleted memo
-      setLocalStorage()
-      //rebuild the memo list to reflect deleted memo
-      loadMemoList()
-    }else{
-      loadMemoList()
-    }
-  })
+  confirmDeleteMemo(thisTitle)
 })
 
-$('#content').on('click', '#recordVoicelyBtn', function (){
-  if($(this).text().toLowerCase() === 'record title' ){
-    console.log('clicked')
-  }
-})
 
 
 // load saved memo list on page startup
