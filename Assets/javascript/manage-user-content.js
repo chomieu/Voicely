@@ -37,9 +37,14 @@ var memoList = [{
   content: '💡     💡     💡     💡     💡     💡     💡     💡\n     💡     💡     💡     💡     💡     💡     💡\n💡     💡     💡     💡     💡     💡     💡     💡\nAdd voicely feature to record emoji text into memo titles.\nSee line 7 of script.js for notes'
 }]
 
+//store deleted entries
+var trashBin = []
+var trashBinStatus = true
+
 //check local storage for saved memos
 function getLocalStorage() {
   var storedMemos = JSON.parse(localStorage.getItem("Voicely"));
+  var deletedMemos = JSON.parse(localStorage.getItem("Voicely-deleted"));
   //if Memos are retrieved, update memoList with data
   if (storedMemos !== null) {
     memoList = storedMemos;
@@ -48,10 +53,14 @@ function getLocalStorage() {
     $('#phraseDiv').text(`Welcome!\n Create a new Voicely to get started`)
 
   }
+  if (deletedMemos !== null) {
+    trashBin = deletedMemos;
+  }
 }
 //update data in local storage
 function setLocalStorage() {
   localStorage.setItem("Voicely", JSON.stringify(memoList));
+  localStorage.setItem("Voicely-deleted", JSON.stringify(trashBin));
 }
 
 
@@ -83,6 +92,17 @@ function loadMemoList() {
     $('#listIcon-' + i).text('clear')
     //increment x for the next line item color pattern
     x++
+  }
+  // if items exist in the trash bin, add this list item to the page
+  if (trashBin[0] !== undefined) {
+    $('#savedList').append($('<li>', { class: 'collection-item cyan darken-4', id: 'trashBin' }))
+    $('#trashBin').append($('<span>', { class: 'trashBinItems', id: 'trashBinTitle' }))
+    $('#trashBinTitle').text('Deleted Items')
+    $('#trashBin').append($('<div>', { class: 'collection', id: 'trashBinDiv' }))
+    $('#trashBinDiv').append($('<ul>', { id: 'trashBinItems' }))
+    // $('#trashBin').append($('<a>', {href:'#!', class:'secondary-content', id: 'trashBinLink' }))
+    // $('#trashBinLink').append($('<i>', {class: 'material-icons', id:'trashBinIcon'}))
+    // $('#trashBinIcon').text('clear')
   }
 }
 
@@ -155,11 +175,11 @@ function approveNewTitle() {
     return
   }
   //if title is not empty, and title matches the current displayed title, allow it and return
-  if(titleApproved && memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim() ){
+  if (titleApproved && memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
     titleApproved = true
     return
     //if title matches a different index location, deny to avoid duplicate title names and alert user to
-  }else {
+  } else {
     for (let i = 0; i < memoList.length; i++) {
       if (memoList[i].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
         titleApproved = false
@@ -385,14 +405,21 @@ $('.collection').on('click', '.secondary-content', function () {
   var thisIndex
   //comfirm with user if they would like to delete
 
+  //to avoid conflicts, collapse the trash bin
+  trashBinStatus = false
+  loadMemoList()
+  //reset the tracking variable to expand trash bin next time it is clicked
+  trashBinStatus = true
+
   //find the index location wher 'thisTitle' is held and store index number it in 'thisIndex'
   for (let i = 0; i < memoList.length; i++) {
     if (memoList[i].title === thisTitle) {
       thisIndex = i
     }
   }
+  //for the index that is clicked on, append a <p> tag and 2 buttons for 'yes' and 'no' options to the <li> that is clicked for removal.
   console.log(thisIndex)
-  $('#listItem-' + thisIndex).append($('<p>', {id: 'delete'}))
+  $('#listItem-' + thisIndex).append($('<p>', { id: 'delete' }))
   $('#delete').text('Delete Memo?').css('color', 'red')
   $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'yesBtn' }))
   $('#yesBtn').css('margin', '0 20px').text('yes')
@@ -400,9 +427,14 @@ $('.collection').on('click', '.secondary-content', function () {
   $('#noBtn').text('no')
 
   $('#listItem-' + thisIndex).on('click', '.deleteBtn', function () {
+    //if the 'yes' button is clicked
     if ($(this).text() === 'yes') {
-      //scenario where the idem displayed is the item being deleted
+      //scenario where the item displayed is the item being deleted
       if (thisTitle === displayedTitle) {
+        //add item to trash bin
+        trashBin.push(memoList[thisIndex])
+        //activate trash bin drop town toggle
+        trashBinStatus = true
         //function to remove the deleted index from memoList
         memoList.splice(thisIndex, 1)
         //console.log to confirm deletion for dev purposes
@@ -415,6 +447,10 @@ $('.collection').on('click', '.secondary-content', function () {
         displayedIndex = null
         // if memo being deleted is not the current memo displayed
       } else {
+        //add the item to ttrash bin
+        trashBin.push(memoList[thisIndex])
+        //activate trash bin status
+        trashBinStatus = true
         //remove the memo from the index
         memoList.splice(thisIndex, 1)
         console.log(memoList)
@@ -423,18 +459,51 @@ $('.collection').on('click', '.secondary-content', function () {
       setLocalStorage()
       //rebuild the memo list to reflect deleted memo
       loadMemoList()
-    }else{
+      //if the 'no' button is clicked
+    } else {
+      //reload the memo list to remove the previously added p tag and 'yes' 'no' buttons
       loadMemoList()
     }
   })
 })
 
-$('#content').on('click', '#recordVoicelyBtn', function (){
-  if($(this).text().toLowerCase() === 'record title' ){
-    console.log('clicked')
+
+
+//********** currently set up to collapse trash bin when the delete icon is selected from a different element.
+// icon currently shares same class tags inside bin so when bin item icons are selected, bin is collapsed.
+//maybe add a different event listener/ class tag for items outsid of bin to distinguish between delete bin items and non bin items
+
+//event listener for trash bin after an item is deleted
+$('.collection').on('click', '#trashBinTitle', function () {
+  //if trash binm status is active, add the 'expand' effect
+  if (trashBinStatus){
+    //create a ul in the trash bin to display deleted items
+  loadMemoList()
+    //loop through the trash bin items in the array to display on screen
+    for (let i = 0; i < trashBin.length; i++) {
+      $('#trashBinItems').append($('<li>', { class: 'collection-item cyan darken-4 trashBinItems', id: 'deletedListItem-' + i }))
+      $('#deletedListItem-' + i).append($('<span>', { class: 'deleted-item', id: 'deletedItem-' + i }))
+      $('#deletedItem-' + i).text(trashBin[i].title)
+      // $('#deletedItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content', id: 'deletedLink-' + i }))
+      // $('#deletedLink-' + i).append($('<i>', { class: 'material-icons', id: 'deletedIcon-' + i }))
+      // $('#deletedIcon-' + i).text('clear')
+    }
+    //toggle status to 'collapse' next time #trashBinTitle is clicked
+    trashBinStatus = false
+  }else{
+    // 'collapse' trash bin items
+    loadMemoList()
+    //toggle status to 'expand' and display items next time #trashBinTitle is clicked
+    trashBinStatus = true
   }
+
+
 })
 
 
 // load saved memo list on page startup
 loadMemoList()
+
+
+
+// 

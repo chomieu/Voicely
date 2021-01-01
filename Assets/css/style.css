@@ -21,7 +21,7 @@ h4 {
 }
 
 /* user cue - when hovered over a memo title, mouse icon will be a pointer*/
-.memo-title{
+.memo-title, .trashBinItems{
     cursor: pointer;
 }
 
