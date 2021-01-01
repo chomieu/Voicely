@@ -12,12 +12,18 @@
 </head>
 
 <body class="container light-blue lighten-5">
-
     <header class="row center white-text cyan accent-3">
         <h3>Voicely</h3>
         <p>Your Personal Transcriptionist</p>
     </header>
 
+    <div class="modal" id="custom-modal">
+        <!-- Content for modal goes here -->
+        <div class="modal-content" id="custom-modal-content">
+            <span id="close">&times;</span>
+            <p class="modal-text">Here's some text.</p>
+        </div>
+    </div>
     <main class="row">
         <article class="col s5 white" id="content">
             <input class="cyan accent-1 white-text" type="text" id="voicelyTitle" placeholder="New Voicely Title" disabled="true">
@@ -38,6 +44,8 @@
             </ul>
         </section>
     </main>
+
+
 
     <script type="text/javascript" src="json/characters.json"></script>
     <script type="text/javascript" src="json/emoji.json"></script>

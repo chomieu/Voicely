@@ -15,7 +15,7 @@ h4 {
     padding-left: 5%;
 }
 
-input{
+input {
     margin-top: 15px !important;
     padding-left: 16px !important;
     width: 94.5% !important;
@@ -36,4 +36,41 @@ ul {
 li {
     font-family: Mali;
     font-size: large;
+}
+
+#custom-modal {
+    display: block !important; /* Hidden by default */
+    z-index: 2; /* Sit on top */
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    max-height: 100%;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */  
+}
+
+#custom-modal #custom-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    border: 1px solid #888;
+    padding: 10px;
+    text-align: center;
+    width: 80%;
+}
+
+#close {
+    color: #aaaaaa;
+    top: 0;
+    right: 0;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 0.6em;
+}
+
+/* Hover and focus effects for modal */
+#close:hover,
+#close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
