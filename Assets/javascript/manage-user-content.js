@@ -34,7 +34,7 @@ var memoList = [{
   content: 'Sandcats'
 }, {
   title: ' 🔨  Time',
-  content: '💡     💡     💡     💡     💡     💡     💡     💡\n     💡     💡     💡     💡     💡     💡     💡\n💡     💡     💡     💡     💡     💡     💡     💡\nAdd voicely feature to record emoji text into memo titles.\nSee line 7 of script.js for notes'
+  content: '💡     💡     💡     💡     💡     💡     💡     💡\n     💡     💡     💡     💡     💡     💡     💡\n💡     💡     💡     💡     💡     💡     💡     💡'
 }]
 
 //check local storage for saved memos
