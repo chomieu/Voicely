@@ -15,8 +15,23 @@ h4 {
     padding-left: 5%;
 }
 
+<<<<<<< HEAD
 input {
     margin-top: 15px !important;
+=======
+#alertText{
+    margin: 0 0 15px 15px !important;
+    color: red;
+}
+
+/* user cue - when hovered over a memo title, mouse icon will be a pointer*/
+.memo-title{
+    cursor: pointer;
+}
+
+input{
+    margin: 15px 0 0 0 !important;
+>>>>>>> ee14d53b0c48fd87763c54ceebdfde1186c70591
     padding-left: 16px !important;
     width: 94.5% !important;
 }
