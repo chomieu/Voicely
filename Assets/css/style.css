@@ -15,10 +15,6 @@ h4 {
     padding-left: 5%;
 }
 
-<<<<<<< HEAD
-input {
-    margin-top: 15px !important;
-=======
 #alertText{
     margin: 0 0 15px 15px !important;
     color: red;
@@ -31,7 +27,6 @@ input {
 
 input{
     margin: 15px 0 0 0 !important;
->>>>>>> ee14d53b0c48fd87763c54ceebdfde1186c70591
     padding-left: 16px !important;
     width: 94.5% !important;
 }
@@ -54,7 +49,7 @@ li {
 }
 
 #custom-modal {
-    display: block !important; /* Hidden by default */
+    display: none; /* Hidden by default */
     z-index: 2; /* Sit on top */
     top: 0;
     width: 100%; /* Full width */
