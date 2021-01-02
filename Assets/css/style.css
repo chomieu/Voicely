@@ -2,6 +2,10 @@ body, html {
     height: 100%;
 }
 
+.container {
+    width: 100%;
+}
+
 header {
     height: 100px;
 }
@@ -26,10 +30,26 @@ main {
     flex-direction: column;
 }
 
+.input-field {
+    margin: 0;
+
+}
+
+.label-icon {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
 #search {
     padding-left: 4rem;
     width: calc(100% - 4rem);
+    font-size: 2rem;
 }
+
+/* .input-field :focus {
+    background-color: transparent !important;
+} */
 
 #alertText {
     margin: 0 0 15px 15px !important;
@@ -59,8 +79,9 @@ main {
     flex: 1;
 }
 
-#savedList {
-    /* overflow: scroll; */
+section {
+    overflow: scroll;
+    height: 360px;
 }
 
 ul {
@@ -76,5 +97,8 @@ li {
     main {
         align-items: stretch;
         flex-direction: row-reverse;
+    }
+    section {
+        height: 100%;
     }
 }
