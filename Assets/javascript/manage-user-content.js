@@ -137,11 +137,7 @@ function updatePageScene() {
     $('#editTitleBtn').text('Edit title')
     $('#phraseDiv').prop("disabled", false)
     $('#recordVoicelyBtn').prop("disabled", false)
-<<<<<<< HEAD
-    $('#recordVoicelyBtn').text('Record')
     $('#smsBtn').prop("disabled", false)
-=======
->>>>>>> c04b9e4b931edaa4b6cac71c69adc5f4c027b836
     $('#saveVoicelyBtn').prop("disabled", false)
   }
 }
