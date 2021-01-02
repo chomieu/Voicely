@@ -69,4 +69,7 @@ li {
         display: flex;
         align-items: stretch;
     }
+    section {
+        order: 2;
+    }
 }
