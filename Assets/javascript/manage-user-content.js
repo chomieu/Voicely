@@ -85,7 +85,7 @@ function loadMemoList() {
     $('#listItem-' + i).append($('<span>', { class: 'memo-title', id: 'memoTitle-' + i }))
     $('#memoTitle-' + i).text(memoList[i].title)
     //append link to new list item
-    $('#listItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content', id: 'listLink-' + i }))
+    $('#listItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content toTrashBin', id: 'listLink-' + i }))
     //append icon to link
     $('#listLink-' + i).append($('<i>', { class: 'material-icons', id: 'listIcon-' + i, }))
     //set icon text to clear
@@ -98,8 +98,6 @@ function loadMemoList() {
     $('#savedList').append($('<li>', { class: 'collection-item cyan darken-4', id: 'trashBin' }))
     $('#trashBin').append($('<span>', { class: 'trashBinItems', id: 'trashBinTitle' }))
     $('#trashBinTitle').text('Deleted Items')
-    $('#trashBin').append($('<div>', { class: 'collection', id: 'trashBinDiv' }))
-    $('#trashBinDiv').append($('<ul>', { id: 'trashBinItems' }))
     // $('#trashBin').append($('<a>', {href:'#!', class:'secondary-content', id: 'trashBinLink' }))
     // $('#trashBinLink').append($('<i>', {class: 'material-icons', id:'trashBinIcon'}))
     // $('#trashBinIcon').text('clear')
@@ -398,7 +396,7 @@ $(document).on('click', '#saveVoicelyBtn', function () {
 })
 
 
-$('.collection').on('click', '.secondary-content', function () {
+$('.collection').on('click', '.toTrashBin', function () {
   var displayedTitle = $('#voicelyTitle').val()
   //grab the title text and save it in a variable
   var thisTitle = $(this).prev().text()
@@ -480,6 +478,8 @@ $('.collection').on('click', '#trashBinTitle', function () {
     //create a ul in the trash bin to display deleted items
   loadMemoList()
     //loop through the trash bin items in the array to display on screen
+    $('#trashBin').append($('<div>', { class: 'collection', id: 'trashBinDiv' }))
+    $('#trashBinDiv').append($('<ul>', { id: 'trashBinItems' }))
     for (let i = 0; i < trashBin.length; i++) {
       $('#trashBinItems').append($('<li>', { class: 'collection-item cyan darken-4 trashBinItems', id: 'deletedListItem-' + i }))
       $('#deletedListItem-' + i).append($('<span>', { class: 'deleted-item', id: 'deletedItem-' + i }))
