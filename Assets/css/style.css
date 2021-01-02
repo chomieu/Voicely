@@ -22,12 +22,13 @@ h4 {
 
 main {
     height: calc(100% - 140px);
+    display: flex;
+    flex-direction: column;
 }
 
 #search {
     padding-left: 4rem;
     width: calc(100% - 4rem);
-    
 }
 
 #alertText {
@@ -46,10 +47,11 @@ main {
     width: 94.5% !important;
 }
 
-.content {
+#content {
     padding-bottom: 15px !important;
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 #phraseDiv {
@@ -57,8 +59,8 @@ main {
     flex: 1;
 }
 
-section {
-    overflow: scroll;
+#savedList {
+    /* overflow: scroll; */
 }
 
 ul {
@@ -72,10 +74,7 @@ li {
 
 @media (min-width: 993px) {
     main {
-        display: flex;
         align-items: stretch;
-    }
-    section {
-        order: 2;
+        flex-direction: row-reverse;
     }
 }

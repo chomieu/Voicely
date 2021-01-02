@@ -78,7 +78,7 @@ function loadMemoList() {
     //append link to new list item
     $('#listItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content', id: 'listLink-' + i }))
     //append icon to link
-    $('#listLink-' + i).append($('<i>', { class: 'material-icons', id: 'listIcon-' + i, }))
+    $('#listLink-' + i).append($('<i>', { class: 'material-icons white-text', id: 'listIcon-' + i, }))
     //set icon text to clear
     $('#listIcon-' + i).text('clear')
     //increment x for the next line item color pattern
