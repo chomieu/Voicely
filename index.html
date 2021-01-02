@@ -12,14 +12,20 @@
 </head>
 
 <body class="container light-blue lighten-5">
-
     <header class="nav-wraper row center white-text cyan accent-3">
         <h3>Voicely</h3>
         <p>Your Personal Transcriptionist</p>
     </header>
 
+    <div class="modal" id="custom-modal">
+        <!-- Content for modal goes here -->
+        <div class="modal-content" id="custom-modal-content">
+            <span id="close">&times;</span>
+            <h3 class="modal-header" id="custom-modal-header"></h3>
+            <p class="modal-text" id="custom-modal-text"></p>
+        </div>
+    </div>
     <main class="row">
-
         <section class="col s12 l6">
             <div class="input-field">
                 <input id="search" type="search" required>
@@ -47,20 +53,20 @@
             <div>
                 <button class="btn cyan accent-3 waves-effect waves-light" id="recordVoicelyBtn"
                     disabled="true">record</button>
-                <button class="btn cyan accent-3 waves-effect waves-light" id="pdfBtn" disabled="true">to PDF</button>
+                <button class="btn cyan accent-3 waves-effect waves-light" id="smsBtn" disabled="true">Send SMS</button>
                 <button class="btn cyan accent-3 waves-effect waves-light" id="saveVoicelyBtn"
                     disabled="true">save</button>
             </div>
         </article>
 
     </main>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="json/characters.json"></script>
     <script type="text/javascript" src="json/emoji.json"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="SpeechSDK/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
     <script src="Assets/javascript/text-parse.js"></script>
+    <script src="Assets/javascript/sms-send.js"></script>
     <script src="Assets/javascript/script.js"></script>
     <script src="Assets/javascript/manage-user-content.js"></script>
 </body>

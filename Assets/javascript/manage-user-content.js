@@ -113,6 +113,7 @@ function updatePageScene() {
     $("#newVoicelyBtn").text("cancel")
     $('#phraseDiv').prop("disabled", true)
     $('#recordVoicelyBtn').prop("disabled", true)
+    $('#smsBtn').prop("disabled", true)
     $('#saveVoicelyBtn').prop("disabled", true)
   }
   //EDIT TITLE - Scene to edit the title of an existing memo
@@ -136,6 +137,7 @@ function updatePageScene() {
     $('#editTitleBtn').text('Edit title')
     $('#phraseDiv').prop("disabled", false)
     $('#recordVoicelyBtn').prop("disabled", false)
+    $('#smsBtn').prop("disabled", false)
     $('#saveVoicelyBtn').prop("disabled", false)
   }
 }
