@@ -170,11 +170,7 @@ function approveNewTitle() {
   }
   console.log(displayedIndex)
   //if title is not empty, and title matches the current displayed title, allow it and return
-<<<<<<< HEAD
-  if (titleApproved && memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
-=======
   if (titleApproved && displayedIndex !== null && memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
->>>>>>> dev-branch
     titleApproved = true
     return
     //if title matches a different index location, deny to avoid duplicate title names and alert user to
@@ -449,7 +445,6 @@ $(document).on('click', '#saveVoicelyBtn', function () {
 })
 
 
-<<<<<<< HEAD
 $('.collection').on('click', '.toTrashBin', function () {
   var displayedTitle = $('#voicelyTitle').val()
   //grab the title text and save it in a variable
@@ -553,13 +548,6 @@ $('.collection').on('click', '#trashBinTitle', function () {
 
 
 })
-=======
-$('.collection').on('click', '.secondary-content', function () {
-  var thisTitle = $(this).prev().text()
-  confirmDeleteMemo(thisTitle)
-})
-
->>>>>>> dev-branch
 
 
 // load saved memo list on page startup
