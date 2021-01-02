@@ -80,4 +80,65 @@ $("document").ready(function () {
         });
   
   });
+  // Clicking the X in a modal
+  $( "#close" ).on( "click", function() {
+    closeModal();
+  });
 })
+
+/* Functions for modals */
+function modalConfirm( text ) {
+  $( "#custom-modal-header" ).text( "Confirm" );
+  $( "#custom-modal" ).css( "display", "block" );
+  var confirmButton = $( "<button>", { class: "modal-button", id: "custom-modal-confirm-button" } ).text( "Confirm" );
+  var denyButton = $( "<button>", { class: "modal-button", id: "custom-modal-deny-button" } ).text( "Cancel" );
+  confirmButton.attr( "data-bool", true );
+  denyButton.attr( "data-bool", false );
+  $( "#custom-modal-content" ).append( confirmButton );
+  $( "#custom-modal-content" ).append( denyButton );
+  $( ".modal-button" ).click( function() {
+    console.log( $( this ).attr( "data-bool" ) );
+    console.log( !!$( this ).attr( "data-bool" ) );
+  })
+}
+
+function modalPrompt( text, func ) {
+  $( "#custom-modal-header" ).text( "Prompt" );
+  $( "#custom-modal-text" ).text( text );
+  var customContent = $( "#custom-modal-content" );
+  var form = $( "<form>", { class: "modal-form", id: "custom-modal-form", method: "POST" } );
+  var formInput = $( "<input>", { class: "modal-input", id: "custom-modal-input" } );
+  customContent.append( form );
+  form.append( formInput );
+  $( "#custom-modal" ).css( "display", "block" );
+  form.on( "submit", function( e ) {
+    e.preventDefault();
+    var data = $( "#custom-modal-input" ).val();
+    func( data );
+    closeModal( form );
+  })
+}
+
+function modalAlert( text ) {
+  $( "#custom-modal-header" ).text( "Alert" );
+  $( "#custom-modal-text" ).text( text );
+  $( "#custom-modal" ).css( "display", "block" );
+}
+
+function closeModal() {
+  // Collects all non-standard elements (modals past children[ 2 ])
+  var modalElements = $( "#custom-modal-content" )[ 0 ].children;
+  // Delete all non-standard elements in the modal.
+  if ( modalElements.length > 3 ) {
+    Object.keys( modalElements ).forEach( key => {
+      if ( key > 2 ) {
+        modalElements[ key ].remove();
+      }
+    })
+  }
+  $( "#custom-modal-header" ).text( "" );
+  $( "#custom-modal-text" ).text( "" );
+  $( "#custom-modal" ).css( "display", "none" );
+}
+
+modalConfirm( "Here's a test of a modalConfirm" );
