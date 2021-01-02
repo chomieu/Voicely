@@ -75,7 +75,9 @@ $("document").ready(function () {
 })
 
 /* Functions for modals */
-function modalConfirm( text ) {
+
+// 
+function modalConfirm( text, trueFunc, falseFunc ) {
   $( "#custom-modal-header" ).text( "Confirm" );
   $( "#custom-modal" ).css( "display", "block" );
   var confirmButton = $( "<button>", { class: "modal-button", id: "custom-modal-confirm-button" } ).text( "Confirm" );
@@ -85,8 +87,12 @@ function modalConfirm( text ) {
   $( "#custom-modal-content" ).append( confirmButton );
   $( "#custom-modal-content" ).append( denyButton );
   $( ".modal-button" ).click( function() {
-    console.log( $( this ).attr( "data-bool" ) );
-    console.log( !!$( this ).attr( "data-bool" ) );
+    if ( $( this ).attr( "data-bool" ) == "true" ) {
+      trueFunc();
+    } else {
+      falseFunc();
+    }
+    closeModal();
   })
 }
 
@@ -116,17 +122,11 @@ function modalAlert( text ) {
 function closeModal() {
   // Collects all non-standard elements (modals past children[ 2 ])
   var modalElements = $( "#custom-modal-content" )[ 0 ].children;
-  // Delete all non-standard elements in the modal.
-  if ( modalElements.length > 3 ) {
-    Object.keys( modalElements ).forEach( key => {
-      if ( key > 2 ) {
-        modalElements[ key ].remove();
-      }
-    })
+  // Delete all non-standard elements in the modal. Loop must be run backwards so we don't delete as we're iterating.
+  for ( i = modalElements.length - 1; i > 2; i-- ) {
+    modalElements[ i ].remove();
   }
   $( "#custom-modal-header" ).text( "" );
   $( "#custom-modal-text" ).text( "" );
   $( "#custom-modal" ).css( "display", "none" );
 }
-
-modalConfirm( "Here's a test of a modalConfirm" );
