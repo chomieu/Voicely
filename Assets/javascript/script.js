@@ -66,6 +66,6 @@ $("document").ready(function () {
           recognizer.close();
           recognizer = undefined;
         });
-  
   });
-})
+  
+});
