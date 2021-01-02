@@ -1,5 +1,9 @@
-body, html, main {
+body, html {
     height: 100%;
+}
+
+header {
+    height: 100px;
 }
 
 header, article {
@@ -7,12 +11,17 @@ header, article {
 }
 
 h3 {
+    margin: 0.25em;
     font-family: "Kaushan Script";
 }
 
 h4 {
     margin-top: 15px;
     padding-left: 5%;
+}
+
+main {
+    height: calc(100% - 140px);
 }
 
 #alertText{
@@ -30,13 +39,20 @@ input{
     padding-left: 16px !important;
     width: 94.5% !important;
 }
+
 article {
     padding-bottom: 15px !important;
+    display: flex;
+    flex-direction: column;
 }
 
-textarea {
-    margin-top: 15px;
-    height: 400px;
+#phraseDiv {
+    margin: 0.5em 0;
+    flex: 1;
+}
+
+section {
+    overflow: scroll;
 }
 
 ul {
@@ -46,4 +62,11 @@ ul {
 li {
     font-family: Mali;
     font-size: large;
+}
+
+@media (min-width: 993px) {
+    main {
+        display: flex;
+        align-items: stretch;
+    }
 }

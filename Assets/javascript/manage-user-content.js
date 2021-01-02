@@ -34,7 +34,7 @@ var memoList = [{
   content: 'Sandcats'
 }, {
   title: ' 🔨  Time',
-  content: '💡     💡     💡     💡     💡     💡     💡     💡\n     💡     💡     💡     💡     💡     💡     💡\n💡     💡     💡     💡     💡     💡     💡     💡\nAdd voicely feature to record emoji text into memo titles.\nSee line 7 of script.js for notes'
+  content: '💡     💡     💡     💡     💡     💡     💡     💡\n     💡     💡     💡     💡     💡     💡     💡\n💡     💡     💡     💡     💡     💡     💡     💡'
 }]
 
 //store deleted entries
@@ -120,7 +120,6 @@ function updatePageScene() {
     $('#phraseDiv').prop("disabled", true)
     $('#phraseDiv').val("")
     $('#recordVoicelyBtn').prop("disabled", true)
-    $('#recordVoicelyBtn').text('Record')
   }
   //LOAD - Scene to create a new Voicely memo, or cancel and return to START-UP SCREEN
   if (pageLoadMemo) {
@@ -131,8 +130,7 @@ function updatePageScene() {
     $("#newVoicelyBtn").prop("disabled", false)
     $("#newVoicelyBtn").text("cancel")
     $('#phraseDiv').prop("disabled", true)
-    $('#recordVoicelyBtn').prop("disabled", false)
-    $('#recordVoicelyBtn').text('Record Title')
+    $('#recordVoicelyBtn').prop("disabled", true)
     $('#saveVoicelyBtn').prop("disabled", true)
   }
   //EDIT TITLE - Scene to edit the title of an existing memo
@@ -143,7 +141,6 @@ function updatePageScene() {
     $("#editTitleBtn").prop("disabled", false)
     $('#editTitleBtn').text('Update title')
     $('#recordVoicelyBtn').prop("disabled", false)
-    $('#recordVoicelyBtn').text('Record Title')
     $('#saveVoicelyBtn').prop("disabled", true)
   }
   //EDIT CONTENT - Scene for working on a current Voicely memo
@@ -157,7 +154,6 @@ function updatePageScene() {
     $('#editTitleBtn').text('Edit title')
     $('#phraseDiv').prop("disabled", false)
     $('#recordVoicelyBtn').prop("disabled", false)
-    $('#recordVoicelyBtn').text('Record')
     $('#saveVoicelyBtn').prop("disabled", false)
   }
 }
@@ -172,8 +168,13 @@ function approveNewTitle() {
     $('#alertText').text(`*title can not be blank`)
     return
   }
+  console.log(displayedIndex)
   //if title is not empty, and title matches the current displayed title, allow it and return
+<<<<<<< HEAD
   if (titleApproved && memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
+=======
+  if (titleApproved && displayedIndex !== null && memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
+>>>>>>> dev-branch
     titleApproved = true
     return
     //if title matches a different index location, deny to avoid duplicate title names and alert user to
@@ -201,9 +202,11 @@ function createNewVoicely() {
   setLocalStorage()
   //update displayedIndex to refrence our newly created & currently selected index
   displayedIndex = memoList.length - 1
+  selectedTitle = memoList[displayedIndex].title
   console.log(`current index is ${displayedIndex}, title: ${memoList[displayedIndex].title}`)
   //reload the list to display the new object
   loadMemoList()
+
   //clear text from previously displayed Memo
   $('#phraseDiv').text('')
   //update the page scene with variable that is true
@@ -211,6 +214,8 @@ function createNewVoicely() {
   updatePageScene()
   //reset variable
   pageEditContent = false
+  console.log(displayedIndex)
+  console.log(memoList)
 }
 
 //find the index location where 'selectedTitle' lives. This is used to load the title and content onto the page when loading a saved memo.
@@ -243,6 +248,56 @@ function saveCurrentVoicely() {
   //update local storage with new values
   setLocalStorage()
   console.log(`1. '${memoList[displayedIndex].title}' content auto-saved`)
+}
+
+function confirmDeleteMemo(x) {
+  var displayedTitle = $('#voicelyTitle').val()
+  //grab the title text and save it in a variable
+  var thisIndex
+  //comfirm with user if they would like to delete
+
+  //find the index location wher 'thisTitle' is held and store index number it in 'thisIndex'
+  for (let i = 0; i < memoList.length; i++) {
+    if (memoList[i].title === x) {
+      thisIndex = i
+    }
+  }
+  console.log(thisIndex)
+  $('#listItem-' + thisIndex).append($('<p>', { id: 'delete' }))
+  $('#delete').text('Delete Memo?').css('color', 'red')
+  $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'yesBtn' }))
+  $('#yesBtn').css('margin', '0 20px').text('yes')
+  $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'noBtn' }))
+  $('#noBtn').text('no')
+
+  $('#listItem-' + thisIndex).on('click', '.deleteBtn', function () {
+    if ($(this).text() === 'yes') {
+      //scenario where the idem displayed is the item being deleted
+      if (x === displayedTitle) {
+        //function to remove the deleted index from memoList
+        memoList.splice(thisIndex, 1)
+        //console.log to confirm deletion for dev purposes
+        console.log(memoList)
+        //update page scene since displayed content was just deleted
+        pageStart = true
+        updatePageScene()
+        //reset scene variable
+        pageStart = false
+        displayedIndex = null
+        // if memo being deleted is not the current memo displayed
+      } else {
+        //remove the memo from the index
+        memoList.splice(thisIndex, 1)
+        console.log(memoList)
+      }
+      //update localstorage to reflect deleted memo
+      setLocalStorage()
+      //rebuild the memo list to reflect deleted memo
+      loadMemoList()
+    } else {
+      loadMemoList()
+    }
+  })
 }
 
 
@@ -357,8 +412,6 @@ $('.collection').on('click', '.memo-title', function () {
   //user is not in the middle of changing a current title name, so
   //user is allowed to load memo
   if ($('#editTitleBtn').text().toLowerCase() === 'edit title') {
-    //save the text from the list item selected to
-    selectedTitle = $(this).text()
     //if no memo is loaded
     if (displayedIndex === null) {
       //find the index of the memo selected
@@ -396,6 +449,7 @@ $(document).on('click', '#saveVoicelyBtn', function () {
 })
 
 
+<<<<<<< HEAD
 $('.collection').on('click', '.toTrashBin', function () {
   var displayedTitle = $('#voicelyTitle').val()
   //grab the title text and save it in a variable
@@ -499,6 +553,13 @@ $('.collection').on('click', '#trashBinTitle', function () {
 
 
 })
+=======
+$('.collection').on('click', '.secondary-content', function () {
+  var thisTitle = $(this).prev().text()
+  confirmDeleteMemo(thisTitle)
+})
+
+>>>>>>> dev-branch
 
 
 // load saved memo list on page startup
