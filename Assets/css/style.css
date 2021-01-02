@@ -24,6 +24,22 @@ main {
     height: calc(100% - 140px);
 }
 
+#alertText{
+    margin: 0 0 15px 15px !important;
+    color: red;
+}
+
+/* user cue - when hovered over a memo title, mouse icon will be a pointer*/
+.memo-title{
+    cursor: pointer;
+}
+
+input{
+    margin: 15px 0 0 0 !important;
+    padding-left: 16px !important;
+    width: 94.5% !important;
+}
+
 article {
     padding-bottom: 15px !important;
     display: flex;

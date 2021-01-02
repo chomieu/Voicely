@@ -1,21 +1,19 @@
 // https://emoji-api.com/
 
-function verifyInclude() {
-    console.log( "text-parse.js successfully added!" );
-};
-
 // Takes in a string, matches a regex with any phrases in it, then returns emojis created from those matches to the #emoji-display div.
 function voiceSearch( matchText, emojiObject ) {
     // construct our RegEx of the keyphrase.
-    var regEx = /(S|s)ymbol[s]?[,]? [\w+ ]+emoji/g;
+    var regEx = /(S|s)ymbol[s]?[,]? (E\d0 )?[\w+( |,|\.|\?|!)]+?(E|e)moji/g;
     console.log( "1. ******** NEW CALL OF voiceSearch ********");
     console.log( "2. Initial RegEx: ", regEx );
     console.log( "3. Text to match: ", matchText );
     var matchArray = matchText.match( regEx );
-    var emojiArray = []
+    var emojiArray = [];
     console.log( "Array of matched phrases: ", matchArray );
     // Gets the current contents of the div, in case there was already content there before running voiceSearch.
-    var oldText = $( "#phraseDiv" ).text();
+    var oldText = $( "#phraseDiv" ).val();
+    console.log( "oldText:", oldText );
+    // If the RegEx has at least one match AND an emojiObject has been passed in (the latter shouldn't be a problem anymore since Chomie added the cached emoji.json file, but it's a nice failsafe in case we use this function in other contexts).
     if ( matchArray && emojiObject ) {
         console.log( "4. Entered matchArray if statement" );
         // Iterate over matchArray and build an array of keywords to replace.
@@ -25,15 +23,29 @@ function voiceSearch( matchText, emojiObject ) {
             voice recognition API inserting commas after or pluralizing the word "symbol," but if both happen
             or users manage to do something else that inserts a second character after "symbol," it could 
             mess up the results being put into #phraseDiv. */
-            var strippedString = matchArray[ i ].substring( 7, matchArray[ i ].length - 6 ).trim();
-            console.log( "5. Matched string stripped of symbol words: ", strippedString );
+            var strippedString = matchArray[ i ].substring( 7, matchArray[ i ].length - 6 ).trim().replace( /,/g, "" );
+            if ( /E\d0/.test( strippedString ) ) {
+                // Make everything lower-case and insert a space after the number.
+                strippedString = strippedString.toLowerCase();
+                strippedString = strippedString.slice( 0, 2) + " " + strippedString.slice( 2, strippedString.length );
+            };
+            console.log( "5. Matched string stripped of symbol words and commas: ", strippedString );
             var dashedString = strippedString.replace( /\s/g, "-" );
             console.log( "6. Matched string with dashes instead of spaces: ", dashedString );
+            // Iterates over entire emojiObject looking for slugs that match the "dashed" version of what was said.
             for ( var j = 0; j < emojiObject.length; j++ ) {
+                if ( "variants" in emojiObject[ j ] ) {
+                    var variantObj = emojiObject[ j ].variants;
+                    for ( var k = 0; k < variantObj.length; k++ ) {
+                        if ( variantObj[ k ].slug == dashedString ) {
+                            emojiArray.push( variantObj[ k ].character );
+                        };
+                    };
+                };
                 if ( emojiObject[ j ].slug == dashedString ) {
                     emojiArray.push( emojiObject[ j ].character );
-                }
-            }
+                };
+            };
         };
         console.log( "7. Array of emojis: ", emojiArray );
         // Iterate over matchArray, and replace all instances of matchArray[ i ] in matchText with emojiArray[ i ].
@@ -48,13 +60,16 @@ function voiceSearch( matchText, emojiObject ) {
                 newText = newText.replace( regEx2, strippedString );
             }
         }
+        // Remove punctuation from new line speech tags that have them immediately afterward.
+        newText = newText.replace( /\n(\.|\?|!|,)(\s)?/, "\n" );
+        newText = newText.replace( /- (\.|\?|!|,)(\s)?/, "- ");
         // Place the result text in the #phraseDiv
         console.log( "10. Text to be placed in #phraseDiv: ", newText );
-        $( "#phraseDiv" ).text( `${ oldText } ${ newText }`);
+        $( "#phraseDiv" ).val( `${ oldText } ${ newText }`);
     } else if ( oldText ) {
-        $( "#phraseDiv" ).text( `${ oldText } ${ matchText }` );
+        $( "#phraseDiv" ).val( `${ oldText } ${ matchText }` );
     } else {
-        $( "#phraseDiv" ).text( `${ matchText }` );
+        $( "#phraseDiv" ).val( `${ matchText }` );
     }
     console.log( "******** END ********");
 }
