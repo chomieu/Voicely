@@ -78,7 +78,7 @@ function loadMemoList() {
     //append link to new list item
     $('#listItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content', id: 'listLink-' + i }))
     //append icon to link
-    $('#listLink-' + i).append($('<i>', { class: 'material-icons', id: 'listIcon-' + i, }))
+    $('#listLink-' + i).append($('<i>', { class: 'material-icons white-text', id: 'listIcon-' + i, }))
     //set icon text to clear
     $('#listIcon-' + i).text('clear')
     //increment x for the next line item color pattern
@@ -182,9 +182,11 @@ function createNewVoicely() {
   setLocalStorage()
   //update displayedIndex to refrence our newly created & currently selected index
   displayedIndex = memoList.length - 1
+  selectedTitle = memoList[displayedIndex].title
   console.log(`current index is ${displayedIndex}, title: ${memoList[displayedIndex].title}`)
   //reload the list to display the new object
   loadMemoList()
+
   //clear text from previously displayed Memo
   $('#phraseDiv').text('')
   //update the page scene with variable that is true
@@ -192,6 +194,8 @@ function createNewVoicely() {
   updatePageScene()
   //reset variable
   pageEditContent = false
+  console.log(displayedIndex)
+  console.log(memoList)
 }
 
 //find the index location where 'selectedTitle' lives. This is used to load the title and content onto the page when loading a saved memo.
@@ -388,8 +392,6 @@ $('.collection').on('click', '.memo-title', function () {
   //user is not in the middle of changing a current title name, so
   //user is allowed to load memo
   if ($('#editTitleBtn').text().toLowerCase() === 'edit title') {
-    //save the text from the list item selected to
-    selectedTitle = $(this).text()
     //if no memo is loaded
     if (displayedIndex === null) {
       //find the index of the memo selected
