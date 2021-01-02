@@ -4,15 +4,6 @@ var recognizer;
 var emojiList;
 
 
-// sjf- added btnStatus variable to track the button text value when clicked.
-// I have added some dynamic fatures to the updatePageScene() to change the record button text
-// when editing the title text. Hoping to add feature to record the title text with emojis as well.
-//**example**
-// if ( btnStatus === 'record title')
-  // print the recording as the title text
-// if ( btnStatus === 'record' )
-  // print the recording in the #phraseDiv
-var btnStatus;
 
 $("document").ready(function () {
 
@@ -38,9 +29,6 @@ $("document").ready(function () {
   })
 
   $("#recordVoicelyBtn").on("click", function () {
-    btnStatus = $(this).text().toLowerCase()
-    console.log(btnStatus)
-
       $("#recordVoicelyBtn").prop("disabled", true)
       // Use the subscription key and configure the SpeechSDK object provided by the file referenced in the index.html file.
       var speechConfig = SpeechSDK.SpeechConfig.fromSubscription("20bad3c2c2a34e2a9ada0c04f778f495", "eastus");
