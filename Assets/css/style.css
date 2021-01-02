@@ -1,5 +1,13 @@
-body, html, main {
+body, html {
     height: 100%;
+}
+
+.container {
+    width: 100%;
+}
+
+header {
+    height: 100px;
 }
 
 header, article {
@@ -7,6 +15,7 @@ header, article {
 }
 
 h3 {
+    margin: 0.25em;
     font-family: "Kaushan Script";
 }
 
@@ -15,18 +24,59 @@ h4 {
     padding-left: 5%;
 }
 
-input{
-    margin-top: 15px !important;
+main {
+    height: calc(100% - 140px);
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field {
+    margin: 0;
+}
+
+.label-icon {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+#search {
+    padding-left: 4rem;
+    width: calc(100% - 4rem);
+    font-size: 2rem;
+}
+
+#alertText {
+    margin: 0 0 15px 15px !important;
+    color: red;
+}
+
+/* user cue - when hovered over a memo title, mouse icon will be a pointer*/
+.memo-title {
+    cursor: pointer;
+}
+
+.voicelyTitle {
+    margin: 15px 0 0 0 !important;
     padding-left: 16px !important;
     width: 94.5% !important;
 }
-article {
+
+#content {
     padding-bottom: 15px !important;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
-textarea {
-    margin-top: 15px;
-    height: 400px;
+#phraseDiv {
+    margin: 0.5em 0;
+    flex: 1;
+}
+
+section {
+    overflow: scroll;
+    height: 360px;
 }
 
 ul {
@@ -36,4 +86,14 @@ ul {
 li {
     font-family: Mali;
     font-size: large;
+}
+
+@media (min-width: 993px) {
+    main {
+        align-items: stretch;
+        flex-direction: row-reverse;
+    }
+    section {
+        height: 100%;
+    }
 }

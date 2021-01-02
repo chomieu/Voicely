@@ -14,16 +14,16 @@ $("document").ready(function () {
   // emojiURL option 2
   var emojiURL = `https://emoji-api.com/emojis?access_key=${APIkey}`;
 
-  $.get( emojiURL ).then( function ( emResponse ) {
+  $.get(emojiURL).then(function (emResponse) {
     emojiList = emResponse;
     // console.log( a );
-    console.log( emojiList );
+    console.log(emojiList);
     // If the emoji API server is down, use the response stored in "emoji.json" as a backup 
-  }).fail( function () {
+  }).fail(function () {
     emojiList = emojiS;
-  }).then( function () {
+  }).then(function () {
     // Always adds the content of characters.json.
-    characterS.forEach(( obj ) => emojiList.push( obj ));
+    characterS.forEach((obj) => emojiList.push(obj));
   })
 
   $("#recordVoicelyBtn").on("click", function () {
@@ -65,4 +65,17 @@ $("document").ready(function () {
         recognizer = undefined;
       });
   });
-})
+  
+  // Search for and show memos that match the search term, hide all others
+  $("#search").keyup(function () {
+    var filter = $("#search").val().toUpperCase();
+    $("li > span").each( function() {
+      if ($(this).text().toUpperCase().indexOf(filter) > -1) {
+        $(this).parent().show()
+      } else {
+        $(this).parent().hide()
+      }
+    })
+  })
+
+});
