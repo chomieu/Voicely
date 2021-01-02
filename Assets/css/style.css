@@ -2,6 +2,10 @@ body, html {
     height: 100%;
 }
 
+.container {
+    width: 100%;
+}
+
 header {
     height: 100px;
 }
@@ -22,28 +26,47 @@ h4 {
 
 main {
     height: calc(100% - 140px);
+    display: flex;
+    flex-direction: column;
 }
 
-#alertText{
+.input-field {
+    margin: 0;
+}
+
+.label-icon {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+#search {
+    padding-left: 4rem;
+    width: calc(100% - 4rem);
+    font-size: 2rem;
+}
+
+#alertText {
     margin: 0 0 15px 15px !important;
     color: red;
 }
 
 /* user cue - when hovered over a memo title, mouse icon will be a pointer*/
-.memo-title{
+.memo-title {
     cursor: pointer;
 }
 
-input{
+.voicelyTitle {
     margin: 15px 0 0 0 !important;
     padding-left: 16px !important;
     width: 94.5% !important;
 }
 
-article {
+#content {
     padding-bottom: 15px !important;
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 #phraseDiv {
@@ -53,6 +76,7 @@ article {
 
 section {
     overflow: scroll;
+    height: 360px;
 }
 
 ul {
@@ -66,7 +90,10 @@ li {
 
 @media (min-width: 993px) {
     main {
-        display: flex;
         align-items: stretch;
+        flex-direction: row-reverse;
+    }
+    section {
+        height: 100%;
     }
 }
