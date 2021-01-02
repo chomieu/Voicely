@@ -22,8 +22,6 @@ h4 {
 
 main {
     height: calc(100% - 140px);
-    display: flex;
-    align-items: stretch;
 }
 
 article {
@@ -31,10 +29,6 @@ article {
     display: flex;
     flex-direction: column;
 }
-
-/* #phraseDiv_container {
-    flex: 1;
-} */
 
 #phraseDiv {
     margin: 0.5em 0;
@@ -54,6 +48,9 @@ li {
     font-size: large;
 }
 
-@media (min-width: 617px) {
- 
+@media (min-width: 993px) {
+    main {
+        display: flex;
+        align-items: stretch;
+    }
 }
