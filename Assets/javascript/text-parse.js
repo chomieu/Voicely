@@ -14,7 +14,6 @@ function voiceSearch( matchText, emojiObjects ) {
     console.log( "1. ******** NEW CALL OF voiceSearch ********");
     console.log( "2. Initial RegEx: ", regEx );
     console.log( "3. Text to match: ", matchText );
-    // Undo Microsoft's questionable decision to replace the word "smiley face" with 
     var matchArray = matchText.match( regEx );
     var emojiArray = [];
     console.log( "Array of matched phrases: ", matchArray );
