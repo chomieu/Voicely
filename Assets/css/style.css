@@ -52,11 +52,7 @@ main {
 }
 
 /* user cue - when hovered over a memo title, mouse icon will be a pointer*/
-<<<<<<< HEAD
 .collection-item {
-=======
-.memo-title {
->>>>>>> dev-branch
     cursor: pointer;
 }
 

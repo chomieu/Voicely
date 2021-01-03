@@ -1,6 +1,5 @@
 //variable to track current index position being used for title and text area
 var displayedIndex = null
-var confirmDelete = false
 
 //track if title is approved
 var titleApproved
@@ -15,6 +14,8 @@ var pageLoadMemo
 var pageEditContent
 var pageEditTitle
 
+//tracks if an item from memo list is selected to be loaded or deleted
+var confirmDelete = false
 
 //object array for storing titles and content
 // var memoList = []
@@ -441,11 +442,6 @@ $('.collection').on('click', '.collection-item', function () {
 $(document).on('click', '#saveVoicelyBtn', function () {
   saveCurrentVoicely()
 })
-
-
-
-
-
 
 // load saved memo list on page startup
 loadMemoList()
