@@ -226,7 +226,6 @@ function loadVoicelyMemo() {
 function saveCurrentVoicely() {
 
   if (displayedIndex !==  null){
-
     //save current content in #phraseDiv and set as the new value for the displayed index
     var updateContent = $('#phraseDiv').val()
     memoList[displayedIndex].content = updateContent
@@ -249,15 +248,7 @@ function confirmDeleteMemo(x) {
     }
   }
 
-  modalConfirm( "Really delete " + x + "?", yesFunc, noFunc );
-  
-  $('#listItem-' + thisIndex).append($('<p>', { id: 'delete' }))
-  $('#delete').text('Delete Memo?').css('color', 'red')
-
-  $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'yesBtn' }))
-  $('#yesBtn').css('margin', '0 20px').text('yes')
-  $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'noBtn' }))
-  $('#noBtn').text('no')
+  modalConfirm( "Really delete \"" + x + "\"?", yesFunc, noFunc );
 
   function yesFunc() {
       //Remove the deleted index from memoList
