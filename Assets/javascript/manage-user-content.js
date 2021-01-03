@@ -226,6 +226,7 @@ function loadVoicelyMemo() {
 function saveCurrentVoicely() {
   //save current content in #phraseDiv and set as the new value for the displayed index
   var updateContent = $('#phraseDiv').val()
+  console.log( displayedIndex );
   memoList[displayedIndex].content = updateContent
   //update local storage with new values
   setLocalStorage()
@@ -244,21 +245,22 @@ function confirmDeleteMemo(x) {
       thisIndex = i
     }
   }
+
+  modalConfirm( "Really delete " + x + "?", yesFunc, noFunc );
+  
   $('#listItem-' + thisIndex).append($('<p>', { id: 'delete' }))
   $('#delete').text('Delete Memo?').css('color', 'red')
+
   $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'yesBtn' }))
   $('#yesBtn').css('margin', '0 20px').text('yes')
   $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'noBtn' }))
   $('#noBtn').text('no')
 
-  $('#listItem-' + thisIndex).on('click', '.deleteBtn', function () {
-    if ($(this).text() === 'yes') {
+  function yesFunc() {
+      //Remove the deleted index from memoList
+      memoList.splice(thisIndex, 1)
       //scenario where the item displayed is the item being deleted
       if (x === displayedTitle) {
-        //function to remove the deleted index from memoList
-        memoList.splice(thisIndex, 1)
-        //console.log to confirm deletion for dev purposes
-        console.log(memoList)
         //update page scene since displayed content was just deleted
         pageStart = true
         updatePageScene()
@@ -266,21 +268,19 @@ function confirmDeleteMemo(x) {
         pageStart = false
         displayedIndex = null
         // if memo being deleted is not the current memo displayed
-      } else {
-        //remove the memo from the index
-        memoList.splice(thisIndex, 1)
-        console.log(memoList)
       }
+      //console.log to confirm deletion (or lack thereof) for dev purposes
+      console.log(memoList)
       //update localstorage to reflect deleted memo
       setLocalStorage()
-      //rebuild the memo list to reflect deleted memo
       confirmDelete = false
-      loadMemoList()
-    } else {
-      confirmDelete = false
-      loadMemoList()
-    }
-  })
+      loadMemoList();
+  }
+
+  function noFunc() {
+    confirmDelete = false
+    loadMemoList();
+  }
 }
 
 

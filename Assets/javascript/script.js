@@ -90,6 +90,7 @@ $("document").ready(function () {
 /* Functions for modals */
 function modalConfirm( text, trueFunc, falseFunc ) {
   $( "#custom-modal-header" ).text( "Confirm" );
+  $( "#custom-modal-text" ).text( text );
   $( "#custom-modal" ).css( "display", "block" );
   var confirmButton = $( "<button>", { class: "modal-button", id: "custom-modal-confirm-button" } ).text( "Confirm" );
   var denyButton = $( "<button>", { class: "modal-button", id: "custom-modal-deny-button" } ).text( "Cancel" );
@@ -141,4 +142,8 @@ function closeModal() {
   $( "#custom-modal-header" ).text( "" );
   $( "#custom-modal-text" ).text( "" );
   $( "#custom-modal" ).css( "display", "none" );
+}
+
+function dummyFunc() {
+  console.log( "Dummy function!" );
 }
