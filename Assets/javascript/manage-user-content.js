@@ -224,12 +224,15 @@ function loadVoicelyMemo() {
 
 //refrencing the current index, update the content of current memo
 function saveCurrentVoicely() {
-  //save current content in #phraseDiv and set as the new value for the displayed index
-  var updateContent = $('#phraseDiv').val()
-  memoList[displayedIndex].content = updateContent
-  //update local storage with new values
-  setLocalStorage()
-  console.log(`1. '${memoList[displayedIndex].title}' content auto-saved`)
+  if (displayedIndex !==  null){
+
+    //save current content in #phraseDiv and set as the new value for the displayed index
+    var updateContent = $('#phraseDiv').val()
+    memoList[displayedIndex].content = updateContent
+    //update local storage with new values
+    setLocalStorage()
+    console.log(`1. '${memoList[displayedIndex].title}' content auto-saved`)
+  }
 }
 
 function confirmDeleteMemo(x) {
