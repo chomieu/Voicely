@@ -288,6 +288,7 @@ function confirmDeleteMemo(x) {
 $(document).on('click', '#newVoicelyBtn', function (event) {
   // if no Memo is loaded (start up page) and user clicks new memo, change page scene to 'LoadMemo'
   if (displayedIndex === null && $(this).text().toLocaleLowerCase() === 'new voicely') {
+    saveCurrentVoicely()
     //update button scene
     pageLoadMemo = true
     updatePageScene()
@@ -305,6 +306,7 @@ $(document).on('click', '#newVoicelyBtn', function (event) {
   }
   // if a memo is loaded and a user clicks 'new voicely' 
   if (displayedIndex !== null && $(this).text().toLowerCase() === 'new voicely') {
+    saveCurrentVoicely()
     //update page scene
     pageLoadMemo = true
     updatePageScene()
