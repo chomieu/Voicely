@@ -65,11 +65,11 @@ $("document").ready(function () {
         recognizer = undefined;
       });
   });
-  
+
   // Search for and show memos that match the search term, hide all others
   $("#search").keyup(function () {
     var filter = $("#search").val().toUpperCase();
-    $("li > span").each( function() {
+    $("li > span").each(function () {
       if ($(this).text().toUpperCase().indexOf(filter) > -1) {
         $(this).parent().show()
       } else {
@@ -78,4 +78,22 @@ $("document").ready(function () {
     })
   })
 
+  var themeColor = ["red", "pink", "purple", "deep-purple", "indigo", "blue", "light-blue", "cyan", "teal", "green", "light-green", "lime", "yellow", "amber", "orange", "deep-orange", "brown", "grey", "blue-grey"]
+  var oldTheme = "cyan"
+  var newTheme
+
+  for (i = 0; i < themeColor.length; i++) {
+    $("#palette").append($("<span>", { class: themeColor[i], style: "padding: 0 1vw;" }))
+  }
+
+  $("#palette").hide()
+  $("#settingsBtn").on("click", function () {
+    $("#palette").show()
+  })
+
+  $("#palette > span").on("click", function () {
+    newTheme = $(this).attr("class")
+    $(".theme").switchClass(oldTheme, newTheme)
+    oldTheme = newTheme
+  })
 });

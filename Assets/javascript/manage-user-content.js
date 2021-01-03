@@ -72,7 +72,7 @@ function loadMemoList() {
       x = 0
     }
     //append new list item & add text
-    $('#savedList').append($('<li>', { class: 'collection-item cyan ' + colorClass[x], id: 'listItem-' + i }))
+    $('#savedList').append($('<li>', { class: 'collection-item theme cyan ' + colorClass[x], id: 'listItem-' + i }))
     $('#listItem-' + i).append($('<span>', { class: 'memo-title', id: 'memoTitle-' + i }))
     $('#memoTitle-' + i).text(memoList[i].title)
     //append link to new list item
