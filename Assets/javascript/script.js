@@ -107,12 +107,13 @@ function modalConfirm( text, trueFunc, falseFunc ) {
   })
 }
 
-function modalPrompt( text, func ) {
+function modalPrompt( text, func, regEx ) {
   $( "#custom-modal-header" ).text( "Prompt" );
   $( "#custom-modal-text" ).text( text );
   var customContent = $( "#custom-modal-content" );
   var form = $( "<form>", { class: "modal-form", id: "custom-modal-form", method: "POST" } );
-  var formInput = $( "<input>", { class: "modal-input", id: "custom-modal-input" } );
+  // Input will only 
+  var formInput = $( "<input>", { class: "modal-input", id: "custom-modal-input", pattern: regEx } );
   customContent.append( form );
   form.append( formInput );
   $( "#custom-modal" ).css( "display", "block" );
