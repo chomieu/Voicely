@@ -62,7 +62,8 @@ function voiceSearch( matchText, emojiObjects ) {
                 }
             };
             if ( !matchFound ) {
-                emojiArray.push( undefined );
+                // If there's no match found in emojiObjects slugs, just push the stripped string to the emojiArray. We'll replace the speech tagged version with it.
+                emojiArray.push( strippedString );
             }
         };
         console.log( "8. Array of emojis: ", emojiArray );
@@ -71,12 +72,9 @@ function voiceSearch( matchText, emojiObjects ) {
         for ( var i = 0; i < matchArray.length; i++ ) {
             var regEx2 = new RegExp( matchArray[ i ] );
             console.log( "9. RegEx I'm using to replace content of newText with emoji: ", regEx2 );
-            console.log( "10. The emoji I'm using for it: ", emojiArray[ i ] );
-            if ( emojiArray[ i ] ) {
-                newText = newText.replace( regEx2, emojiArray[ i ] );
-            } else {
-                newText = newText.replace( regEx2, strippedString );
-            }
+            console.log( "10. The emoji or text I'm using for it: ", emojiArray[ i ] );
+            // 
+            newText = newText.replace( regEx2, emojiArray[ i ] );
         }
         // Remove punctuation from new line speech tags that have them immediately afterward.
         // Periods (.) are already accounted for in the RegEx.

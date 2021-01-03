@@ -1,5 +1,5 @@
 $( "#smsBtn" ).on( "click", function () {
-    modalPrompt( "Enter the phone number you'd like to send a text to: ", sendSMS );
+    modalPrompt( "Enter the phone number you'd like to send a text to (numbers only): ", sendSMS, "^[0-9]+$" );
 });
 
 function sendSMS( phoneNumber ) {
