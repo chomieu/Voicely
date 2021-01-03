@@ -95,5 +95,6 @@ $("document").ready(function () {
     newTheme = $(this).attr("class")
     $(".theme").switchClass(oldTheme, newTheme)
     oldTheme = newTheme
+    $("#palette").hide()
   })
 });
