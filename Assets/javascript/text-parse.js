@@ -3,26 +3,26 @@
 // Takes in a string, matches a regex with any phrases in it, then returns emojis created from those matches to the #emoji-display div.
 function voiceSearch( matchText, emojiObjects ) {
     // Undo Microsoft's questionable decision to replace "smiley face" with ":)".
-    console.log( "Smiley face test match? ", /:\)/.test( matchText ) );
+    // console.log( "Smiley face test match? ", /:\)/.test( matchText ) );
     if ( /:\)/.test( matchText ) ) {
-        console.log( "Entered if statement for smiley match" );
+        // console.log( "Entered if statement for smiley match" );
         matchText = matchText.replace( /:\)/g, "slightly smiling face" );
     }
     // construct our RegEx of the keyphrase.
     // var regEx = /(S|s)ymbol[s]?[,]? (E\d0 )?[\w+( |,|\.|\?|!)]+?(E|e)moji/g;
     var regEx = /(V|v)oice[,]? (L|l)(ee||i)[s]?[,]? (E\d0 )?[\w+( |,|\.|\?|!)]+?((E|e)moji|(S|s)ymbol)\.?/g;
-    console.log( "1. ******** NEW CALL OF voiceSearch ********");
-    console.log( "2. Initial RegEx: ", regEx );
-    console.log( "3. Text to match: ", matchText );
+    // console.log( "1. ******** NEW CALL OF voiceSearch ********");
+    // console.log( "2. Initial RegEx: ", regEx );
+    // console.log( "3. Text to match: ", matchText );
     var matchArray = matchText.match( regEx );
     var emojiArray = [];
-    console.log( "Array of matched phrases: ", matchArray );
+    // console.log( "Array of matched phrases: ", matchArray );
     // Gets the current contents of the div, in case there was already content there before running voiceSearch.
     var oldText = $( "#phraseDiv" ).val();
-    console.log( "oldText:", oldText );
+    // console.log( "oldText:", oldText );
     // If the RegEx has at least one match AND an emojiObjects has been passed in (the latter shouldn't be a problem anymore since Chomie added the cached emoji.json file, but it's a nice failsafe in case we use this function in other contexts).
     if ( matchArray && emojiObjects ) {
-        console.log( "4. Entered matchArray if statement" );
+        // console.log( "4. Entered matchArray if statement" );
         // Iterate over matchArray and build an array of keywords to replace.
         for ( var i = 0; i < matchArray.length; i++ ) {
             /* This complicated line of code preps the matched string to be converted into an emoji or symbol slug. It takes the matched string and does the following: */
@@ -31,17 +31,17 @@ function voiceSearch( matchText, emojiObjects ) {
             // - The replace() method removes all commas.
             // - toLowerCase() converts everything to lowercase letters.
             var strippedString = matchArray[ i ].substring( matchArray[ i ].indexOf( " ", matchArray[ i ].indexOf( " " ) + 1 ), matchArray[ i ].lastIndexOf( " " ) ).trim().replace( /,/g, "" ).toLowerCase();
-            console.log( "5. Matched string stripped of symbol words and commas, and set to lowercase: ", strippedString );
+            // console.log( "5. Matched string stripped of symbol words and commas, and set to lowercase: ", strippedString );
             // In case the user is using variants of the standard emojis.
             if ( /e\d0/.test( strippedString ) ) {
                 /* Insert a space after the first number so that inserting dashes in the place of spaces gets us
                 the proper format for an emoji slug. */
                 strippedString = strippedString.slice( 0, 2) + " " + strippedString.slice( 2, strippedString.length );
             };
-            console.log( "6. strippedString, with spaces inserted for emoji variant tag: ", strippedString );
+            // console.log( "6. strippedString, with spaces inserted for emoji variant tag: ", strippedString );
             // Replaces all spaces with dashes to create a string that corresponds with the "slug" key for emojis in the emojiObjects array.
             var dashedString = strippedString.replace( /\s/g, "-" );
-            console.log( "7. Matched string with dashes instead of spaces: ", dashedString );
+            // console.log( "7. Matched string with dashes instead of spaces: ", dashedString );
             // Iterates over entire emojiObjects array looking for slugs that match the "dashed" version of what was said.
             var matchFound = false;
             for ( var j = 0; j < emojiObjects.length; j++ ) {
@@ -66,13 +66,13 @@ function voiceSearch( matchText, emojiObjects ) {
                 emojiArray.push( strippedString );
             }
         };
-        console.log( "8. Array of emojis: ", emojiArray );
+        // console.log( "8. Array of emojis: ", emojiArray );
         // Iterate over matchArray, and replace all instances of matchArray[ i ] in matchText with emojiArray[ i ], where they exist.
         var newText = matchText;
         for ( var i = 0; i < matchArray.length; i++ ) {
             var regEx2 = new RegExp( matchArray[ i ] );
-            console.log( "9. RegEx I'm using to replace content of newText with emoji: ", regEx2 );
-            console.log( "10. The emoji or text I'm using for it: ", emojiArray[ i ] );
+            // console.log( "9. RegEx I'm using to replace content of newText with emoji: ", regEx2 );
+            // console.log( "10. The emoji or text I'm using for it: ", emojiArray[ i ] );
             // 
             newText = newText.replace( regEx2, emojiArray[ i ] );
         }
@@ -81,20 +81,20 @@ function voiceSearch( matchText, emojiObjects ) {
         newText = newText.replace( /\n(\?|!|,)(\s)?/, "\n" );
         newText = newText.replace( /- (\?|!|,)(\s)?/, "- ");
         // Place the result text in the #phraseDiv
-        console.log( "11. Text to be placed in #phraseDiv: ", newText );
+        // console.log( "11. Text to be placed in #phraseDiv: ", newText );
         $( "#phraseDiv" ).val( `${ oldText } ${ newText }`);
     } else if ( oldText ) {
         $( "#phraseDiv" ).val( `${ oldText } ${ matchText }` );
     } else {
         $( "#phraseDiv" ).val( `${ matchText }` );
     }
-    console.log( "******** END ********");
+    // console.log( "******** END ********");
 }
   
 $('#emoji-submit').on('click', function (event) {
     event.preventDefault(event)
 
     var emojiSearch = $(this).prev().val()
-    console.log(emojiSearch)
+    // console.log(emojiSearch)
     // requestEmoji(emojiSearch)
 })

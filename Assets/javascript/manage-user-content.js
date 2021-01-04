@@ -132,7 +132,6 @@ function recordSmsSaveBtnSettings(x){
   $('#smsBtn').prop("disabled", x)
   $('#saveVoicelyBtn').prop("disabled", x)
 }
-
 //Layout to create a new Voicely or load a saved session
 function pageSceneStart(){
   viocelyTitleSettings(true,  'white-text theme' + oldTheme,)

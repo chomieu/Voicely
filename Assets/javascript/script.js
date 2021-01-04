@@ -177,3 +177,11 @@ function closeModal() {
 function dummyFunc() {
   console.log( "Dummy function!" );
 }
+
+// $(window).on("resize", function() {
+//   if ($(window).width() <= 768 && $(window).width() > 420) {
+//     $("button").switchClass("btn", "btn-large")
+//   } else {
+//     $("button").switchClass("btn-large", "btn")
+//   }
+// })
