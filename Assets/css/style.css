@@ -7,11 +7,15 @@ body, html {
 }
 
 header {
-    height: 100px;
+    height: 200px;
 }
 
 header, article {
     border: 1px solid lightgray;
+}
+
+#header-logo {
+    height: 200px;
 }
 
 h3 {
