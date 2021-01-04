@@ -5,6 +5,17 @@ var emojiList;
 var oldTheme = "cyan"
 var newTheme
 
+var mainHeader = $( "#main-header" );
+var headerLogo = $( "#header-logo" );
+
+mainHeader.css( "height", "100%" );
+headerLogo.css( "height", "100%" );
+
+setTimeout( function() {
+  mainHeader.css( "height", "120px" );
+  headerLogo.css( "height", "120px" );
+}, 2000 );
+
 $("document").ready(function () {
 
   // key option 1
