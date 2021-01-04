@@ -76,7 +76,7 @@ function loadMemoList() {
       x = 0
     }
     //append new list item & add text
-    $('#savedList').append($('<li>', { class: 'collection-item cyan ' + colorClass[x], id: 'listItem-' + i }))
+    $('#savedList').append($('<li>', { class: oldTheme + ' theme collection-item ' + colorClass[x], id: 'listItem-' + i }))
     $('#listItem-' + i).append($('<span>', { class: 'memo-title', id: 'memoTitle-' + i }))
     $('#memoTitle-' + i).text(memoList[i].title)
     //append link to new list item
@@ -120,7 +120,7 @@ function recordSmsSaveBtnSettings(x){
 function updatePageScene() {
   //START - Scene to create a new Voicely or load a saved session
   if (pageStart) {
-    viocelyTitleSettings(true, 'cyan white-text',)
+    viocelyTitleSettings(true, 'white-text theme '+ oldTheme,)
     $("#voicelyTitle").val('')
     $('#alertText').text('')
     newVoicelyBtnSettings(false, 'New Voicely')
@@ -132,7 +132,7 @@ function updatePageScene() {
 
   //LOAD - Scene to create a new Voicely memo, or cancel and return to START-UP SCREEN
   if (pageLoadMemo) {
-    viocelyTitleSettings(false, 'cyan white-text lighten-3')
+    viocelyTitleSettings(false, 'white-text lighten-3 theme '+ oldTheme)
     newVoicelyBtnSettings(false, 'Cancel')
     editTitleBtnSettings(false, 'Save Title')
     phraseDivSettings(true)
@@ -140,7 +140,7 @@ function updatePageScene() {
   }
   //EDIT TITLE - Scene to edit the title of an existing memo
   if (pageEditTitle) {
-    viocelyTitleSettings(false, 'cyan white-text lighten-3')
+    viocelyTitleSettings(false, 'white-text lighten-3 '+ oldTheme)
     newVoicelyBtnSettings(false, 'Cancel')
     editTitleBtnSettings(false, 'Update Title')
     phraseDivSettings(true)
@@ -148,7 +148,7 @@ function updatePageScene() {
   }
   //EDIT CONTENT - Scene for working on a current Voicely memo
   if (pageEditContent) {
-    viocelyTitleSettings(true, 'cyan white-text')
+    viocelyTitleSettings(true, 'white-text theme '+ oldTheme)
     $('#alertText').text('')
     newVoicelyBtnSettings(false, 'New Voicely')
     editTitleBtnSettings(false, 'Edit Title')
