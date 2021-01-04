@@ -80,12 +80,15 @@ $("document").ready(function () {
     })
   })
 
+  // Array of possible theme colors for the homepage.
   var themeColor = ["red", "pink", "purple", "deep-purple", "indigo", "blue", "light-blue", "cyan", "teal", "green", "light-green", "lime", "yellow", "amber", "orange", "deep-orange", "brown", "grey", "blue-grey"]
 
+  // Appends the theme colors to the palette.
   for (i = 0; i < themeColor.length; i++) {
     $("#palette").append($("<span>", { class: themeColor[i] }))
   }
 
+  // Settings button toggle.
   $("#settingsBtn").on("click", function () {
     if($("#settings").is(":visible")) {
       $("#settings").hide()
@@ -96,6 +99,7 @@ $("document").ready(function () {
     }
   })
 
+  // Changes out the CSS class of selected elements to change the theme color.
   $("#palette > span").on("click", function () {
     newTheme = $(this).attr("class")
     $(".theme").switchClass(oldTheme, newTheme)
@@ -112,6 +116,10 @@ $("document").ready(function () {
 })
 
 /* Functions for modals */
+
+// Replaces the confirm() function. Takes a text string to inform the user about what to do, a function for
+// if the user clicks the affirmative "Confirm" button and a function for if the user clicks the negative
+// "Cancel" button.
 function modalConfirm( text, trueFunc, falseFunc ) {
   $( "#custom-modal-header" ).text( "Confirm" );
   $( "#custom-modal-text" ).text( text );
@@ -132,16 +140,14 @@ function modalConfirm( text, trueFunc, falseFunc ) {
   })
 }
 
+// Replaces the prompt() function. Takes a string of text to inform the user, a function to execute when
+// the user submits it, and an optional regex for form input validation.
 function modalPrompt( text, func, regEx ) {
   $( "#custom-modal-header" ).text( "Prompt" );
   $( "#custom-modal-text" ).text( text );
   var customContent = $( "#custom-modal-content" );
   var form = $( "<form>", { class: "modal-form", id: "custom-modal-form", method: "POST" } );
-  // Input will only 
-    // Input will only 
-  // Input will only 
-    // Input will only 
-  // Input will only 
+  // Input will only add a regex for validation if it's specified in the function call.
   var formInput = $( "<input>", { class: "modal-input", id: "custom-modal-input", pattern: regEx } );
   customContent.append( form );
   form.append( formInput );
@@ -154,12 +160,14 @@ function modalPrompt( text, func, regEx ) {
   })
 }
 
+// Replaces the alert() function. Only takes a text string as an argument.
 function modalAlert( text ) {
   $( "#custom-modal-header" ).text( "Alert" );
   $( "#custom-modal-text" ).text( text );
   $( "#custom-modal" ).css( "display", "block" );
 }
 
+// Used in all modals. Closes the modal and deletes all children within it beyond the "standard" ones.
 function closeModal() {
   // Collects all non-standard elements (modals past children[ 2 ])
   var modalElements = $( "#custom-modal-content" )[ 0 ].children;
@@ -170,8 +178,4 @@ function closeModal() {
   $( "#custom-modal-header" ).text( "" );
   $( "#custom-modal-text" ).text( "" );
   $( "#custom-modal" ).css( "display", "none" );
-}
-
-function dummyFunc() {
-  console.log( "Dummy function!" );
 }
