@@ -65,7 +65,7 @@ function loadMemoList() {
   $('#savedList').empty()
   // color class names ordered to create the list item background fade effect
   var colorClass = ['lighten-3', 'lighten-2', 'lighten-1', '', 'darken-1', 'darken-2', 'darken-3', 'darken-2', 'darken-1', '', 'lighten-1', 'lighten-2']
-  //start on colorClass index 0
+  //'x' will be used to track our 'colorClass' index position. It will start on index-0
   var x = 0
 
   for (let i = 0; i < memoList.length; i++) {
@@ -88,59 +88,70 @@ function loadMemoList() {
   }
 }
 
+function viocelyTitleSettings(x, y,){
+  $("#voicelyTitle").prop("disabled", x)
+  $('#voicelyTitle').attr('class', y)
+}
+
+function newVoicelyBtnSettings(x, y){
+  $("#newVoicelyBtn").prop("disabled", x)
+  $("#newVoicelyBtn").text(y)
+}
+
+function editTitleBtnSettings(x,y){
+  $("#editTitleBtn").prop("disabled", x)
+  $('#editTitleBtn').text(y)
+}
+
+function phraseDivSettings(x){
+  $('#phraseDiv').prop("disabled", x)
+}
+
+function recordSmsSaveBtnSettings(x){
+  $('#recordVoicelyBtn').prop("disabled", x)
+  $('#smsBtn').prop("disabled", x)
+  $('#saveVoicelyBtn').prop("disabled", x)
+
+}
 
 // depending on what the user clicks on, change the behavior and accessibility of the page
 function updatePageScene() {
   //START - Scene to create a new Voicely or load a saved session
   if (pageStart) {
-    $("#voicelyTitle").prop("disabled", true)
-    $('#voicelyTitle').attr('class', 'cyan white-text')
+    viocelyTitleSettings(true, 'cyan white-text',)
     $("#voicelyTitle").val('')
     $('#alertText').text('')
-    $("#editTitleBtn").prop("disabled", true)
-    $('#editTitleBtn').text('Edit title')
-    $("#newVoicelyBtn").prop("disabled", false)
-    $("#newVoicelyBtn").text("new voicely")
-    $('#phraseDiv').prop("disabled", true)
-    $('#phraseDiv').val("")
-    $('#recordVoicelyBtn').prop("disabled", true)
+    newVoicelyBtnSettings(false, 'New Voicely')
+    editTitleBtnSettings(true, 'Edit Title')
+    phraseDivSettings(true)
+    $('#phraseDiv').val('')
+    recordSmsSaveBtnSettings(true)
   }
+
   //LOAD - Scene to create a new Voicely memo, or cancel and return to START-UP SCREEN
   if (pageLoadMemo) {
-    $("#voicelyTitle").prop("disabled", false)
-    $('#voicelyTitle').attr('class', 'cyan white-text lighten-3')
-    $("#editTitleBtn").prop("disabled", false)
-    $('#editTitleBtn').text('Save title')
-    $("#newVoicelyBtn").prop("disabled", false)
-    $("#newVoicelyBtn").text("cancel")
-    $('#phraseDiv').prop("disabled", true)
-    $('#recordVoicelyBtn').prop("disabled", true)
-    $('#smsBtn').prop("disabled", true)
-    $('#saveVoicelyBtn').prop("disabled", true)
+    viocelyTitleSettings(false, 'cyan white-text lighten-3')
+    newVoicelyBtnSettings(false, 'Cancel')
+    editTitleBtnSettings(false, 'Save Title')
+    phraseDivSettings(true)
+    recordSmsSaveBtnSettings(true)
   }
   //EDIT TITLE - Scene to edit the title of an existing memo
   if (pageEditTitle) {
-    $("#voicelyTitle").prop("disabled", false)
-    $('#voicelyTitle').attr('class', 'cyan white-text lighten-3')
-    $("#newVoicelyBtn").text('cancel')
-    $("#editTitleBtn").prop("disabled", false)
-    $('#editTitleBtn').text('Update title')
-    $('#recordVoicelyBtn').prop("disabled", false)
-    $('#saveVoicelyBtn').prop("disabled", true)
+    viocelyTitleSettings(false, 'cyan white-text lighten-3')
+    newVoicelyBtnSettings(false, 'Cancel')
+    editTitleBtnSettings(false, 'Update Title')
+    phraseDivSettings(true)
+    recordSmsSaveBtnSettings(true)
   }
   //EDIT CONTENT - Scene for working on a current Voicely memo
   if (pageEditContent) {
-    $("#voicelyTitle").prop("disabled", true)
-    $('#voicelyTitle').attr('class', 'cyan white-text')
+    viocelyTitleSettings(true, 'cyan white-text')
     $('#alertText').text('')
-    $("#newVoicelyBtn").prop("disabled", false)
-    $("#newVoicelyBtn").text("new voicely")
-    $("#editTitleBtn").prop("disabled", false)
-    $('#editTitleBtn').text('Edit title')
-    $('#phraseDiv').prop("disabled", false)
-    $('#recordVoicelyBtn').prop("disabled", false)
-    $('#smsBtn').prop("disabled", false)
-    $('#saveVoicelyBtn').prop("disabled", false)
+    newVoicelyBtnSettings(false, 'New Voicely')
+    editTitleBtnSettings(false, 'Edit Title')
+    phraseDivSettings(false)
+    recordSmsSaveBtnSettings(false)
   }
 }
 
