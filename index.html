@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
-
+    
 <head>
     <title>Voicely</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mali:wght@500&family=Kaushan+Script&display=swap"
@@ -11,22 +12,28 @@
     <link rel="stylesheet" href="./Assets/css/style.css">
 </head>
 
-<body class="container light-blue lighten-5">
+<body class="container theme cyan lighten-5">
 
-    <header class="nav-wraper row center white-text cyan accent-3">
+    <header class="nav-wraper row center white-text theme cyan accent-3">
         <h3>Voicely</h3>
         <p>Your Personal Transcriptionist</p>
     </header>
 
+    <div class="modal" id="custom-modal">
+        <!-- Content for modal goes here -->
+        <div class="modal-content" id="custom-modal-content">
+            <span id="close">&times;</span>
+            <h3 class="modal-header" id="custom-modal-header"></h3>
+            <p class="modal-text" id="custom-modal-text"></p>
+        </div>
+    </div>
     <main class="row">
-
-        <section class="col s12 l7">
+        <section class="col s12 l6">
             <div class="input-field">
                 <input id="search" type="search" required>
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                <i class="material-icons">close</i>
             </div>
-            <ul class="collection white-text dropdown-content" id="savedList">
+            <ul class="collection white-text" id="savedList">
                 <!-- <li class="collection-item cyan lighten-3">Grocery list<a href="#!" class="secondary-content"><i class="material-icons">clear</i></a>
                 <li class="collection-item cyan lighten-2">Christmas Presents<a href="#!" class="secondary-content"><i class="material-icons">clear</i></a>
                 <li class="collection-item cyan lighten-1">To Do<a href="#!" class="secondary-content"><i class="material-icons">clear</i></a>
@@ -35,34 +42,41 @@
             </ul>
         </section>
 
-        <article class="col s12 l5 white" id="content">
-            <input class="cyan white-text" type="text" id="voicelyTitle" placeholder="New Voicely Title"
+        <article class="col s12 l6 white" id="content">
+            <input class="theme cyan white-text" type="text" id="voicelyTitle" placeholder="New Voicely Title"
                 disabled="true">
             <p id="alertText"></p>
             <div>
-                <button class="btn cyan accent-3 waves-effect waves-light" id="newVoicelyBtn">new voicely</button>
-                <button class="btn cyan accent-3 waves-effect waves-light" id="editTitleBtn" disabled="true">edit
-                    title</button>
+                <button class="btn theme cyan accent-3 waves-effect waves-light" id="newVoicelyBtn">new voicely</button>
+                <button class="btn theme cyan accent-3 waves-effect waves-light" id="editTitleBtn" disabled="true">edit title</button>
+                <button class="btn theme cyan accent-3 waves-effect waves-light right" id="settingsBtn"><i class="material-icons">settings</i></button>
+                <ul class="collapsible center" id="settings">
+                    <li>
+                        <div class="collapsible-header">Theme Color</div>
+                        <div class="collapsible-body" id="palette"></div>
+                    </li>
+                </ul>
             </div>
-            <textarea class="cyan lighten-5" id="phraseDiv" placeholder="Create new Voicely or load a saved memo"
-                disabled="true"></textarea>
+            <textarea class="theme cyan lighten-5" id="phraseDiv" placeholder="Create new Voicely or load a saved memo"
+                disabled="true" style="background-color: transparent;"></textarea>
             <div>
-                <button class="btn cyan accent-3 waves-effect waves-light" id="recordVoicelyBtn"
+                <button class="btn theme cyan accent-3 waves-effect waves-light" id="recordVoicelyBtn"
                     disabled="true">record</button>
-                <button class="btn cyan accent-3 waves-effect waves-light" id="pdfBtn" disabled="true">to PDF</button>
-                <button class="btn cyan accent-3 waves-effect waves-light" id="saveVoicelyBtn"
+                <button class="btn theme cyan accent-3 waves-effect waves-light" id="smsBtn" disabled="true">Send SMS</button>
+                <button class="btn theme cyan accent-3 waves-effect waves-light" id="saveVoicelyBtn"
                     disabled="true">save</button>
             </div>
         </article>
 
     </main>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="json/characters.json"></script>
     <script type="text/javascript" src="json/emoji.json"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
     <script src="SpeechSDK/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
     <script src="Assets/javascript/text-parse.js"></script>
+    <script src="Assets/javascript/sms-send.js"></script>
     <script src="Assets/javascript/script.js"></script>
     <script src="Assets/javascript/manage-user-content.js"></script>
 </body>
