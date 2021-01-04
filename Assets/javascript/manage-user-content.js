@@ -14,6 +14,8 @@ var pageLoadMemo
 var pageEditContent
 var pageEditTitle
 
+//tracks if an item from memo list is selected to be loaded or deleted
+var confirmDelete = false
 
 //object array for storing titles and content
 // var memoList = []
@@ -72,7 +74,7 @@ function loadMemoList() {
       x = 0
     }
     //append new list item & add text
-    $('#savedList').append($('<li>', { class: 'collection-item theme cyan ' + colorClass[x], id: 'listItem-' + i }))
+    $('#savedList').append($('<li>', { class: oldTheme + ' theme collection-item ' + colorClass[x], id: 'listItem-' + i }))
     $('#listItem-' + i).append($('<span>', { class: 'memo-title', id: 'memoTitle-' + i }))
     $('#memoTitle-' + i).text(memoList[i].title)
     //append link to new list item
@@ -92,7 +94,7 @@ function updatePageScene() {
   //START - Scene to create a new Voicely or load a saved session
   if (pageStart) {
     $("#voicelyTitle").prop("disabled", true)
-    $('#voicelyTitle').attr('class', 'cyan white-text')
+    $('#voicelyTitle').attr('class', 'white-text theme ' + oldTheme)
     $("#voicelyTitle").val('')
     $('#alertText').text('')
     $("#editTitleBtn").prop("disabled", true)
@@ -106,19 +108,20 @@ function updatePageScene() {
   //LOAD - Scene to create a new Voicely memo, or cancel and return to START-UP SCREEN
   if (pageLoadMemo) {
     $("#voicelyTitle").prop("disabled", false)
-    $('#voicelyTitle').attr('class', 'cyan white-text lighten-3')
+    $('#voicelyTitle').attr('class', 'white-text lighten-3 theme ' + oldTheme)
     $("#editTitleBtn").prop("disabled", false)
     $('#editTitleBtn').text('Save title')
     $("#newVoicelyBtn").prop("disabled", false)
     $("#newVoicelyBtn").text("cancel")
     $('#phraseDiv').prop("disabled", true)
     $('#recordVoicelyBtn').prop("disabled", true)
+    $('#smsBtn').prop("disabled", true)
     $('#saveVoicelyBtn').prop("disabled", true)
   }
   //EDIT TITLE - Scene to edit the title of an existing memo
   if (pageEditTitle) {
     $("#voicelyTitle").prop("disabled", false)
-    $('#voicelyTitle').attr('class', 'cyan white-text lighten-3')
+    $('#voicelyTitle').attr('class', 'white-text lighten-3 theme ' + oldTheme)
     $("#newVoicelyBtn").text('cancel')
     $("#editTitleBtn").prop("disabled", false)
     $('#editTitleBtn').text('Update title')
@@ -128,7 +131,7 @@ function updatePageScene() {
   //EDIT CONTENT - Scene for working on a current Voicely memo
   if (pageEditContent) {
     $("#voicelyTitle").prop("disabled", true)
-    $('#voicelyTitle').attr('class', 'cyan white-text')
+    $('#voicelyTitle').attr('class', 'white-text theme ' + oldTheme)
     $('#alertText').text('')
     $("#newVoicelyBtn").prop("disabled", false)
     $("#newVoicelyBtn").text("new voicely")
@@ -136,6 +139,7 @@ function updatePageScene() {
     $('#editTitleBtn').text('Edit title')
     $('#phraseDiv').prop("disabled", false)
     $('#recordVoicelyBtn').prop("disabled", false)
+    $('#smsBtn').prop("disabled", false)
     $('#saveVoicelyBtn').prop("disabled", false)
   }
 }
@@ -220,12 +224,15 @@ function loadVoicelyMemo() {
 
 //refrencing the current index, update the content of current memo
 function saveCurrentVoicely() {
-  //save current content in #phraseDiv and set as the new value for the displayed index
-  var updateContent = $('#phraseDiv').val()
-  memoList[displayedIndex].content = updateContent
-  //update local storage with new values
-  setLocalStorage()
-  console.log(`1. '${memoList[displayedIndex].title}' content auto-saved`)
+
+  if (displayedIndex !==  null){
+    //save current content in #phraseDiv and set as the new value for the displayed index
+    var updateContent = $('#phraseDiv').val()
+    memoList[displayedIndex].content = updateContent
+    //update local storage with new values
+    setLocalStorage()
+    console.log(`1. '${memoList[displayedIndex].title}' content auto-saved`)
+  }
 }
 
 function confirmDeleteMemo(x) {
@@ -240,22 +247,14 @@ function confirmDeleteMemo(x) {
       thisIndex = i
     }
   }
-  console.log(thisIndex)
-  $('#listItem-' + thisIndex).append($('<p>', { id: 'delete' }))
-  $('#delete').text('Delete Memo?').css('color', 'red')
-  $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'yesBtn' }))
-  $('#yesBtn').css('margin', '0 20px').text('yes')
-  $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'noBtn' }))
-  $('#noBtn').text('no')
 
-  $('#listItem-' + thisIndex).on('click', '.deleteBtn', function () {
-    if ($(this).text() === 'yes') {
-      //scenario where the idem displayed is the item being deleted
+  modalConfirm( "Really delete \"" + x + "\"?", yesFunc, noFunc );
+
+  function yesFunc() {
+      //Remove the deleted index from memoList
+      memoList.splice(thisIndex, 1)
+      //scenario where the item displayed is the item being deleted
       if (x === displayedTitle) {
-        //function to remove the deleted index from memoList
-        memoList.splice(thisIndex, 1)
-        //console.log to confirm deletion for dev purposes
-        console.log(memoList)
         //update page scene since displayed content was just deleted
         pageStart = true
         updatePageScene()
@@ -263,19 +262,19 @@ function confirmDeleteMemo(x) {
         pageStart = false
         displayedIndex = null
         // if memo being deleted is not the current memo displayed
-      } else {
-        //remove the memo from the index
-        memoList.splice(thisIndex, 1)
-        console.log(memoList)
       }
+      //console.log to confirm deletion (or lack thereof) for dev purposes
+      console.log(memoList)
       //update localstorage to reflect deleted memo
       setLocalStorage()
-      //rebuild the memo list to reflect deleted memo
-      loadMemoList()
-    } else {
-      loadMemoList()
-    }
-  })
+      confirmDelete = false
+      loadMemoList();
+  }
+
+  function noFunc() {
+    confirmDelete = false
+    loadMemoList();
+  }
 }
 
 
@@ -283,6 +282,7 @@ function confirmDeleteMemo(x) {
 $(document).on('click', '#newVoicelyBtn', function (event) {
   // if no Memo is loaded (start up page) and user clicks new memo, change page scene to 'LoadMemo'
   if (displayedIndex === null && $(this).text().toLocaleLowerCase() === 'new voicely') {
+    saveCurrentVoicely()
     //update button scene
     pageLoadMemo = true
     updatePageScene()
@@ -300,6 +300,7 @@ $(document).on('click', '#newVoicelyBtn', function (event) {
   }
   // if a memo is loaded and a user clicks 'new voicely' 
   if (displayedIndex !== null && $(this).text().toLowerCase() === 'new voicely') {
+    saveCurrentVoicely()
     //update page scene
     pageLoadMemo = true
     updatePageScene()
@@ -380,59 +381,63 @@ $(document).on('click', '#editTitleBtn', function (event) {
   }
 })
 
-
-//listen for a click on any saved Memo
-// $('.collection').on('click', '.collection-item', function () {
-$('.collection').on('click', '.memo-title', function () {
-  findDisplayedIndex()
-  selectedTitle = $(this).text()
-  //if a memo is selected and the edit title button displays 'edit title',
-  //user is not in the middle of changing a current title name, so
-  //user is allowed to load memo
-  if ($('#editTitleBtn').text().toLowerCase() === 'edit title') {
-    //if no memo is loaded
-    if (displayedIndex === null) {
-      //find the index of the memo selected
-      findDisplayedIndex()
-      //if a memo is currently loaded, index will not be null
-    } else {
-      //check to see if currrent memo content should be updated before loading the selected memo
-      saveCurrentVoicely()
-      //find the index of the memo selected to load
-      findDisplayedIndex()
-    }
-    //load the page with the index if the Memo selected
-    loadVoicelyMemo()
-    console.log(`2. '${memoList[displayedIndex].title}' loaded from index-${displayedIndex}`)
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    //update page scene
-    pageEditContent = true
-    updatePageScene()
-    //reset page scene variable
-    pageEditContent = false
-    //refresh page if any delete buttons were activated but not confirmed
-    loadMemoList()
-  } else {
-    //if button does not display text of 'edit title',
-    //then user is in the middle of creating a new memo or loading a saved memo
-    //alert user and deny loading the selected memo
-    $('#alertText').text("*Update 'title' or cancel")
-  }
-})
-
-
-//listen for a click on save content button, when clicked updatet the conent value refrenced in displayedIndex
-$(document).on('click', '#saveVoicelyBtn', function () {
-  saveCurrentVoicely()
-})
-
-
 $('.collection').on('click', '.secondary-content', function () {
+  confirmDelete = true
+  // console.log($(this).text())
   var thisTitle = $(this).prev().text()
+  console.log('secondary-content')
   confirmDeleteMemo(thisTitle)
 })
 
 
+//listen for a click on any saved Memo
+$('.collection').on('click', '.collection-item', function () {
+// $('.collection').on('click', '.memo-title', function () {
+  // console.log($(this).val())
+  if(confirmDelete === false) {
+
+    findDisplayedIndex()
+    selectedTitle = $(this).find('span').text()
+    //if a memo is selected and the edit title button displays 'edit title',
+    //user is not in the middle of changing a current title name, so
+    //user is allowed to load memo
+    if ($('#editTitleBtn').text().toLowerCase() === 'edit title') {
+      //if no memo is loaded
+      if (displayedIndex === null) {
+        //find the index of the memo selected
+        findDisplayedIndex()
+        //if a memo is currently loaded, index will not be null
+      } else {
+        //check to see if currrent memo content should be updated before loading the selected memo
+        saveCurrentVoicely()
+        //find the index of the memo selected to load
+        findDisplayedIndex()
+      }
+      //load the page with the index if the Memo selected
+      loadVoicelyMemo()
+      console.log(`2. '${memoList[displayedIndex].title}' loaded from index-${displayedIndex}`)
+      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+      //update page scene
+      pageEditContent = true
+      updatePageScene()
+      //reset page scene variable
+      pageEditContent = false
+      //refresh page if any delete buttons were activated but not confirmed
+      loadMemoList()
+    } else {
+      //if button does not display text of 'edit title',
+      //then user is in the middle of creating a new memo or loading a saved memo
+      //alert user and deny loading the selected memo
+      $('#alertText').text("*Update 'title' or cancel")
+    }
+  }
+  })
+  
+  
+//listen for a click on save content button, when clicked updatet the conent value refrenced in displayedIndex
+$(document).on('click', '#saveVoicelyBtn', function () {
+  saveCurrentVoicely()
+})
 
 // load saved memo list on page startup
 loadMemoList()
