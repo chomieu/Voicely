@@ -2,12 +2,10 @@
 var SpeechSDK;
 var recognizer;
 var emojiList;
-var oldTheme = "cyan"
+var oldTheme
 var newTheme
 
-var mainHeader = $( "#main-header" );
 var headerLogo = $( "#header-logo" );
-
 headerLogo.css( "width", "100%" );
 
 setTimeout( function() {
@@ -15,6 +13,7 @@ setTimeout( function() {
 }, 2000 );
 
 $("document").ready(function () {
+
 
   // key option 1
   var APIkey = '2b307e3e19a6de2e97c409b817d0a381eec4b0e1'
@@ -113,6 +112,7 @@ $("document").ready(function () {
     newTheme = $(this).attr("class")
     $(".theme").switchClass(oldTheme, newTheme)
     oldTheme = newTheme
+    localStorage.setItem('Voicely Theme', oldTheme)
   })
 
   $('.collapsible').collapsible()

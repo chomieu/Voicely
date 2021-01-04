@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="./Assets/css/style.css">
 </head>
 
-<body class="container theme cyan lighten-5">
+<body class="container theme lighten-5">
 
-    <header id="main-header" class="nav-wraper row center white-text theme cyan accent-3">
+    <header id="pageHeader" class="nav-wraper row center white-text theme cyan accent-3">
         <img id="header-logo" src="./Assets/images/voicely-logo.png" alt="Voicely sand cat logo">
     </header>
 
@@ -43,13 +43,13 @@
         </section>
 
         <article class="col s12 l6 white" id="content">
-            <input class="theme cyan white-text" type="text" id="voicelyTitle" placeholder="New Voicely Title"
+            <input class="theme white-text" type="text" id="voicelyTitle" placeholder="New Voicely Title"
                 disabled="true">
             <p id="alertText"></p>
             <div>
-                <button class="btn theme cyan accent-3 waves-effect waves-light" id="newVoicelyBtn">new voicely</button>
-                <button class="btn theme cyan accent-3 waves-effect waves-light" id="editTitleBtn" disabled="true">edit title</button>
-                <button class="btn theme cyan accent-3 waves-effect waves-light right" id="settingsBtn"><i class="material-icons">settings</i></button>
+                <button class="btn theme accent-3 waves-effect waves-light" id="newVoicelyBtn" disabled="true">new voicely</button>
+                <button class="btn theme accent-3 waves-effect waves-light" id="editTitleBtn" disabled="true">edit title</button>
+                <button class="btn theme accent-3 waves-effect waves-light right" id="settingsBtn" disabled="true"><i class="material-icons">settings</i></button>
                 <ul class="collapsible center" id="settings">
                     <li>
                         <div class="collapsible-header">Theme Color</div>
@@ -57,13 +57,13 @@
                     </li>
                 </ul>
             </div>
-            <textarea class="theme cyan lighten-5" id="phraseDiv" placeholder="Create new Voicely or load a saved memo"
+            <textarea class="theme lighten-5" id="phraseDiv" placeholder="Create new Voicely or load a saved memo"
                 disabled="true" style="background-color: transparent;"></textarea>
             <div>
-                <button class="btn theme cyan accent-3 waves-effect waves-light" id="recordVoicelyBtn"
+                <button class="btn theme accent-3 waves-effect waves-light" id="recordVoicelyBtn"
                     disabled="true">record</button>
-                <button class="btn theme cyan accent-3 waves-effect waves-light" id="smsBtn" disabled="true">Send SMS</button>
-                <button class="btn theme cyan accent-3 waves-effect waves-light" id="saveVoicelyBtn"
+                <button class="btn theme accent-3 waves-effect waves-light" id="smsBtn" disabled="true">Send SMS</button>
+                <button class="btn theme accent-3 waves-effect waves-light" id="saveVoicelyBtn"
                     disabled="true">save</button>
             </div>
         </article>
