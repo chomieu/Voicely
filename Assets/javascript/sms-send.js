@@ -1,5 +1,5 @@
 $( "#smsBtn" ).on( "click", function () {
-    modalPrompt( "Enter the phone number you'd like to send a text to (numbers only): ", sendSMS, "^[0-9]+$" );
+    modalPrompt( "Enter the phone number you'd like to send a text to (start with country code, numbers only): ", sendSMS, "^[0-9]+$" );
 });
 
 function sendSMS( phoneNumber ) {
@@ -29,7 +29,7 @@ function sendSMS( phoneNumber ) {
     $( '#smsBtn' ).prop( "disabled", true );
 
     $.ajax( settings ).done( function ( response ) {
-        console.log( response );
+        // console.log( response );
         // This API doesn't give fail responses for many unsent message results, so we need to build them into the section for successful ones.
         if ( response.data.messages[ 0 ].status == "SUCCESS" ) {
             $( "#smsBtn" ).text( "Sent!" );
@@ -42,7 +42,7 @@ function sendSMS( phoneNumber ) {
         }
     // Only happens if the API bugs out or something's wrong with our key.
     }).fail( function( e ) {
-        console.log( e );
+        // console.log( e );
         modalAlert( "Message failed: " + e.responseJSON.http_code + ": " + e.responseJSON.response_msg );
         resetSmsButton();
     });
