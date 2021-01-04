@@ -163,11 +163,11 @@ li {
     }
 
     section {
-        height: 275px;
+        height: 40%;
     }
 
     .collection-item {
         padding: 1em !important;
-        font-size: 1em;
+        font-size: 1.5em;
     }
 }

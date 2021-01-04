@@ -176,7 +176,6 @@ function dummyFunc() {
   console.log( "Dummy function!" );
 }
 
-console.log($(window).width())
 if ($(window).width() < 768) {
   $("button").addClass(" btn-large")
   $("button").removeClass("btn")
