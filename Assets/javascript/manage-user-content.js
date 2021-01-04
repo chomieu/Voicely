@@ -59,6 +59,8 @@ function setLocalStorage() {
 
 // load current titles in memoList as saved sessions
 function loadMemoList() {
+  //clear text field in search bar
+  $('#search').val('')
   //retrieve latest local storage data
   getLocalStorage()
   //clear contents of #savedList to start fresh
