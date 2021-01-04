@@ -59,6 +59,8 @@ function setLocalStorage() {
 
 // load current titles in memoList as saved sessions
 function loadMemoList() {
+  //clear search input text when new memo is loaded
+  $('#search').val('')
   //retrieve latest local storage data
   getLocalStorage()
   //clear contents of #savedList to start fresh
@@ -88,30 +90,27 @@ function loadMemoList() {
   }
 }
 
+
+//settings used in updatePageScene function for disabling/enabling buttons & #phraseDiv, button text
 function viocelyTitleSettings(x, y,){
   $("#voicelyTitle").prop("disabled", x)
   $('#voicelyTitle').attr('class', y)
 }
-
 function newVoicelyBtnSettings(x, y){
   $("#newVoicelyBtn").prop("disabled", x)
   $("#newVoicelyBtn").text(y)
 }
-
 function editTitleBtnSettings(x,y){
   $("#editTitleBtn").prop("disabled", x)
   $('#editTitleBtn').text(y)
 }
-
 function phraseDivSettings(x){
   $('#phraseDiv').prop("disabled", x)
 }
-
 function recordSmsSaveBtnSettings(x){
   $('#recordVoicelyBtn').prop("disabled", x)
   $('#smsBtn').prop("disabled", x)
   $('#saveVoicelyBtn').prop("disabled", x)
-
 }
 
 // depending on what the user clicks on, change the behavior and accessibility of the page
@@ -154,7 +153,6 @@ function updatePageScene() {
     recordSmsSaveBtnSettings(false)
   }
 }
-
 
 //approve or deny a title input from a user
 function approveNewTitle() {
@@ -400,7 +398,6 @@ $('.collection').on('click', '.secondary-content', function () {
   confirmDeleteMemo(thisTitle)
 })
 
-
 //listen for a click on any saved Memo
 $('.collection').on('click', '.collection-item', function () {
 // $('.collection').on('click', '.memo-title', function () {
@@ -443,7 +440,6 @@ $('.collection').on('click', '.collection-item', function () {
     }
   }
   })
-  
   
 //listen for a click on save content button, when clicked updatet the conent value refrenced in displayedIndex
 $(document).on('click', '#saveVoicelyBtn', function () {
