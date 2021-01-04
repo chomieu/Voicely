@@ -83,10 +83,6 @@ main {
 }
 
 #phraseDiv {
-<<<<<<< HEAD
-    margin-top: 15px;
-    height: 400px;
-=======
     margin: 0.5em 0;
     flex: 1;
 }
@@ -94,7 +90,6 @@ main {
 section {
     overflow: scroll;
     height: 360px;
->>>>>>> c9882031af6f124a848fef339b8c666a0494d7fa
 }
 
 ul {

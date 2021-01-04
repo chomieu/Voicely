@@ -68,30 +68,6 @@ $("document").ready(function () {
       });
   });
 
-<<<<<<< HEAD
-  // Text Editor Tool
-  tinymce.init({
-    selector: '#phraseDiv',
-    plugins: [
-      'advlist autolink lists link image charmap print preview anchor',
-      'searchreplace visualblocks code fullscreen',
-      'insertdatetime media table paste code help wordcount'
-    ],
-    toolbar: 'formatselect | ' +
-    'bold italic underline fontcolor backcolor | alignleft aligncenter ' +
-    'alignright alignjustify | bullist numlist outdent indent | ' +
-    'removeformat',
-    toolbar_mode: 'floating',
-    tinycomments_mode: 'embedded',
-    tinycomments_author: 'Author name',
-    inline: true,
-    draggable_modal: true,
-    mobile: {
-      menubar: true
-    }
-  });
-});
-=======
   // Search for and show memos that match the search term, hide all others
   $("#search").keyup(function () {
     var filter = $("#search").val().toUpperCase();
@@ -124,7 +100,6 @@ $("document").ready(function () {
     newTheme = $(this).attr("class")
     $(".theme").switchClass(oldTheme, newTheme)
     oldTheme = newTheme
-    $("#palette").hide()
   })
 
   $('.collapsible').collapsible()
@@ -200,28 +175,3 @@ function closeModal() {
 function dummyFunc() {
   console.log( "Dummy function!" );
 }
-
-// bkLib.onDomLoaded(function() {
-//   var textEditor = new nicEditor()
-//   textEditor.setPanel("editorDiv")
-//   textEditor.addInstance("phraseDiv")
-// })
-
-var editor
-
-function addEditorTool() {
-  editor = new nicEditor({fullPanel : true}).panelInstance('phraseDiv')
-}
-
-function removeEditorTool() {
-  editor.removeInstance('phraseDiv');
-}
-
-$("#enable").on("click", function() {
-  addEditorTool()
-})
-
-$("#disable").on("click", function() {
-  removeEditorTool()
-})
->>>>>>> c9882031af6f124a848fef339b8c666a0494d7fa

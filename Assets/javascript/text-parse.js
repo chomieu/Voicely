@@ -41,12 +41,6 @@ function voiceSearch( matchText, emojiObjects ) {
             console.log( "6. strippedString, with spaces inserted for emoji variant tag: ", strippedString );
             // Replaces all spaces with dashes to create a string that corresponds with the "slug" key for emojis in the emojiObjects array.
             var dashedString = strippedString.replace( /\s/g, "-" );
-<<<<<<< HEAD
-            console.log( "6. Matched string with dashes instead of spaces: ", dashedString );
-            for ( var j = 0; j < emojiObject.length; j++ ) {
-                if ( emojiObject[ j ] == dashedString ) {
-                    emojiArray.push( emojiObject[ j ].character );
-=======
             console.log( "7. Matched string with dashes instead of spaces: ", dashedString );
             // Iterates over entire emojiObjects array looking for slugs that match the "dashed" version of what was said.
             var matchFound = false;
@@ -65,7 +59,6 @@ function voiceSearch( matchText, emojiObjects ) {
                 if ( emojiObjects[ j ].slug == dashedString ) {
                     emojiArray.push( emojiObjects[ j ].character );
                     matchFound = true;
->>>>>>> c9882031af6f124a848fef339b8c666a0494d7fa
                 }
             };
             if ( !matchFound ) {
@@ -73,20 +66,6 @@ function voiceSearch( matchText, emojiObjects ) {
                 emojiArray.push( strippedString );
             }
         };
-<<<<<<< HEAD
-        console.log( "7. Array of emojis: ", emojiObject);
-        // Iterate over matchArray, and replace all instances of matchArray[ i ] in matchText with emojiArray[ i ].
-        var newText = matchText;
-        for ( var i = 0; i < matchArray.length; i++ ) {
-            var regEx2 = new RegExp( matchArray[ i ] );
-            console.log( "8. RegEx I'm using to replace content of newText with emoji: ", regEx2 );
-            console.log( "9. The emoji I'm using for it: ", emojiObject[ i ] );
-            if ( emojiObject[ i ] ) {
-                newText = newText.replace( regEx2, emojiObject[ i ] );
-            } else {
-                newText = newText.replace( regEx2, strippedString );
-            }
-=======
         console.log( "8. Array of emojis: ", emojiArray );
         // Iterate over matchArray, and replace all instances of matchArray[ i ] in matchText with emojiArray[ i ], where they exist.
         var newText = matchText;
@@ -96,7 +75,6 @@ function voiceSearch( matchText, emojiObjects ) {
             console.log( "10. The emoji or text I'm using for it: ", emojiArray[ i ] );
             // 
             newText = newText.replace( regEx2, emojiArray[ i ] );
->>>>>>> c9882031af6f124a848fef339b8c666a0494d7fa
         }
         // Remove punctuation from new line speech tags that have them immediately afterward.
         // Periods (.) are already accounted for in the RegEx.
