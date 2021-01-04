@@ -8,11 +8,6 @@ var newTitle
 //record title selected for loading saved memos
 var selectedTitle
 
-//page scene selectors
-var pageStart
-var pageLoadMemo
-var pageEditContent
-var pageEditTitle
 var storedTheme = localStorage.getItem("Voicely Theme")
 
 
@@ -49,27 +44,31 @@ function colorPage(){
     console.log(storedTheme)
     oldTheme = "cyan"
   }
+  $('body').attr('class','container theme lighten-5 '+ oldTheme)
   $('#pageHeader').attr('class', 'nav-wraper row center white-text theme accent-3 '+ oldTheme)
   $('#voicelyTitle').attr('class', 'theme white-text '+oldTheme)
   $('#newVoicelyBtn').attr('class','btn theme accent-3 waves-effect waves-light '+ oldTheme)
   $('#editTitleBtn').attr('class','btn theme accent-3 waves-effect waves-light '+ oldTheme)
   $('#settingsBtn').attr('class','btn theme accent-3 waves-effect waves-light right '+ oldTheme)
-  // $('#').attr('class',' '+ oldTheme)
-  // $('#').attr('class',' '+ oldTheme)
-
+  $('#phraseDiv').attr('class','theme lighten-5 '+ oldTheme)
+  $('#recordVoicelyBtn').attr('class','btn theme accent-3 waves-effect waves-light '+ oldTheme)
+  $('#smsBtn').attr('class','btn theme accent-3 waves-effect waves-light '+ oldTheme)
+  $('#saveVoicelyBtn').attr('class','btn theme accent-3 waves-effect waves-light '+ oldTheme)
 }
 
-colorPage()
 //check local storage for saved memos
 function getLocalStorage() {
   var storedMemos = JSON.parse(localStorage.getItem("Voicely"));
   //if Memos are retrieved, update memoList with data
   if (storedMemos !== null) {
     memoList = storedMemos;
-    $('#phraseDiv').text(`Welcome back!\n Create a new Voicely or load a previous session`)
-  } else {
-    $('#phraseDiv').text(`Welcome!\n Create a new Voicely to get started`)
+  }
+  if (storedMemos !== null && displayedIndex === null){
 
+    $('#phraseDiv').val(`Create a new Voicely or load a previous session 🤓`)
+  }
+  if (storedMemos === null && displayedIndex === null){
+    $('#phraseDiv').val(`Welcome!\n\n Create a new Voicely or load a previous memo to get started 🙂 `)
   }
 }
 //update data in local storage
@@ -87,7 +86,7 @@ function loadMemoList() {
   //clear contents of #savedList to start fresh
   $('#savedList').empty()
   // color class names ordered to create the list item background fade effect
-  var colorClass = ['lighten-3', 'lighten-2', 'lighten-1', '', 'darken-1', 'darken-2', 'darken-3', 'darken-2', 'darken-1', '', 'lighten-1', 'lighten-2']
+  var colorClass = ['lighten-2', 'lighten-1', '', 'darken-1', 'darken-2', 'darken-3', 'darken-2', 'darken-1', '', 'lighten-1', 'lighten-2', 'lighten-3']
   //'x' will be used to track our 'colorClass' index position. It will start on index-0
   var x = 0
 
@@ -134,45 +133,42 @@ function recordSmsSaveBtnSettings(x){
   $('#saveVoicelyBtn').prop("disabled", x)
 }
 
-// depending on what the user clicks on, change the behavior and accessibility of the page
-function updatePageScene() {
-  //START - Scene to create a new Voicely or load a saved session
-  if (pageStart) {
-    viocelyTitleSettings(true,  'white-text theme' + oldTheme,)
-    $("#voicelyTitle").val('')
-    $('#alertText').text('')
-    newVoicelyBtnSettings(false, 'New Voicely')
-    editTitleBtnSettings(true, 'Edit Title')
-    phraseDivSettings(true)
-    $('#phraseDiv').val('')
-    recordSmsSaveBtnSettings(true)
-  }
-
-  //LOAD - Scene to create a new Voicely memo, or cancel and return to START-UP SCREEN
-  if (pageLoadMemo) {
-    viocelyTitleSettings(false, 'white-text lighten-3 theme ' + oldTheme)
-    newVoicelyBtnSettings(false, 'Cancel')
-    editTitleBtnSettings(false, 'Save Title')
-    phraseDivSettings(true)
-    recordSmsSaveBtnSettings(true)
-  }
-  //EDIT TITLE - Scene to edit the title of an existing memo
-  if (pageEditTitle) {
-    viocelyTitleSettings(false, 'white-text lighten-3 theme ' + oldTheme)
-    newVoicelyBtnSettings(false, 'Cancel')
-    editTitleBtnSettings(false, 'Update Title')
-    phraseDivSettings(true)
-    recordSmsSaveBtnSettings(true)
-  }
-  //EDIT CONTENT - Scene for working on a current Voicely memo
-  if (pageEditContent) {
-    viocelyTitleSettings(true, 'white-text theme ' + oldTheme)
-    $('#alertText').text('')
-    newVoicelyBtnSettings(false, 'New Voicely')
-    editTitleBtnSettings(false, 'Edit Title')
-    phraseDivSettings(false)
-    recordSmsSaveBtnSettings(false)
-  }
+//Layout to create a new Voicely or load a saved session
+function pageSceneStart(){
+  viocelyTitleSettings(true,  'white-text theme' + oldTheme,)
+  $("#voicelyTitle").val('')
+  $('#alertText').text('')
+  newVoicelyBtnSettings(false, 'New Voicely')
+  editTitleBtnSettings(true, 'Edit Title')
+  $('#settingsBtn').prop('disabled', false)
+  phraseDivSettings(true)
+  $('#phraseDiv').val('')
+  recordSmsSaveBtnSettings(true)
+}
+//Layout to create a new Voicely memo, or cancel and return to START-UP SCREEN
+function pageSceneLoadMemo() {
+  viocelyTitleSettings(false, 'white-text lighten-3 theme ' + oldTheme)
+  newVoicelyBtnSettings(false, 'Cancel')
+  editTitleBtnSettings(false, 'Save Title')
+  phraseDivSettings(true)
+  recordSmsSaveBtnSettings(true)
+}
+//Layout to edit the title of an existing memo
+function pageSceneEditTitle() {
+  viocelyTitleSettings(false, 'white-text lighten-3 theme ' + oldTheme)
+  newVoicelyBtnSettings(false, 'Cancel')
+  editTitleBtnSettings(false, 'Update Title')
+  phraseDivSettings(true)
+  recordSmsSaveBtnSettings(true)
+}
+//Layout for working on a current Voicely memo
+function pageSceneEditContent() {
+  viocelyTitleSettings(true, 'white-text theme ' + oldTheme)
+  $('#alertText').text('')
+  newVoicelyBtnSettings(false, 'New Voicely')
+  editTitleBtnSettings(false, 'Edit Title')
+  phraseDivSettings(false)
+  recordSmsSaveBtnSettings(false)
 }
 
 //approve or deny a title input from a user
@@ -222,10 +218,8 @@ function createNewVoicely() {
   //clear text from previously displayed Memo
   $('#phraseDiv').text('')
   //update the page scene with variable that is true
-  pageEditContent = true
-  updatePageScene()
-  //reset variable
-  pageEditContent = false
+  pageSceneEditContent()
+
   console.log(displayedIndex)
   console.log(memoList)
 }
@@ -286,10 +280,8 @@ function confirmDeleteMemo(x) {
       //scenario where the item displayed is the item being deleted
       if (x === displayedTitle) {
         //update page scene since displayed content was just deleted
-        pageStart = true
-        updatePageScene()
-        //reset scene variable
-        pageStart = false
+        pageSceneStart()
+
         displayedIndex = null
         // if memo being deleted is not the current memo displayed
       }
@@ -314,28 +306,21 @@ $(document).on('click', '#newVoicelyBtn', function (event) {
   if (displayedIndex === null && $(this).text().toLocaleLowerCase() === 'new voicely') {
     saveCurrentVoicely()
     //update button scene
-    pageLoadMemo = true
-    updatePageScene()
-    //reset button scene variable
-    pageLoadMemo = false
+    pageSceneLoadMemo()
+
     return
   }
   //if no Memo is loaded and user clicks 'cancel', return to start up screen
   if (displayedIndex === null && $(this).text().toLocaleLowerCase() === 'cancel') {
-    pageStart = true
-    updatePageScene()
-    //reset page scene variable
-    pageStart = false
+    pageSceneStart()
+
     return
   }
   // if a memo is loaded and a user clicks 'new voicely' 
   if (displayedIndex !== null && $(this).text().toLowerCase() === 'new voicely') {
     saveCurrentVoicely()
     //update page scene
-    pageLoadMemo = true
-    updatePageScene()
-    //reset page scene variable
-    pageLoadMemo = false
+    pageSceneLoadMemo()
     //clear title and content for new Memo creation
     $('#voicelyTitle').val('')
     $('#phraseDiv').val('')
@@ -344,10 +329,7 @@ $(document).on('click', '#newVoicelyBtn', function (event) {
   //if a memo is loaded, and a user clicks 'new voicely', then clicks 'cancel' to return to current memo
   if (displayedIndex !== null && $(this).text().toLowerCase() === 'cancel') {
     //update page scene
-    pageEditContent = true
-    updatePageScene()
-    //reset page scene variable
-    pageEditContent = false
+    pageSceneEditContent()
     //reload the voicely memo that was loaded before 'new voicely' was clicked
     loadVoicelyMemo()
   }
@@ -367,6 +349,7 @@ $(document).on('click', '#editTitleBtn', function (event) {
     if (titleApproved) {
       //create the new memo object
       createNewVoicely()
+      $('#phraseDiv').val('')
       //reset the title approved variable
       titleApproved = false
     }
@@ -376,10 +359,7 @@ $(document).on('click', '#editTitleBtn', function (event) {
   //if button is clicked and text displays 'edit title', user has an active Memo loaded
   if ($(this).text().toLowerCase() === 'edit title') {
     //load page scene to edit title name
-    pageEditTitle = true
-    updatePageScene()
-    //reset page scene variable
-    pageEditTitle = false
+    pageSceneEditTitle()
     return
   }
 
@@ -400,10 +380,7 @@ $(document).on('click', '#editTitleBtn', function (event) {
       //reload the Memo list to display updated title name
       loadMemoList()
       //update the page scene
-      pageEditContent = true
-      updatePageScene()
-      //reset page scene variable
-      pageEditContent = false
+      pageSceneEditContent()
       //reset approved title variable
       titleApproved = false
     }
@@ -447,10 +424,7 @@ $('.collection').on('click', '.collection-item', function () {
       console.log(`2. '${memoList[displayedIndex].title}' loaded from index-${displayedIndex}`)
       console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
       //update page scene
-      pageEditContent = true
-      updatePageScene()
-      //reset page scene variable
-      pageEditContent = false
+      pageSceneEditContent()
       //refresh page if any delete buttons were activated but not confirmed
       loadMemoList()
     } else {
@@ -467,5 +441,7 @@ $(document).on('click', '#saveVoicelyBtn', function () {
   saveCurrentVoicely()
 })
 
-// load saved memo list on page startup
+// load page on startup screen
+colorPage()
+pageSceneStart()
 loadMemoList()
