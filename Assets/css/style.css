@@ -6,9 +6,12 @@ body, html {
     width: 100%;
 }
 
-header, #header-logo {
-    height: 100%;
-    transition-property: height;
+
+
+#header-logo {
+    width: 100%;
+    max-width: 700px;
+    transition-property: width;
     transition-duration: 1s;
 }
 
@@ -116,6 +119,10 @@ li {
     height: 100%; /* Full height */
     max-height: 100%;
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */  
+}
+
+#custom-modal-content {
+    border-radius: 22px;
 }
 
 #custom-modal #custom-modal-content {

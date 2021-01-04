@@ -1,5 +1,5 @@
 # Project #1: Voicely Speech-To-Text
-Voicely is a multi-function text-to-speech note storage web app.
+Voicely is a multi-function speech-to-text note storage web app.
 <br>
 <br>
 

@@ -8,12 +8,10 @@ var newTheme
 var mainHeader = $( "#main-header" );
 var headerLogo = $( "#header-logo" );
 
-mainHeader.css( "height", "100%" );
-headerLogo.css( "height", "100%" );
+headerLogo.css( "width", "100%" );
 
 setTimeout( function() {
-  mainHeader.css( "height", "120px" );
-  headerLogo.css( "height", "120px" );
+  headerLogo.css( "width", "171px" );
 }, 2000 );
 
 $("document").ready(function () {
@@ -135,8 +133,8 @@ function modalConfirm( text, trueFunc, falseFunc ) {
   $( "#custom-modal-header" ).text( "Confirm" );
   $( "#custom-modal-text" ).text( text );
   $( "#custom-modal" ).css( "display", "block" );
-  var confirmButton = $( "<button>", { class: "modal-button", id: "custom-modal-confirm-button" } ).text( "Confirm" );
-  var denyButton = $( "<button>", { class: "modal-button", id: "custom-modal-deny-button" } ).text( "Cancel" );
+  var confirmButton = $( "<button>", { class: "modal-button btn theme cyan accent-3 waves-effect waves-light", id: "custom-modal-confirm-button" } ).text( "Confirm" );
+  var denyButton = $( "<button>", { class: "modal-button btn theme cyan accent-3 waves-effect waves-light", id: "custom-modal-deny-button" } ).text( "Cancel" );
   confirmButton.attr( "data-bool", true );
   denyButton.attr( "data-bool", false );
   $( "#custom-modal-content" ).append( confirmButton );
