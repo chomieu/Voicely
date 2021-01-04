@@ -6,16 +6,12 @@ body, html {
     width: 100%;
 }
 
-header {
-    height: 200px;
+.row {
+    margin-bottom: 0 !important;
 }
 
-header, article {
-    border: 1px solid lightgray;
-}
-
-#header-logo {
-    height: 200px;
+header,#header-logo {
+    height: 150px;
 }
 
 h3 {
@@ -29,7 +25,7 @@ h4 {
 }
 
 main {
-    height: calc(100% - 140px);
+    height: calc(100% - 150px);
     display: flex;
     flex-direction: column;
 }
@@ -80,6 +76,7 @@ main {
 }
 
 #content {
+    margin: 1em 0 0 0;
     padding-bottom: 15px !important;
     display: flex;
     flex-direction: column;
@@ -92,8 +89,8 @@ main {
 }
 
 section {
-    overflow: scroll;
-    height: 360px;
+    overflow-y: scroll;
+    height: 35%;
 }
 
 ul {
