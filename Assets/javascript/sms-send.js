@@ -29,7 +29,7 @@ function sendSMS( phoneNumber ) {
     $( '#smsBtn' ).prop( "disabled", true );
 
     $.ajax( settings ).done( function ( response ) {
-        console.log( response );
+        // console.log( response );
         // This API doesn't give fail responses for many unsent message results, so we need to build them into the section for successful ones.
         if ( response.data.messages[ 0 ].status == "SUCCESS" ) {
             $( "#smsBtn" ).text( "Sent!" );
@@ -42,7 +42,7 @@ function sendSMS( phoneNumber ) {
         }
     // Only happens if the API bugs out or something's wrong with our key.
     }).fail( function( e ) {
-        console.log( e );
+        // console.log( e );
         modalAlert( "Message failed: " + e.responseJSON.http_code + ": " + e.responseJSON.response_msg );
         resetSmsButton();
     });
