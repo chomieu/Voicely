@@ -91,7 +91,7 @@ main {
 
 section {
     overflow-y: scroll;
-    height: 360px;
+    height: 35%;
 }
 
 ul {
@@ -154,20 +154,5 @@ li {
     }
     section {
         height: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    main {
-        font-size: 1.5em;
-    }
-
-    section {
-        height: 40%;
-    }
-
-    .collection-item {
-        padding: 1em !important;
-        font-size: 1.5em;
     }
 }
