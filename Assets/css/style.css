@@ -2,12 +2,16 @@ body, html {
     height: 100%;
 }
 
-header {
-    height: 100px;
+.container {
+    width: 100%;
 }
 
-header, article {
-    border: 1px solid lightgray;
+.row {
+    margin-bottom: 0 !important;
+}
+
+header,#header-logo {
+    height: 150px;
 }
 
 h3 {
@@ -21,29 +25,62 @@ h4 {
 }
 
 main {
-    height: calc(100% - 140px);
+    height: calc(100% - 150px);
+    display: flex;
+    flex-direction: column;
 }
 
-#alertText{
+.input-field {
+    margin: 0;
+}
+
+.label-icon {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+#search {
+    padding-left: 4rem;
+    width: calc(100% - 4rem);
+    font-size: 2rem;
+}
+
+#alertText {
     margin: 0 0 15px 15px !important;
     color: red;
 }
 
 /* user cue - when hovered over a memo title, mouse icon will be a pointer*/
-.memo-title, .trashBinItems{
+.collection-item {
     cursor: pointer;
 }
 
-input{
+.voicelyTitle {
     margin: 15px 0 0 0 !important;
     padding-left: 16px !important;
     width: 94.5% !important;
 }
 
-article {
+#settings {
+    display: none;
+    margin: 0.5rem 0 0 0 !important;
+}
+
+.collapsible-body {
+    padding: 0;
+}
+
+#palette span {
+    padding: 0 calc(100% / 38);
+}
+
+#content {
+    margin: 1em 0 0 0;
     padding-bottom: 15px !important;
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 #phraseDiv {
@@ -52,7 +89,8 @@ article {
 }
 
 section {
-    overflow: scroll;
+    overflow-y: scroll;
+    height: 35%;
 }
 
 ul {
@@ -64,9 +102,56 @@ li {
     font-size: large;
 }
 
+#custom-modal {
+    display: none; /* Hidden by default */
+    z-index: 2; /* Sit on top */
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    max-height: 100%;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */  
+}
+
+#custom-modal #custom-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    border: 1px solid #888;
+    padding: 10px;
+    text-align: center;
+    width: 80%;
+    min-width: 350px;
+}
+
+#custom-modal-input {
+    max-width: 200px;
+    background-color: lightgrey;
+    border-radius: 10px 10px 0 0;
+}
+
+#close {
+    color: #aaaaaa;
+    top: 0;
+    right: 0;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 0.6em;
+}
+
+/* Hover and focus effects for modal */
+#close:hover,
+#close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 @media (min-width: 993px) {
     main {
-        display: flex;
         align-items: stretch;
+        flex-direction: row-reverse;
+    }
+    section {
+        height: 100%;
     }
 }
