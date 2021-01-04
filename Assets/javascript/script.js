@@ -2,8 +2,11 @@
 var SpeechSDK;
 var recognizer;
 var emojiList;
+var oldTheme
+var newTheme
 
 $("document").ready(function () {
+
 
   // key option 1
   var APIkey = '2b307e3e19a6de2e97c409b817d0a381eec4b0e1'
@@ -66,11 +69,10 @@ $("document").ready(function () {
       });
   });
 
-    
   // Search for and show memos that match the search term, hide all others
   $("#search").keyup(function () {
     var filter = $("#search").val().toUpperCase();
-    $("li > span").each( function() {
+    $("li > span").each(function () {
       if ($(this).text().toUpperCase().indexOf(filter) > -1) {
         $(this).parent().show()
       } else {
@@ -79,11 +81,35 @@ $("document").ready(function () {
     })
   })
 
+  var themeColor = ["red", "pink", "purple", "deep-purple", "indigo", "blue", "light-blue", "cyan", "teal", "green", "light-green", "lime", "yellow", "amber", "orange", "deep-orange", "brown", "grey", "blue-grey"]
+
+  for (i = 0; i < themeColor.length; i++) {
+    $("#palette").append($("<span>", { class: themeColor[i] }))
+  }
+
+  $("#settingsBtn").on("click", function () {
+    if($("#settings").is(":visible")) {
+      $("#settings").hide()
+      $(".collapsible-body").hide()
+      $("#settings > li").removeClass("active")
+    } else {
+      $("#settings").show()
+    }
+  })
+
+  $("#palette > span").on("click", function () {
+    newTheme = $(this).attr("class")
+    $(".theme").switchClass(oldTheme, newTheme)
+    oldTheme = newTheme
+    localStorage.setItem('Voicely Theme', oldTheme)
+  })
+
+  $('.collapsible').collapsible()
 
   // Clicking the X in a modal
   $( "#close" ).on( "click", function() {
-    closeModal();
-  });
+    closeModal()
+  })
 
 })
 
@@ -113,6 +139,10 @@ function modalPrompt( text, func, regEx ) {
   $( "#custom-modal-text" ).text( text );
   var customContent = $( "#custom-modal-content" );
   var form = $( "<form>", { class: "modal-form", id: "custom-modal-form", method: "POST" } );
+  // Input will only 
+    // Input will only 
+  // Input will only 
+    // Input will only 
   // Input will only 
   var formInput = $( "<input>", { class: "modal-input", id: "custom-modal-input", pattern: regEx } );
   customContent.append( form );

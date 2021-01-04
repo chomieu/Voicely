@@ -13,6 +13,8 @@ var pageStart
 var pageLoadMemo
 var pageEditContent
 var pageEditTitle
+var storedTheme = localStorage.getItem("Voicely Theme")
+
 
 //tracks if an item from memo list is selected to be loaded or deleted
 var confirmDelete = false
@@ -39,6 +41,25 @@ var memoList = [{
   content: '💡     💡     💡     💡     💡     💡     💡     💡\n     💡     💡     💡     💡     💡     💡     💡\n💡     💡     💡     💡     💡     💡     💡     💡'
 }]
 
+function colorPage(){
+  if(storedTheme !== null){
+    oldTheme = storedTheme
+    console.log(oldTheme)
+  }else{
+    console.log(storedTheme)
+    oldTheme = "cyan"
+  }
+  $('#pageHeader').attr('class', 'nav-wraper row center white-text theme accent-3 '+ oldTheme)
+  $('#voicelyTitle').attr('class', 'theme white-text '+oldTheme)
+  $('#newVoicelyBtn').attr('class','btn theme accent-3 waves-effect waves-light '+ oldTheme)
+  $('#editTitleBtn').attr('class','btn theme accent-3 waves-effect waves-light '+ oldTheme)
+  $('#settingsBtn').attr('class','btn theme accent-3 waves-effect waves-light right '+ oldTheme)
+  // $('#').attr('class',' '+ oldTheme)
+  // $('#').attr('class',' '+ oldTheme)
+
+}
+
+colorPage()
 //check local storage for saved memos
 function getLocalStorage() {
   var storedMemos = JSON.parse(localStorage.getItem("Voicely"));
@@ -76,7 +97,7 @@ function loadMemoList() {
       x = 0
     }
     //append new list item & add text
-    $('#savedList').append($('<li>', { class: 'collection-item cyan ' + colorClass[x], id: 'listItem-' + i }))
+    $('#savedList').append($('<li>', { class: oldTheme + ' theme collection-item ' + colorClass[x], id: 'listItem-' + i }))
     $('#listItem-' + i).append($('<span>', { class: 'memo-title', id: 'memoTitle-' + i }))
     $('#memoTitle-' + i).text(memoList[i].title)
     //append link to new list item
@@ -117,7 +138,7 @@ function recordSmsSaveBtnSettings(x){
 function updatePageScene() {
   //START - Scene to create a new Voicely or load a saved session
   if (pageStart) {
-    viocelyTitleSettings(true, 'cyan white-text',)
+    viocelyTitleSettings(true,  'white-text theme' + oldTheme,)
     $("#voicelyTitle").val('')
     $('#alertText').text('')
     newVoicelyBtnSettings(false, 'New Voicely')
@@ -129,7 +150,7 @@ function updatePageScene() {
 
   //LOAD - Scene to create a new Voicely memo, or cancel and return to START-UP SCREEN
   if (pageLoadMemo) {
-    viocelyTitleSettings(false, 'cyan white-text lighten-3')
+    viocelyTitleSettings(false, 'white-text lighten-3 theme ' + oldTheme)
     newVoicelyBtnSettings(false, 'Cancel')
     editTitleBtnSettings(false, 'Save Title')
     phraseDivSettings(true)
@@ -137,7 +158,7 @@ function updatePageScene() {
   }
   //EDIT TITLE - Scene to edit the title of an existing memo
   if (pageEditTitle) {
-    viocelyTitleSettings(false, 'cyan white-text lighten-3')
+    viocelyTitleSettings(false, 'white-text lighten-3 theme ' + oldTheme)
     newVoicelyBtnSettings(false, 'Cancel')
     editTitleBtnSettings(false, 'Update Title')
     phraseDivSettings(true)
@@ -145,7 +166,7 @@ function updatePageScene() {
   }
   //EDIT CONTENT - Scene for working on a current Voicely memo
   if (pageEditContent) {
-    viocelyTitleSettings(true, 'cyan white-text')
+    viocelyTitleSettings(true, 'white-text theme ' + oldTheme)
     $('#alertText').text('')
     newVoicelyBtnSettings(false, 'New Voicely')
     editTitleBtnSettings(false, 'Edit Title')
