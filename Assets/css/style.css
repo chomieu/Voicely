@@ -1,7 +1,9 @@
+/* Sets body and html height to be 100% of viewport */
 body, html {
     height: 100%;
 }
 
+/*  */
 .container {
     width: 100%;
 }
@@ -11,7 +13,7 @@ body, html {
 }
 
 header,#header-logo {
-    height: 150px;
+    height: 120px;
 }
 
 h3 {
@@ -19,19 +21,15 @@ h3 {
     font-family: "Kaushan Script";
 }
 
-h4 {
-    margin-top: 15px;
-    padding-left: 5%;
-}
-
 main {
-    height: calc(100% - 150px);
+    height: calc(100% - 120px);
     display: flex;
     flex-direction: column;
 }
 
-.input-field {
-    margin: 0;
+section {
+    overflow-y: scroll;
+    height: 35%;
 }
 
 .label-icon {
@@ -40,39 +38,19 @@ main {
     height: 100%;
 }
 
+.input-field {
+    margin: 0;
+}
+
 #search {
     padding-left: 4rem;
     width: calc(100% - 4rem);
     font-size: 2rem;
 }
 
-#alertText {
-    margin: 0 0 15px 15px !important;
-    color: red;
-}
-
 /* user cue - when hovered over a memo title, mouse icon will be a pointer*/
 .collection-item {
     cursor: pointer;
-}
-
-.voicelyTitle {
-    margin: 15px 0 0 0 !important;
-    padding-left: 16px !important;
-    width: 94.5% !important;
-}
-
-#settings {
-    display: none;
-    margin: 0.5rem 0 0 0 !important;
-}
-
-.collapsible-body {
-    padding: 0;
-}
-
-#palette span {
-    padding: 0 calc(100% / 38);
 }
 
 #content {
@@ -83,23 +61,42 @@ main {
     flex: 1;
 }
 
-#phraseDiv {
-    margin: 0.5em 0;
-    flex: 1;
+.voicelyTitle {
+    margin: 15px 0 0 0 !important;
+    padding-left: 16px !important;
+    width: 94.5% !important;
 }
 
-section {
-    overflow-y: scroll;
-    height: 35%;
+#alertText {
+    margin: 0 0 15px 15px !important;
+    color: red;
 }
 
 ul {
     margin-top: 0 !important;
 }
 
+#settings {
+    display: none;
+    margin: 0.5rem 0 0 0 !important;
+}
+
 li {
     font-family: Mali;
     font-size: large;
+}
+
+.collapsible-body {
+    padding: 0;
+}
+
+#palette span {
+    padding: 0 calc(100% / 38);
+}
+
+#phraseDiv {
+    margin: 0.5em 0;
+    flex: 1;
 }
 
 #custom-modal {
