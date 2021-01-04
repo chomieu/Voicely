@@ -95,5 +95,73 @@ $("document").ready(function () {
     newTheme = $(this).attr("class")
     $(".theme").switchClass(oldTheme, newTheme)
     oldTheme = newTheme
+    $("#palette").hide()
   })
+
+  // Clicking the X in a modal
+  $("#close").on("click", function () {
+    closeModal();
+  });
+
+  /* Functions for modals */
+  function modalConfirm(text, trueFunc, falseFunc) {
+    $("#custom-modal-header").text("Confirm");
+    $("#custom-modal-text").text(text);
+    $("#custom-modal").css("display", "block");
+    var confirmButton = $("<button>", { class: "modal-button", id: "custom-modal-confirm-button" }).text("Confirm");
+    var denyButton = $("<button>", { class: "modal-button", id: "custom-modal-deny-button" }).text("Cancel");
+    confirmButton.attr("data-bool", true);
+    denyButton.attr("data-bool", false);
+    $("#custom-modal-content").append(confirmButton);
+    $("#custom-modal-content").append(denyButton);
+    $(".modal-button").click(function () {
+      if ($(this).attr("data-bool") == "true") {
+        trueFunc();
+      } else {
+        falseFunc();
+      }
+      closeModal();
+    })
+  }
+
+  function modalPrompt(text, func, regEx) {
+    $("#custom-modal-header").text("Prompt");
+    $("#custom-modal-text").text(text);
+    var customContent = $("#custom-modal-content");
+    var form = $("<form>", { class: "modal-form", id: "custom-modal-form", method: "POST" });
+    // Input will only 
+    var formInput = $("<input>", { class: "modal-input", id: "custom-modal-input", pattern: regEx });
+    customContent.append(form);
+    form.append(formInput);
+    $("#custom-modal").css("display", "block");
+    form.on("submit", function (e) {
+      e.preventDefault();
+      var data = $("#custom-modal-input").val();
+      func(data);
+      closeModal(form);
+    })
+  }
+
+  function modalAlert(text) {
+    $("#custom-modal-header").text("Alert");
+    $("#custom-modal-text").text(text);
+    $("#custom-modal").css("display", "block");
+  }
+
+  function closeModal() {
+    // Collects all non-standard elements (modals past children[ 2 ])
+    var modalElements = $("#custom-modal-content")[0].children;
+    // Delete all non-standard elements in the modal. Loop must be run backwards so we don't delete as we're iterating.
+    for (i = modalElements.length - 1; i > 2; i--) {
+      modalElements[i].remove();
+    }
+    $("#custom-modal-header").text("");
+    $("#custom-modal-text").text("");
+    $("#custom-modal").css("display", "none");
+  }
+
+  function dummyFunc() {
+    console.log("Dummy function!");
+  }
+
 });

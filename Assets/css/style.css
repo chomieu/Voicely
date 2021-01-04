@@ -52,7 +52,7 @@ main {
 }
 
 /* user cue - when hovered over a memo title, mouse icon will be a pointer*/
-.memo-title {
+.collection-item {
     cursor: pointer;
 }
 
@@ -86,6 +86,50 @@ ul {
 li {
     font-family: Mali;
     font-size: large;
+}
+
+#custom-modal {
+    display: none; /* Hidden by default */
+    z-index: 2; /* Sit on top */
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    max-height: 100%;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */  
+}
+
+#custom-modal #custom-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    border: 1px solid #888;
+    padding: 10px;
+    text-align: center;
+    width: 80%;
+    min-width: 350px;
+}
+
+#custom-modal-input {
+    max-width: 200px;
+    background-color: lightgrey;
+    border-radius: 10px 10px 0 0;
+}
+
+#close {
+    color: #aaaaaa;
+    top: 0;
+    right: 0;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 0.6em;
+}
+
+/* Hover and focus effects for modal */
+#close:hover,
+#close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 @media (min-width: 993px) {
