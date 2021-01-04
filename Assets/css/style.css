@@ -3,17 +3,15 @@ body, html {
     height: 100%;
 }
 
-/*  */
+/* Holds all responsive elements */
 .container {
     width: 100%;
 }
 
-.row {
-    margin-bottom: 0 !important;
-}
-
-header,#header-logo {
-    height: 120px;
+#header-logo {
+    width: 100%;
+    max-width: 700px;
+    transition: width 1s;
 }
 
 h3 {
@@ -107,6 +105,10 @@ li {
     height: 100%; /* Full height */
     max-height: 100%;
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */  
+}
+
+#custom-modal-content {
+    border-radius: 22px;
 }
 
 #custom-modal #custom-modal-content {
