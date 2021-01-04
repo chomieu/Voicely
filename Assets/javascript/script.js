@@ -6,7 +6,6 @@ var oldTheme
 var newTheme
 
 var headerLogo = $( "#header-logo" );
-headerLogo.css( "width", "100%" );
 
 setTimeout( function() {
   headerLogo.css( "width", "171px" );

@@ -9,9 +9,17 @@ body, html {
 }
 
 #header-logo {
-    width: 100%;
+    width: 95%;
     max-width: 700px;
     transition: width 1s;
+}
+
+#pageHeader {
+    padding-top: 10px;
+}
+
+.row {
+    margin-bottom: 0 !important;
 }
 
 h3 {
