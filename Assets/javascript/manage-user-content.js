@@ -74,7 +74,7 @@ function loadMemoList() {
       x = 0
     }
     //append new list item & add text
-    $('#savedList').append($('<li>', { class: 'collection-item theme cyan ' + colorClass[x], id: 'listItem-' + i }))
+    $('#savedList').append($('<li>', { class: oldTheme + ' theme collection-item ' + colorClass[x], id: 'listItem-' + i }))
     $('#listItem-' + i).append($('<span>', { class: 'memo-title', id: 'memoTitle-' + i }))
     $('#memoTitle-' + i).text(memoList[i].title)
     //append link to new list item
@@ -94,7 +94,7 @@ function updatePageScene() {
   //START - Scene to create a new Voicely or load a saved session
   if (pageStart) {
     $("#voicelyTitle").prop("disabled", true)
-    // $('#voicelyTitle').attr('class', 'theme cyan white-text')
+    $('#voicelyTitle').attr('class', 'white-text theme ' + oldTheme)
     $("#voicelyTitle").val('')
     $('#alertText').text('')
     $("#editTitleBtn").prop("disabled", true)
@@ -108,7 +108,7 @@ function updatePageScene() {
   //LOAD - Scene to create a new Voicely memo, or cancel and return to START-UP SCREEN
   if (pageLoadMemo) {
     $("#voicelyTitle").prop("disabled", false)
-    // $('#voicelyTitle').attr('class', 'theme cyan white-text lighten-3')
+    $('#voicelyTitle').attr('class', 'white-text lighten-3 theme ' + oldTheme)
     $("#editTitleBtn").prop("disabled", false)
     $('#editTitleBtn').text('Save title')
     $("#newVoicelyBtn").prop("disabled", false)
@@ -121,7 +121,7 @@ function updatePageScene() {
   //EDIT TITLE - Scene to edit the title of an existing memo
   if (pageEditTitle) {
     $("#voicelyTitle").prop("disabled", false)
-    // $('#voicelyTitle').attr('class', 'theme cyan white-text lighten-3')
+    $('#voicelyTitle').attr('class', 'white-text lighten-3 theme ' + oldTheme)
     $("#newVoicelyBtn").text('cancel')
     $("#editTitleBtn").prop("disabled", false)
     $('#editTitleBtn').text('Update title')
@@ -131,7 +131,7 @@ function updatePageScene() {
   //EDIT CONTENT - Scene for working on a current Voicely memo
   if (pageEditContent) {
     $("#voicelyTitle").prop("disabled", true)
-    // $('#voicelyTitle').attr('class', 'theme cyan white-text')
+    $('#voicelyTitle').attr('class', 'white-text theme ' + oldTheme)
     $('#alertText').text('')
     $("#newVoicelyBtn").prop("disabled", false)
     $("#newVoicelyBtn").text("new voicely")

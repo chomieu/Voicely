@@ -2,6 +2,8 @@
 var SpeechSDK;
 var recognizer;
 var emojiList;
+var oldTheme = "cyan"
+var newTheme
 
 $("document").ready(function () {
 
@@ -79,89 +81,121 @@ $("document").ready(function () {
   })
 
   var themeColor = ["red", "pink", "purple", "deep-purple", "indigo", "blue", "light-blue", "cyan", "teal", "green", "light-green", "lime", "yellow", "amber", "orange", "deep-orange", "brown", "grey", "blue-grey"]
-  var oldTheme = "cyan"
-  var newTheme
 
   for (i = 0; i < themeColor.length; i++) {
-    $("#palette").append($("<span>", { class: themeColor[i], style: "padding: 0 1vw;" }))
+    $("#palette").append($("<span>", { class: themeColor[i] }))
   }
 
-  $("#palette").hide()
   $("#settingsBtn").on("click", function () {
-    $("#palette").show()
+    if($("#settings").is(":visible")) {
+      $("#settings").hide()
+      $(".collapsible-body").hide()
+      $("#settings > li").removeClass("active")
+    } else {
+      $("#settings").show()
+    }
   })
 
   $("#palette > span").on("click", function () {
     newTheme = $(this).attr("class")
     $(".theme").switchClass(oldTheme, newTheme)
     oldTheme = newTheme
-    $("#palette").hide()
   })
 
+  $('.collapsible').collapsible()
+
   // Clicking the X in a modal
-  $("#close").on("click", function () {
-    closeModal();
-  });
+  $( "#close" ).on( "click", function() {
+    closeModal()
+  })
 
-  /* Functions for modals */
-  function modalConfirm(text, trueFunc, falseFunc) {
-    $("#custom-modal-header").text("Confirm");
-    $("#custom-modal-text").text(text);
-    $("#custom-modal").css("display", "block");
-    var confirmButton = $("<button>", { class: "modal-button", id: "custom-modal-confirm-button" }).text("Confirm");
-    var denyButton = $("<button>", { class: "modal-button", id: "custom-modal-deny-button" }).text("Cancel");
-    confirmButton.attr("data-bool", true);
-    denyButton.attr("data-bool", false);
-    $("#custom-modal-content").append(confirmButton);
-    $("#custom-modal-content").append(denyButton);
-    $(".modal-button").click(function () {
-      if ($(this).attr("data-bool") == "true") {
-        trueFunc();
-      } else {
-        falseFunc();
-      }
-      closeModal();
-    })
-  }
+})
 
-  function modalPrompt(text, func, regEx) {
-    $("#custom-modal-header").text("Prompt");
-    $("#custom-modal-text").text(text);
-    var customContent = $("#custom-modal-content");
-    var form = $("<form>", { class: "modal-form", id: "custom-modal-form", method: "POST" });
-    // Input will only 
-    var formInput = $("<input>", { class: "modal-input", id: "custom-modal-input", pattern: regEx });
-    customContent.append(form);
-    form.append(formInput);
-    $("#custom-modal").css("display", "block");
-    form.on("submit", function (e) {
-      e.preventDefault();
-      var data = $("#custom-modal-input").val();
-      func(data);
-      closeModal(form);
-    })
-  }
-
-  function modalAlert(text) {
-    $("#custom-modal-header").text("Alert");
-    $("#custom-modal-text").text(text);
-    $("#custom-modal").css("display", "block");
-  }
-
-  function closeModal() {
-    // Collects all non-standard elements (modals past children[ 2 ])
-    var modalElements = $("#custom-modal-content")[0].children;
-    // Delete all non-standard elements in the modal. Loop must be run backwards so we don't delete as we're iterating.
-    for (i = modalElements.length - 1; i > 2; i--) {
-      modalElements[i].remove();
+/* Functions for modals */
+function modalConfirm( text, trueFunc, falseFunc ) {
+  $( "#custom-modal-header" ).text( "Confirm" );
+  $( "#custom-modal-text" ).text( text );
+  $( "#custom-modal" ).css( "display", "block" );
+  var confirmButton = $( "<button>", { class: "modal-button", id: "custom-modal-confirm-button" } ).text( "Confirm" );
+  var denyButton = $( "<button>", { class: "modal-button", id: "custom-modal-deny-button" } ).text( "Cancel" );
+  confirmButton.attr( "data-bool", true );
+  denyButton.attr( "data-bool", false );
+  $( "#custom-modal-content" ).append( confirmButton );
+  $( "#custom-modal-content" ).append( denyButton );
+  $( ".modal-button" ).click( function() {
+    if ( $( this ).attr( "data-bool" ) == "true" ) {
+      trueFunc();
+    } else {
+      falseFunc();
     }
-    $("#custom-modal-header").text("");
-    $("#custom-modal-text").text("");
-    $("#custom-modal").css("display", "none");
-  }
+    closeModal();
+  })
+}
 
-  function dummyFunc() {
-    console.log("Dummy function!");
-  }
+function modalPrompt( text, func, regEx ) {
+  $( "#custom-modal-header" ).text( "Prompt" );
+  $( "#custom-modal-text" ).text( text );
+  var customContent = $( "#custom-modal-content" );
+  var form = $( "<form>", { class: "modal-form", id: "custom-modal-form", method: "POST" } );
+  // Input will only 
+    // Input will only 
+  // Input will only 
+    // Input will only 
+  // Input will only 
+  var formInput = $( "<input>", { class: "modal-input", id: "custom-modal-input", pattern: regEx } );
+  customContent.append( form );
+  form.append( formInput );
+  $( "#custom-modal" ).css( "display", "block" );
+  form.on( "submit", function( e ) {
+    e.preventDefault();
+    var data = $( "#custom-modal-input" ).val();
+    func( data );
+    closeModal( form );
+  })
+}
 
-});
+function modalAlert( text ) {
+  $( "#custom-modal-header" ).text( "Alert" );
+  $( "#custom-modal-text" ).text( text );
+  $( "#custom-modal" ).css( "display", "block" );
+}
+
+function closeModal() {
+  // Collects all non-standard elements (modals past children[ 2 ])
+  var modalElements = $( "#custom-modal-content" )[ 0 ].children;
+  // Delete all non-standard elements in the modal. Loop must be run backwards so we don't delete as we're iterating.
+  for ( i = modalElements.length - 1; i > 2; i-- ) {
+    modalElements[ i ].remove();
+  }
+  $( "#custom-modal-header" ).text( "" );
+  $( "#custom-modal-text" ).text( "" );
+  $( "#custom-modal" ).css( "display", "none" );
+}
+
+function dummyFunc() {
+  console.log( "Dummy function!" );
+}
+
+// bkLib.onDomLoaded(function() {
+//   var textEditor = new nicEditor()
+//   textEditor.setPanel("editorDiv")
+//   textEditor.addInstance("phraseDiv")
+// })
+
+var editor
+
+function addEditorTool() {
+  editor = new nicEditor({fullPanel : true}).panelInstance('phraseDiv')
+}
+
+function removeEditorTool() {
+  editor.removeInstance('phraseDiv');
+}
+
+$("#enable").on("click", function() {
+  addEditorTool()
+})
+
+$("#disable").on("click", function() {
+  removeEditorTool()
+})

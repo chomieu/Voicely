@@ -49,10 +49,22 @@
                 <button class="btn theme cyan accent-3 waves-effect waves-light" id="newVoicelyBtn">new voicely</button>
                 <button class="btn theme cyan accent-3 waves-effect waves-light" id="editTitleBtn" disabled="true">edit title</button>
                 <button class="btn theme cyan accent-3 waves-effect waves-light right" id="settingsBtn"><i class="material-icons">settings</i></button>
-                <div class="collapsible-body right" id="palette"></div>
+                <ul class="collapsible center" id="settings">
+                    <li>
+                        <div class="collapsible-header">Theme Color</div>
+                        <div class="collapsible-body" id="palette"></div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">Text Editor Tool</div>
+                        <div class="collapsible-body" id="editorDiv">
+                            <button id="enable">Enable</button>
+                            <button id="disable">Disable</button>
+                        </div>
+                    </li>
+                </ul>
             </div>
             <textarea class="theme cyan lighten-5" id="phraseDiv" placeholder="Create new Voicely or load a saved memo"
-                disabled="true"></textarea>
+                disabled="true" style="background-color: transparent;"></textarea>
             <div>
                 <button class="btn theme cyan accent-3 waves-effect waves-light" id="recordVoicelyBtn"
                     disabled="true">record</button>
@@ -63,6 +75,8 @@
         </article>
 
     </main>
+    <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+    <!-- <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="json/characters.json"></script>
     <script type="text/javascript" src="json/emoji.json"></script>
