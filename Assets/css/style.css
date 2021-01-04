@@ -1,5 +1,6 @@
 body, html {
     height: 100%;
+    font-size: 95%;
 }
 
 .container {
@@ -76,6 +77,7 @@ main {
 }
 
 #content {
+    margin: 1em 0 0 0;
     padding-bottom: 15px !important;
     display: flex;
     flex-direction: column;
@@ -88,7 +90,7 @@ main {
 }
 
 section {
-    overflow: scroll;
+    overflow-y: scroll;
     height: 360px;
 }
 
@@ -152,5 +154,20 @@ li {
     }
     section {
         height: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        font-size: 1.5em;
+    }
+
+    section {
+        height: 275px;
+    }
+
+    .collection-item {
+        padding: 1em !important;
+        font-size: 1em;
     }
 }
