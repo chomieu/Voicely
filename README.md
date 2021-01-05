@@ -34,7 +34,7 @@ Voicely is a loginless messaging and notekeeping app featuring speech-to-text, S
 
 [Live Site URL](https://chomieu.github.io/project-1/)
 
-![Screenshot](./mockup/screenshot.png)
+![Screenshot](./mockups/screenshot.png)
 <br>
 <br>
 ## Technologies
