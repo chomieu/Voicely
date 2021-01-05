@@ -56,6 +56,7 @@ function colorPage(){
   $('#newVoicelyBtn').attr('class','btn theme accent-3 waves-effect waves-light '+ oldTheme)
   $('#editTitleBtn').attr('class','btn theme accent-3 waves-effect waves-light '+ oldTheme)
   $('#settingsBtn').attr('class','btn theme accent-3 waves-effect waves-light right '+ oldTheme)
+  $('#trashBin').attr( 'class', 'btn theme accent-3 waves-effect waves-light right '+ oldTheme)
   $('#phraseDiv').attr('class','theme lighten-5 '+ oldTheme)
   $('#recordVoicelyBtn').attr('class','btn theme accent-3 waves-effect waves-light '+ oldTheme)
   $('#smsBtn').attr('class','btn theme accent-3 waves-effect waves-light '+ oldTheme)
@@ -79,6 +80,9 @@ function getLocalStorage() {
   }
   if (deletedMemos !== null) {
     trashBin = deletedMemos;
+    $('#trashBin').prop('disabled', false)
+  }else{
+    $('#trashBin').prop('disabled', true)
   }
 }
 //update data in local storage
@@ -96,6 +100,10 @@ function loadMemoList() {
   getLocalStorage()
   //clear contents of #savedList to start fresh
   $('#savedList').empty()
+  $('#savedList').append($('<li>', { class: 'trashBinItems theme darken-4 '+ oldTheme, id: 'savedMemoLi'}))
+  $('#savedMemoLi').append($('<span>', { class: 'deleted-item', id: 'savedMemoHeader'}))
+  $('#savedMemoHeader').text("Saved Voicely's")
+  $("#savedMemoLi").css("text-align", "center");
   // color class names ordered to create the list item background fade effect
   var colorClass = ['lighten-2', 'lighten-1', '', 'darken-1', 'darken-2', 'darken-3', 'darken-2', 'darken-1', '', 'lighten-1', 'lighten-2', 'lighten-3']
   //'x' will be used to track our 'colorClass' index position. It will start on index-0
@@ -114,21 +122,50 @@ function loadMemoList() {
     $('#listItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content toTrashBin', id: 'listLink-' + i }))
     //append icon to link
     $('#listLink-' + i).append($('<i>', { class: 'material-icons white-text', id: 'listIcon-' + i, }))
-    //set icon text to clear
+    //set text for icon value
     $('#listIcon-' + i).text('clear')
     //increment x for the next line item color pattern
     x++
   }
   // if items exist in the trash bin, add this list item to the page
-  if (trashBin[0] !== undefined) {
-    $('#savedList').append($('<li>', { class: 'collection-item cyan darken-4', id: 'trashBin' }))
-    $('#trashBin').append($('<span>', { class: 'trashBinItems', id: 'trashBinTitle' }))
-    $('#trashBinTitle').text('Trash Bin')
-    // $('#trashBin').append($('<a>', {href:'#!', class:'secondary-content', id: 'trashBinLink' }))
-    // $('#trashBinLink').append($('<i>', {class: 'material-icons', id:'trashBinIcon'}))
-    // $('#trashBinIcon').text('clear')
+}
+
+
+function loadTrashBinList(){
+  //clear search input text when new memo is loaded
+  $('#search').val('')
+  //retrieve local storage data
+  getLocalStorage()
+  //empty contents of 'savedList'
+  $('#savedList').empty()
+  $('#savedList').append($('<li>', { class: 'trashBinItems theme darken-4 '+ oldTheme, id: 'trashBinLi'}))
+  $('#trashBinLi').append($('<span>', { class: 'deleted-item', id: 'trashBinHeader'}))
+  $('#trashBinHeader').text('Trash Bin')
+  $("#trashBinLi").css("text-align", "center");
+  if(trashBin[0] !== 'undefined'){
+    //loop through the trash bin items in the array to display on screen
+    for (let i = 0; i < trashBin.length; i++) {
+      //append new list item & add text
+      $('#savedList').append($('<li>', { class: 'collection-item trashBinItems theme  lighten-2 '+ oldTheme, id: 'deletedListItem-' + i }))
+      $('#deletedListItem-' + i).append($('<span>', { class: 'deleted-item', id: 'deletedItem-' + i }))
+      $('#deletedItem-' + i).text(trashBin[i].title)
+      //append link to new list item
+      $('#deletedListItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content white-text', id: 'deleteLink-' + i }))
+      // $('#deleteLink-' + i).text('delete')
+      //append icon to link
+      $('#deleteLink-' + i).append($('<i>', { class: 'material-icons white-text', id: 'deleteIcon-' + i, }))
+      //set text for icon value
+      $('#deleteIcon-' + i).text('delete_forever')
+      //append link to new list item
+      $('#deletedListItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content', id: 'restoreLink-' + i }))
+      //append icon to link
+      $('#restoreLink-' + i).append($('<i>', { class: 'material-icons white-text', id: 'restoreIcon-' + i, }))
+      //set text for icon value
+      $('#restoreIcon-' + i).text('undo')
+    }
   }
 }
+
 
 
 //settings used in updatePageScene function for disabling/enabling buttons & #phraseDiv, button text
@@ -278,7 +315,7 @@ function saveCurrentVoicely() {
   }
 }
 
-function confirmDeleteMemo(x) {
+function confirmMemoToTrashBin(x) {
   var displayedTitle = $('#voicelyTitle').val()
   //grab the title text and save it in a variable
   var thisIndex
@@ -296,7 +333,7 @@ function confirmDeleteMemo(x) {
   function yesFunc() {
     //
     trashBin.push(memoList[thisIndex])
-    console.log(trashBin)
+    console.log(`trash bin: ${trashBin}`)
 
       //Remove the deleted index from memoList
       memoList.splice(thisIndex, 1)
@@ -411,12 +448,12 @@ $(document).on('click', '#editTitleBtn', function (event) {
   }
 })
 
-$('.collection').on('click', '.secondary-content', function () {
+$('.collection').on('click', '.toTrashBin', function () {
   confirmDelete = true
   // console.log($(this).text())
   var thisTitle = $(this).prev().text()
   console.log('secondary-content')
-  confirmDeleteMemo(thisTitle)
+  confirmMemoToTrashBin(thisTitle)
 })
 
 //listen for a click on any saved Memo
@@ -464,185 +501,28 @@ $(document).on('click', '#saveVoicelyBtn', function () {
   saveCurrentVoicely()
 })
 
-$('.collection').on('click', '.toTrashBin', function () {
-  var displayedTitle = $('#voicelyTitle').val()
-  //grab the title text and save it in a variable
-  var thisTitle = $(this).prev().text()
-  var thisIndex
-  //comfirm with user if they would like to delete
-
-  //to avoid conflicts, collapse the trash bin
-  trashBinStatus = false
-  loadMemoList()
-  //reset the tracking variable to expand trash bin next time it is clicked
-  trashBinStatus = true
-
-  //find the index location wher 'thisTitle' is held and store index number it in 'thisIndex'
-  for (let i = 0; i < memoList.length; i++) {
-    if (memoList[i].title === thisTitle) {
-      thisIndex = i
-    }
-  }
-  //for the index that is clicked on, append a <p> tag and 2 buttons for 'yes' and 'no' options to the <li> that is clicked for removal.
-  // console.log(thisIndex)
-  // $('#listItem-' + thisIndex).append($('<p>', { id: 'delete' }))
-  // $('#delete').text('Send to Trash Bin?').css('color', 'red')
-  // $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'yesBtn' }))
-  // $('#yesBtn').css('margin', '0 20px').text('yes')
-  // $('#delete').append($('<button>', { class: 'btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'noBtn' }))
-  // $('#noBtn').text('no')
-
-  $('#listItem-' + thisIndex).on('click', '.deleteBtn', function () {
-    //if the 'yes' button is clicked
-    if ($(this).text() === 'yes') {
-      //scenario where the item displayed is the item being deleted
-      if (thisTitle === displayedTitle) {
-        //add item to trash bin
-        trashBin.push(memoList[thisIndex])
-        //activate trash bin drop town toggle
-        trashBinStatus = true
-        //function to remove the deleted index from memoList
-        memoList.splice(thisIndex, 1)
-        //console.log to confirm deletion for dev purposes
-        console.log(memoList)
-        //update page scene since displayed content was just deleted
-        pageStart = true
-        updatePageScene()
-        //reset scene variable
-        pageStart = false
-        displayedIndex = null
-        // if memo being deleted is not the current memo displayed
-      } else {
-        //add the item to ttrash bin
-        trashBin.push(memoList[thisIndex])
-        //activate trash bin status
-        trashBinStatus = true
-        //remove the memo from the index
-        memoList.splice(thisIndex, 1)
-        console.log(memoList)
-      }
-      //update localstorage to reflect deleted memo
-      setLocalStorage()
-      //rebuild the memo list to reflect deleted memo
-      loadMemoList()
-      //if the 'no' button is clicked
-    } else {
-      //reload the memo list to remove the previously added p tag and 'yes' 'no' buttons
-      loadMemoList()
-    }
-  })
-})
 
 function findBinItemIndex(){
   for (let i = 0; i < trashBin.length; i++) {
     if(trashBin[i].title === binItemTitle)
     binItemIndex = i
-
   }
-
-}
-
-// listen for click on the different delete button options
-$('.collection').on('click', '.deleteBtn', function () {
-  if ($(this).text() === 'yes') {
-    //scenario where the idem displayed is the item being deleted
-    if (x === displayedTitle) {
-      //function to remove the deleted index from memoList
-      memoList.splice(thisIndex, 1)
-      //console.log to confirm deletion for dev purposes
-      console.log(memoList)
-      //update page scene since displayed content was just deleted
-      pageStart = true
-      updatePageScene()
-      //reset scene variable
-      pageStart = false
-      displayedIndex = null
-      // if memo being deleted is not the current memo displayed
-    } else {
-      //remove the memo from the index
-      memoList.splice(thisIndex, 1)
-      console.log(memoList)
-    }
-    //update localstorage to reflect deleted memo
-    setLocalStorage()
-    //rebuild the memo list to reflect deleted memo
-    loadMemoList()
-    //if button text is no
-  } if ($(this).text() === 'no') {
-    //reload page to remove 
-    loadMemoList()
-    //if button text is restore
-  } if ($(this).text() === 'restore') {
-    //store the list item text abd find the index position
-    binItemTitle = $(this).prev().text()
-    findBinItemIndex()
-    //add the item back to memoList
-    memoList.push(trashBin[binItemIndex])
-    //remove item from trash bin
-    trashBin.splice(binItemIndex, 1)
-    //update local storage
-    setLocalStorage()
-    //reload memoList items to reflect changes
-    loadMemoList()
-    //reload trash bin items to reflect changes
-    loadTrashBinList()
-    //if button text is delete
-  } if ($(this).text() === 'delete') {
-    //store the list item text and find the index position
-    binItemTitle = $(this).prev().prev().text()
-    findBinItemIndex()
-    //remove item from trash bin
-    trashBin.splice(binItemIndex, 1)
-    //update local storage
-    setLocalStorage()
-    //reload trash bin to reflect changes
-    loadTrashBinList()
-    //reload memo List to reflect changes
-    loadMemoList()
-  }
-})
-
-function loadTrashBinList(){
-  $('#trashBin').empty()
-  if(trashBin[0] !== 'undefined'){
-    //add the elements to hold the deleted li elements
-    $('#trashBin').append($('<div>', { class: 'collection', id: 'trashBinDiv' }))
-    $('#trashBinDiv').append($('<ul>', { id: 'trashBinUl' }))
-    //loop through the trash bin items in the array to display on screen
-    for (let i = 0; i < trashBin.length; i++) {
-      $('#trashBinUl').append($('<li>', { class: 'collection-item cyan darken-4 trashBinItems', id: 'deletedListItem-' + i }))
-      $('#deletedListItem-' + i).append($('<span>', { class: 'deleted-item', id: 'deletedItem-' + i }))
-      $('#deletedItem-' + i).text(trashBin[i].title)
-      $('#deletedListItem-' + i).append($('<button>', { class: ' btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'restore-' + i }))
-      $('#restore-' + i).css('margin', '0 20px').text('restore')
-      $('#deletedListItem-' + i).append($('<button>', { class: ' btn cyan accent-3 waves-effect waves-light deleteBtn', id: 'permanentlyDelete-' + i }))
-      $('#permanentlyDelete-' + i).text('delete')
-    }
-  }
-
 }
 
 
-//event listener for trash bin after an item is deleted
-$('.collection').on('click', '#trashBinTitle', function () {
-  //if trash binm status is active, add the 'expand' effect
-  if (trashBinStatus) {
-    //create a ul in the trash bin to display deleted items
-    loadMemoList()
+$(document).on('click', "#trashBin", function (){
+  console.log('trash clicked')
+  if(trashBinStatus){
+    $('#trashBin').attr('class', 'btn theme accent-4 waves-effect waves-light right ' + oldTheme)
+    $('#trashBinIcon').text('reorder')
     loadTrashBinList()
-    //toggle status to 'collapse' next time #trashBinTitle is clicked
     trashBinStatus = false
-  } else {
-    // 'collapse' trash bin items
+  }else{
+    $('#trashBin').attr('class', 'btn theme accent-3 waves-effect waves-light right ' + oldTheme)
+    $('#trashBinIcon').text('delete')
     loadMemoList()
-    //toggle status to 'expand' and display items next time #trashBinTitle is clicked
     trashBinStatus = true
   }
-})
-
-$('.collection').on('click', '.deleted-item', function () {
-
-  console.log($(this).text())
 })
 
 // load page on startup screen
