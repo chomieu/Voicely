@@ -51,6 +51,10 @@ main {
     height: 100%;
 }
 
+#settingsBtn{
+    margin-right: 4px !important;
+}
+
 #search {
     padding-left: 4rem;
     width: calc(100% - 4rem);

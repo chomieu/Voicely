@@ -120,7 +120,6 @@ $("document").ready(function () {
   $( "#close" ).on( "click", function() {
     closeModal()
   })
-
 })
 
 /* Functions for modals */
@@ -132,8 +131,8 @@ function modalConfirm( text, trueFunc, falseFunc ) {
   $( "#custom-modal-header" ).text( "Confirm" );
   $( "#custom-modal-text" ).text( text );
   $( "#custom-modal" ).css( "display", "block" );
-  var confirmButton = $( "<button>", { class: "modal-button btn theme cyan accent-3 waves-effect waves-light", id: "custom-modal-confirm-button" } ).text( "Confirm" );
-  var denyButton = $( "<button>", { class: "modal-button btn theme cyan accent-3 waves-effect waves-light", id: "custom-modal-deny-button" } ).text( "Cancel" );
+  var confirmButton = $( "<button>", { class: "modal-button btn theme accent-3 waves-effect waves-light " + oldTheme, id: "custom-modal-confirm-button" } ).text( "Confirm" );
+  var denyButton = $( "<button>", { class: "modal-button btn theme accent-3 waves-effect waves-light " + oldTheme, id: "custom-modal-deny-button" } ).text( "Cancel" );
   confirmButton.attr( "data-bool", true );
   denyButton.attr( "data-bool", false );
   $( "#custom-modal-content" ).append( confirmButton );
