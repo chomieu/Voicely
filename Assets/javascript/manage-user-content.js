@@ -17,20 +17,20 @@ var confirmDelete = false
 //object array for storing titles and content
 // var memoList = []
 var memoList = [{
-  title: 'GroceryList',
-  content: 'snacks',
+  title: 'How To Use Voicely',
+  content: '1. Start by naming your new Voicly memo.\n\n2. Press record, allow microphone access, then tell Voicely what to type for you!\n\n3. To use voice activated emojis,\n\n  simply say: \n\n    "Voicely `fire` emoji"\n\n\       and Voicely will display that `🔥`',
 }, {
-  title: 'Christmas List',
-  content: 'World peace',
+  title: 'Grocery List',
+  content: '- eggs🥚 🍳\n\n- bread 🍞\n\n- spinach 🥗',
 }, {
   title: 'To Do',
-  content: 'Work on Voicely project',
+  content: '1. Short ~1min intro of Voicely\n2. User story/motivation for development\n3. The 2 APIs we used and the json responses we get back\n4. Talk about json and challenges we faced (emoji API not being reliable)\n5. Talk about successes (teamwork, go Sandcat!)\n6. Demo - quickly go over each feature:Creating Voicely\n ⦿ Recording and adding emoji\n ⦿ Saving to localstorage\n ⦿ Searching for saved memos\n ⦿ Sending SMS\n7. Demo for the SMS\n8. Changing Theme color\n9. Text Editor Tool (?)\n10. Questions?',
 }, {
   title: 'Why Westley is the cutest',
-  content: 'Facts',
+  content: 'Fluffy fur 😼 \n😻 likes to snuggle\nloves the hoomans 😸',
 }, {
   title: '5 Cutest Wildcat Species',
-  content: 'Sandcats'
+  content: "1. Carcal\n2. Pallas' Cat\n3. Sand Cat 🐈\n4. Rusty Spotted Cat\n5. Margay",
 }, {
   title: ' 🔨  Time',
   content: '💡     💡     💡     💡     💡     💡     💡     💡\n     💡     💡     💡     💡     💡     💡     💡\n💡     💡     💡     💡     💡     💡     💡     💡'
@@ -41,7 +41,6 @@ function colorPage(){
     oldTheme = storedTheme
     console.log(oldTheme)
   }else{
-    console.log(storedTheme)
     oldTheme = "cyan"
   }
   $('body').attr('class','container theme lighten-5 '+ oldTheme)
