@@ -45,7 +45,6 @@ var trashBinStatus = true
 function colorPage(){
   if(storedTheme !== null){
     oldTheme = storedTheme
-    console.log(oldTheme)
   }else{
     oldTheme = "cyan"
   }
@@ -80,6 +79,10 @@ function getLocalStorage() {
   if (deletedMemos !== null) {
     trashBin = deletedMemos;
     $('#trashBin').prop('disabled', false)
+    if(trashBin[0] === undefined){
+      $('#trashBin').prop('disabled', true)
+
+    }
   }else{
     $('#trashBin').prop('disabled', true)
   }
@@ -152,11 +155,11 @@ function loadTrashBinList(){
       $('#deletedListItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content white-text', id: 'deleteLink-' + i }))
       // $('#deleteLink-' + i).text('delete')
       //append icon to link
-      $('#deleteLink-' + i).append($('<i>', { class: 'material-icons white-text', id: 'deleteIcon-' + i, }))
+      $('#deleteLink-' + i).append($('<i>', { class: 'material-icons deleteIcon', id: 'deleteIcon-' + i, }))
       //set text for icon value
       $('#deleteIcon-' + i).text('delete_forever')
       //append link to new list item
-      $('#deletedListItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content', id: 'restoreLink-' + i }))
+      $('#deletedListItem-' + i).append($('<a>', { href: '#!', class: 'secondary-content restoreIcon', id: 'restoreLink-' + i }))
       //append icon to link
       $('#restoreLink-' + i).append($('<i>', { class: 'material-icons white-text', id: 'restoreIcon-' + i, }))
       //set text for icon value
@@ -235,7 +238,6 @@ function approveNewTitle() {
     $('#alertText').text(`*title can not be blank`)
     return
   }
-  console.log(displayedIndex)
   //if title is not empty, and title matches the current displayed title, allow it and return
   if (titleApproved && displayedIndex !== null && memoList[displayedIndex].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
     titleApproved = true
@@ -245,8 +247,6 @@ function approveNewTitle() {
     for (let i = 0; i < memoList.length; i++) {
       if (memoList[i].title.toLocaleLowerCase().trim() === newTitle.toLowerCase().trim()) {
         titleApproved = false
-        console.log(`The title: '${memoList[i].title}', already exists at index ${i}`)
-        $('#alertText').text(`"${newTitle}" already exists`)
       }
     }
   }
@@ -266,7 +266,6 @@ function createNewVoicely() {
   //update displayedIndex to refrence our newly created & currently selected index
   displayedIndex = memoList.length - 1
   selectedTitle = memoList[displayedIndex].title
-  console.log(`current index is ${displayedIndex}, title: ${memoList[displayedIndex].title}`)
   //reload the list to display the new object
   loadMemoList()
 
@@ -275,8 +274,6 @@ function createNewVoicely() {
   //update the page scene with variable that is true
   pageSceneEditContent()
 
-  console.log(displayedIndex)
-  console.log(memoList)
 }
 
 //find the index location where 'selectedTitle' lives. This is used to load the title and content onto the page when loading a saved memo.
@@ -294,11 +291,11 @@ function findDisplayedIndex() {
 
 //refrencing the displayedIndex variable, load the memo selected by the user
 function loadVoicelyMemo() {
-  $('#voicelyTitle').val(memoList[displayedIndex].title)
-  //empty #phraseDiv before loading content to avoid concatination of previous and new content
-  $('#phraseDiv').val('')
-  $('#phraseDiv').val(memoList[displayedIndex].content)
-}
+    $('#voicelyTitle').val(memoList[displayedIndex].title)
+    //empty #phraseDiv before loading content to avoid concatination of previous and new content
+    $('#phraseDiv').val('')
+    $('#phraseDiv').val(memoList[displayedIndex].content)
+  }
 
 
 //refrencing the current index, update the content of current memo
@@ -310,7 +307,6 @@ function saveCurrentVoicely() {
     memoList[displayedIndex].content = updateContent
     //update local storage with new values
     setLocalStorage()
-    console.log(`1. '${memoList[displayedIndex].title}' content auto-saved`)
   }
 }
 
@@ -319,42 +315,86 @@ function confirmMemoToTrashBin(x) {
   //grab the title text and save it in a variable
   var thisIndex
   //comfirm with user if they would like to delete
-
   //find the index location wher 'thisTitle' is held and store index number it in 'thisIndex'
   for (let i = 0; i < memoList.length; i++) {
     if (memoList[i].title === x) {
       thisIndex = i
     }
   }
-
-  modalConfirm( "Really delete \"" + x + "\"?", yesFunc, noFunc );
-
+  modalConfirm( "Move \"" + x + "\" to trash bin?", yesFunc, noFunc );
   function yesFunc() {
-    //
     trashBin.push(memoList[thisIndex])
-    console.log(`trash bin: ${trashBin}`)
-
       //Remove the deleted index from memoList
       memoList.splice(thisIndex, 1)
       //scenario where the item displayed is the item being deleted
       if (x === displayedTitle) {
         //update page scene since displayed content was just deleted
         pageSceneStart()
-
         displayedIndex = null
         // if memo being deleted is not the current memo displayed
       }
       //console.log to confirm deletion (or lack thereof) for dev purposes
-      console.log(memoList)
       //update localstorage to reflect deleted memo
       setLocalStorage()
       confirmDelete = false
       loadMemoList();
   }
-
   function noFunc() {
     confirmDelete = false
     loadMemoList();
+  }
+}
+
+
+function findBinItemIndex(){
+  for (let i = 0; i < trashBin.length; i++) {
+    if(trashBin[i].title === binItemTitle)
+    binItemIndex = i
+  }
+}
+
+
+function confirmDeleteFromTrashBin(x) {
+  modalConfirm( "Permanently delete \"" + x + "\"?", yesFunc, noFunc );
+  function yesFunc() {
+      //Remove the deleted index from trashBin
+      trashBin.splice(binItemIndex, 1)
+      //console.log to confirm deletion (or lack thereof) for dev purposes
+      //update localstorage to reflect deleted memo
+      setLocalStorage()
+      if(trashBin[0] !== undefined){
+        loadTrashBinList()
+      }else{
+        trashBinStatus = false
+        trashBinDisplay()
+        getLocalStorage()
+      }
+  }
+  function noFunc() {
+    loadTrashBinList()
+  }
+}
+
+
+function confirmRestoreToMemoList(x) {
+  modalConfirm( "Restore \"" + x + "\" to saved memos?", yesFunc, noFunc );
+  function yesFunc() {
+      //Remove the deleted index from trashBin
+      memoList.push(trashBin[binItemIndex])
+      trashBin.splice(binItemIndex, 1)
+      //console.log to confirm deletion (or lack thereof) for dev purposes
+      //update localstorage to reflect deleted memo
+      setLocalStorage()
+      if(trashBin[0] !== undefined){
+        loadTrashBinList()
+      }else{
+        trashBinStatus = false
+        trashBinDisplay()
+        getLocalStorage()
+      }
+  }
+  function noFunc() {
+    loadTrashBinList()
   }
 }
 
@@ -412,7 +452,6 @@ $(document).on('click', '#editTitleBtn', function (event) {
       //reset the title approved variable
       titleApproved = false
     }
-    console.log(memoList)
     return
   }
   //if button is clicked and text displays 'edit title', user has an active Memo loaded
@@ -433,7 +472,6 @@ $(document).on('click', '#editTitleBtn', function (event) {
     if (titleApproved) {
       //update current memo object with new title name
       memoList[displayedIndex].title = newTitle
-      console.log(memoList)
       //update local storage
       setLocalStorage()
       //reload the Memo list to display updated title name
@@ -449,17 +487,14 @@ $(document).on('click', '#editTitleBtn', function (event) {
 
 $('.collection').on('click', '.toTrashBin', function () {
   confirmDelete = true
-  // console.log($(this).text())
   var thisTitle = $(this).prev().text()
-  console.log('secondary-content')
   confirmMemoToTrashBin(thisTitle)
 })
 
 //listen for a click on any saved Memo
 $('.collection').on('click', '.collection-item', function () {
 // $('.collection').on('click', '.memo-title', function () {
-  // console.log($(this).val())
-  if(confirmDelete === false) {
+  if(confirmDelete === false && trashBinStatus === true) {
 
     findDisplayedIndex()
     selectedTitle = $(this).find('span').text()
@@ -480,8 +515,6 @@ $('.collection').on('click', '.collection-item', function () {
       }
       //load the page with the index if the Memo selected
       loadVoicelyMemo()
-      console.log(`2. '${memoList[displayedIndex].title}' loaded from index-${displayedIndex}`)
-      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
       //update page scene
       pageSceneEditContent()
       //refresh page if any delete buttons were activated but not confirmed
@@ -500,17 +533,7 @@ $(document).on('click', '#saveVoicelyBtn', function () {
   saveCurrentVoicely()
 })
 
-
-function findBinItemIndex(){
-  for (let i = 0; i < trashBin.length; i++) {
-    if(trashBin[i].title === binItemTitle)
-    binItemIndex = i
-  }
-}
-
-
-$(document).on('click', "#trashBin", function (){
-  console.log('trash clicked')
+function trashBinDisplay(){
   if(trashBinStatus){
     $('#trashBin').attr('class', 'btn theme accent-4 waves-effect waves-light right ' + oldTheme)
     $('#trashBinIcon').text('reorder')
@@ -522,6 +545,22 @@ $(document).on('click', "#trashBin", function (){
     loadMemoList()
     trashBinStatus = true
   }
+}
+
+$(document).on('click', "#trashBin", function (){
+  trashBinDisplay()
+})
+
+$('.collection').on('click', '.deleteIcon', function (){
+    binItemTitle = ($(this).parent().prev().text())
+    findBinItemIndex()
+    confirmDeleteFromTrashBin(binItemTitle)
+})
+
+$('.collection').on('click', '.restoreIcon', function (){
+  binItemTitle = $(this).parent().find('span').text()
+  findBinItemIndex()
+  confirmRestoreToMemoList(binItemTitle)
 })
 
 // load page on startup screen
