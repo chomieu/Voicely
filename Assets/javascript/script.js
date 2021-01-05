@@ -5,11 +5,11 @@ var emojiList;
 var oldTheme
 var newTheme
 
-var headerLogo = $( "#header-logo" );
+var headerLogo = $("#header-logo");
 
-setTimeout( function() {
-  headerLogo.css( "width", "171px" );
-}, 2000 );
+setTimeout(function () {
+  headerLogo.css("width", "171px");
+}, 2000);
 
 $("document").ready(function () {
 
@@ -97,7 +97,7 @@ $("document").ready(function () {
 
   // Settings button toggle.
   $("#settingsBtn").on("click", function () {
-    if($("#settings").is(":visible")) {
+    if ($("#settings").is(":visible")) {
       $("#settings").hide()
       $(".collapsible-body").hide()
       $("#settings > li").removeClass("active")
@@ -117,7 +117,7 @@ $("document").ready(function () {
   $('.collapsible').collapsible()
 
   // Clicking the X in a modal
-  $( "#close" ).on( "click", function() {
+  $("#close").on("click", function () {
     closeModal()
   })
 
@@ -128,18 +128,18 @@ $("document").ready(function () {
 // Replaces the confirm() function. Takes a text string to inform the user about what to do, a function for
 // if the user clicks the affirmative "Confirm" button and a function for if the user clicks the negative
 // "Cancel" button.
-function modalConfirm( text, trueFunc, falseFunc ) {
-  $( "#custom-modal-header" ).text( "Confirm" );
-  $( "#custom-modal-text" ).text( text );
-  $( "#custom-modal" ).css( "display", "block" );
-  var confirmButton = $( "<button>", { class: "modal-button btn theme cyan accent-3 waves-effect waves-light", id: "custom-modal-confirm-button" } ).text( "Confirm" );
-  var denyButton = $( "<button>", { class: "modal-button btn theme cyan accent-3 waves-effect waves-light", id: "custom-modal-deny-button" } ).text( "Cancel" );
-  confirmButton.attr( "data-bool", true );
-  denyButton.attr( "data-bool", false );
-  $( "#custom-modal-content" ).append( confirmButton );
-  $( "#custom-modal-content" ).append( denyButton );
-  $( ".modal-button" ).click( function() {
-    if ( $( this ).attr( "data-bool" ) == "true" ) {
+function modalConfirm(text, trueFunc, falseFunc) {
+  $("#custom-modal-header").text("Confirm");
+  $("#custom-modal-text").text(text);
+  $("#custom-modal").css("display", "block");
+  var confirmButton = $("<button>", { class: "modal-button btn theme accent-3 waves-effect waves-light " + oldTheme, id: "custom-modal-confirm-button" }).text("Confirm");
+  var denyButton = $("<button>", { class: "modal-button btn theme accent-3 waves-effect waves-light " + oldTheme, id: "custom-modal-deny-button" }).text("Cancel");
+  confirmButton.attr("data-bool", true);
+  denyButton.attr("data-bool", false);
+  $("#custom-modal-content").append(confirmButton);
+  $("#custom-modal-content").append(denyButton);
+  $(".modal-button").click(function () {
+    if ($(this).attr("data-bool") == "true") {
       trueFunc();
     } else {
       falseFunc();
@@ -150,40 +150,40 @@ function modalConfirm( text, trueFunc, falseFunc ) {
 
 // Replaces the prompt() function. Takes a string of text to inform the user, a function to execute when
 // the user submits it, and an optional regex for form input validation.
-function modalPrompt( text, func, regEx ) {
-  $( "#custom-modal-header" ).text( "Prompt" );
-  $( "#custom-modal-text" ).text( text );
-  var customContent = $( "#custom-modal-content" );
-  var form = $( "<form>", { class: "modal-form", id: "custom-modal-form", method: "POST" } );
+function modalPrompt(text, func, regEx) {
+  $("#custom-modal-header").text("Prompt");
+  $("#custom-modal-text").text(text);
+  var customContent = $("#custom-modal-content");
+  var form = $("<form>", { class: "modal-form", id: "custom-modal-form", method: "POST" });
   // Input will only add a regex for validation if it's specified in the function call.
-  var formInput = $( "<input>", { class: "modal-input", id: "custom-modal-input", pattern: regEx } );
-  customContent.append( form );
-  form.append( formInput );
-  $( "#custom-modal" ).css( "display", "block" );
-  form.on( "submit", function( e ) {
+  var formInput = $("<input>", { class: "modal-input", id: "custom-modal-input", pattern: regEx });
+  customContent.append(form);
+  form.append(formInput);
+  $("#custom-modal").css("display", "block");
+  form.on("submit", function (e) {
     e.preventDefault();
-    var data = $( "#custom-modal-input" ).val();
-    func( data );
-    closeModal( form );
+    var data = $("#custom-modal-input").val();
+    func(data);
+    closeModal(form);
   })
 }
 
 // Replaces the alert() function. Only takes a text string as an argument.
-function modalAlert( text ) {
-  $( "#custom-modal-header" ).text( "Alert" );
-  $( "#custom-modal-text" ).text( text );
-  $( "#custom-modal" ).css( "display", "block" );
+function modalAlert(text) {
+  $("#custom-modal-header").text("Alert");
+  $("#custom-modal-text").text(text);
+  $("#custom-modal").css("display", "block");
 }
 
 // Used in all modals. Closes the modal and deletes all children within it beyond the "standard" ones.
 function closeModal() {
   // Collects all non-standard elements (modals past children[ 2 ])
-  var modalElements = $( "#custom-modal-content" )[ 0 ].children;
+  var modalElements = $("#custom-modal-content")[0].children;
   // Delete all non-standard elements in the modal. Loop must be run backwards so we don't delete as we're iterating.
-  for ( i = modalElements.length - 1; i > 2; i-- ) {
-    modalElements[ i ].remove();
+  for (i = modalElements.length - 1; i > 2; i--) {
+    modalElements[i].remove();
   }
-  $( "#custom-modal-header" ).text( "" );
-  $( "#custom-modal-text" ).text( "" );
-  $( "#custom-modal" ).css( "display", "none" );
+  $("#custom-modal-header").text("");
+  $("#custom-modal-text").text("");
+  $("#custom-modal").css("display", "none");
 }

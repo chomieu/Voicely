@@ -153,6 +153,11 @@ li {
     cursor: pointer;
 }
 
+.modal-button {
+    margin: 0 0.5em;
+}
+
+/*  */
 @media (min-width: 993px) {
     main {
         align-items: stretch;
