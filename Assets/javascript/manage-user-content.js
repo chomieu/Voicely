@@ -169,7 +169,7 @@ function loadTrashBinList(){
 
 
 //settings used in updatePageScene function for disabling/enabling buttons & #phraseDiv, button text
-function viocelyTitleSettings(x, y,){
+function voicelyTitleSettings(x, y,){
   $("#voicelyTitle").prop("disabled", x)
   $('#voicelyTitle').attr('class', y)
 }
@@ -191,7 +191,7 @@ function recordSmsSaveBtnSettings(x){
 }
 //Layout to create a new Voicely or load a saved session
 function pageSceneStart(){
-  viocelyTitleSettings(true,  'white-text theme' + oldTheme,)
+  voicelyTitleSettings(true,  'white-text theme ' + oldTheme)
   $("#voicelyTitle").val('')
   $('#alertText').text('')
   newVoicelyBtnSettings(false, 'New Voicely')
@@ -203,7 +203,7 @@ function pageSceneStart(){
 }
 //Layout to create a new Voicely memo, or cancel and return to START-UP SCREEN
 function pageSceneLoadMemo() {
-  viocelyTitleSettings(false, 'white-text lighten-3 theme ' + oldTheme)
+  voicelyTitleSettings(false, 'white-text lighten-3 theme ' + oldTheme)
   newVoicelyBtnSettings(false, 'Cancel')
   editTitleBtnSettings(false, 'Save Title')
   phraseDivSettings(true)
@@ -211,7 +211,7 @@ function pageSceneLoadMemo() {
 }
 //Layout to edit the title of an existing memo
 function pageSceneEditTitle() {
-  viocelyTitleSettings(false, 'white-text lighten-3 theme ' + oldTheme)
+  voicelyTitleSettings(false, 'white-text lighten-3 theme ' + oldTheme)
   newVoicelyBtnSettings(false, 'Cancel')
   editTitleBtnSettings(false, 'Update Title')
   phraseDivSettings(true)
@@ -219,7 +219,7 @@ function pageSceneEditTitle() {
 }
 //Layout for working on a current Voicely memo
 function pageSceneEditContent() {
-  viocelyTitleSettings(true, 'white-text theme ' + oldTheme)
+  voicelyTitleSettings(true, 'white-text theme ' + oldTheme)
   $('#alertText').text('')
   newVoicelyBtnSettings(false, 'New Voicely')
   editTitleBtnSettings(false, 'Edit Title')
