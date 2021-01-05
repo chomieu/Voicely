@@ -33,7 +33,7 @@ var memoList = [{
   content: "1. Carcal\n2. Pallas' Cat\n3. Sand Cat 🐈\n4. Rusty Spotted Cat\n5. Margay",
 }, {
   title: ' 🔨  Time',
-  content: '💡     💡     💡     💡     💡     💡     💡     💡\n     💡     💡     💡     💡     💡     💡     💡\n💡     💡     💡     💡     💡     💡     💡     💡'
+  content: '\n💡     💡  b  💡  u  💡  i  💡  l  💡  d  💡     💡\n\n\n  a  💡  l  💡  l  💡     💡  t  💡  h  💡  e  💡\n\n\n💡  t  💡  h  💡  i  💡  n  💡  g  💡  s  💡     💡'
 }]
 
 function colorPage(){
