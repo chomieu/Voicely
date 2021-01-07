@@ -57,7 +57,7 @@ THEN my text area content is delivered
 
 ## Product
 
-[Live Site URL](https://chomieu.github.io/Project-1/)
+[Live Site URL](https://chomieu.github.io/Voicely/)
 
 ![Screenshot](./mockups/screenshot.png)
 <br>
