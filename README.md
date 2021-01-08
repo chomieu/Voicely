@@ -1,5 +1,5 @@
-# Project #1: Voicely Speech-To-Text
-Voicely is a multi-function speech-to-text note storage web app.
+# Project #1: Voicely
+Online notepad that recognizes and transcribes voice into text. Winner of the Best Functionality and People's Choice awards for the Winter 2020 University of Washington coding bootcamp.
 <br>
 <br>
 
