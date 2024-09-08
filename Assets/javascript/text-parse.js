@@ -10,7 +10,7 @@ function voiceSearch( matchText, emojiObjects ) {
     }
     // construct our RegEx of the keyphrase.
     // var regEx = /(S|s)ymbol[s]?[,]? (E\d0 )?[\w+( |,|\.|\?|!)]+?(E|e)moji/g;
-    var regEx = /(V|v)oice[,]? (L|l)(ee||i||y)[s]?[,]? (E\d0 )?[\w+( |,|\.|\?|!)]+?((E|e)moji|(S|s)ymbol)\.?/g;
+    var regEx = /(V|v)oice((ly)||[,]? (L|l)(ee||i))[s]?[,]? (E\d0 )?[\w+( |,|\.|\?|!)]+?((E|e)moji|(S|s)ymbol)\.?/g;
     // console.log( "1. ******** NEW CALL OF voiceSearch ********");
     // console.log( "2. Initial RegEx: ", regEx );
     // console.log( "3. Text to match: ", matchText );
