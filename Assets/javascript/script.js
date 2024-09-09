@@ -15,7 +15,7 @@ $("document").ready(function () {
 
 
   // key option 1
-  var APIkey = '2b307e3e19a6de2e97c409b817d0a381eec4b0e1'
+  var APIkey = '31a1cec32f86c5df3982a9843513ce1aac76c462'
   // key option 2
   // var APIkey = '8b4259ccd704fd17cd7ad399e0ee00b9dd83faab';
   // emojiURL option 1
